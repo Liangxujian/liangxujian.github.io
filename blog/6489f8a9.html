@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Docker介绍 |  Liangxj</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Docker介绍"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Docker介绍
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/6489f8a9.html" class="article-date">
+  <time datetime="2023-03-28T08:54:06.000Z" itemprop="datePublished">2023-03-28</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a> / <a class="article-category-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/Docker/">Docker</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">11 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <blockquote>
+<p> 相关网址：</p>
+<p><a target="_blank" rel="noopener" href="https://www.docker.com/">Docker 官网</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/">Docker 文档地址</a></p>
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker 仓库地址</a></p>
+</blockquote>
+<h1 id="一、Docker-是什么"><a href="#一、Docker-是什么" class="headerlink" title="一、Docker 是什么"></a>一、Docker 是什么</h1><p>Docker 就像一个命令不完整的轻量级的虚拟机，它将应用程序的代码、工具库、运行环境封装在一个容器中，我们到时候只需要执行一条命令即可，因此大大减轻了测试和部署的难度。</p>
+<p><img src="http://localhost:4000/assets/Docker%E4%BB%8B%E7%BB%8D/1656065889066.png"></p>
+<h2 id="1-1-Docker-VS-VMware"><a href="#1-1-Docker-VS-VMware" class="headerlink" title="1.1 Docker VS VMware"></a>1.1 Docker VS VMware</h2><p>Docker 和 VMware 都是属于虚拟化技术</p>
+<ul>
+<li>VMware 虚拟的是一台或多台电脑，笨重（占用资源多，冗余步骤多【每次都要开机都要初始化】，启动速度慢）</li>
+<li>Docker 虚拟的是镜像，镜像 &#x3D; 最核心的环境（4m）+ JDK + MySQL + ……，直接运行镜像就可以了，小巧（Docker 容器模拟的并不是一个完整的操作系统，容器运行在操作系统之上，共享系统内核，相互之间使用沙箱机制，不会有任何接口，所以一个容器崩了，其他容器不受影响，当然也可以使用 Nginx 进行跨域关联起来）</li>
+</ul>
+<h2 id="1-2-镜像是什么"><a href="#1-2-镜像是什么" class="headerlink" title="1.2 镜像是什么"></a>1.2 镜像是什么</h2><p>镜像是一种轻量级、可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含运行某个软件所需的所有内容，包括代码、运行时、库、环境变量和配置文件。</p>
+<p>同时，就像代码可以保存到 GitHub 中开源，镜像也可以提交到 DockerHub 中</p>
+<h2 id="1-3-镜像加载原理"><a href="#1-3-镜像加载原理" class="headerlink" title="1.3 镜像加载原理"></a>1.3 镜像加载原理</h2><h3 id="1-3-1-UnionFS（联合文件系统）"><a href="#1-3-1-UnionFS（联合文件系统）" class="headerlink" title="1.3.1 UnionFS（联合文件系统）"></a>1.3.1 UnionFS（联合文件系统）</h3><p>UnionFS（联合文件系统）是一种分层、轻量级并且高性能的文件系统，它支持对文件系统的修改作为一次提交来一层层的叠加，同时可以将不同目录挂载到同一个虚拟文件系统下（unite serveral directories into a single virtual filesystem）。Union 文件系统是 Docker 镜像的基础。镜像可以通过分层来进行继承（不同镜像之间可以使用同一个底层系统，然后节省空间），基于基础镜像（没有父镜像），可以制作各种具体的应用镜像。</p>
+<p>特性：以此同时加载多个文件系统，但从外面看起来，只能看到一个文件系统，联合加载会把各层文件叠加起来，这样最终的文件系统会包含所有底层的文件和目录。</p>
+<h3 id="1-3-2-镜像加载原理"><a href="#1-3-2-镜像加载原理" class="headerlink" title="1.3.2 镜像加载原理"></a>1.3.2 镜像加载原理</h3><p>docker 的镜像实际上由一层一层的文件系统组成，这种层级的文件系统 UnionFS。</p>
+<h4 id="bootfs（boot-file-system）"><a href="#bootfs（boot-file-system）" class="headerlink" title="bootfs（boot file system）"></a>bootfs（boot file system）</h4><p>bootfs 主要包含 BootLoader 和 kernel，BootLoader 主要是引导加载 kernel，Linux 刚启动时会加载 bootfs 文件系统，在 Docker 镜像的最底层是 bootfs。这一层与我们典型的 Linux&#x2F;Unix 系统是一样的，包含 boot 加载器和内核。当 boot 加载完成之后整个内核就都在内存中了，此时内存的使用权已由 bootfs 转交给内核，此时系统也会卸载 bootfs。</p>
+<h4 id="rootfs（root-file-system）"><a href="#rootfs（root-file-system）" class="headerlink" title="rootfs（root file system）"></a>rootfs（root file system）</h4><p>rootfs 在 bootfs 之上。包含的就是典型 Linux 系统中的 &#x2F;dev、&#x2F;proc、&#x2F;bin、&#x2F;etc 等标准目录和文件。rootfs 就是各种不同的操作系统发行版，比如 Ubuntu，CentOS 等等。</p>
+<p><img src="http://localhost:4000/assets/Docker%E4%BB%8B%E7%BB%8D/1656399799960.png"></p>
+<p><img src="http://localhost:4000/assets/Docker%E4%BB%8B%E7%BB%8D/1649487227223.png"></p>
+<p>例如：对于一个精简的 OS，rootfs 可以很小，只需要包含最基本的命令，工具和程序库就可以了，因为底层直接用 Host 的 kernel，自己只需要提供 rootfs 就可以了。由此可见对不同的 Linux 发行版，bootfs 基本是一致的，rootfs 会有差别，因此不同的发行版可以公用 bootfs。</p>
+<h3 id="1-3-3-分层的理解"><a href="#1-3-3-分层的理解" class="headerlink" title="1.3.3 分层的理解"></a>1.3.3 分层的理解</h3><p>在下载镜像的时候可以观察日志输出，可以看到是一层一层的在下载。</p>
+<p><img src="http://localhost:4000/assets/Docker%E4%BB%8B%E7%BB%8D/1649487257810.png"></p>
+<p>思考：为什么 Docker 镜像要采用这种分层的结构？</p>
+<p>最大的好处就是资源共享，比如有多个镜像都从相同的 Base 镜像构建而来，那么宿主机只需在磁盘上保留一份 base 镜像，同时内存中也只需要加载一份 base 镜像，这样就可以为所有的容器服务了，而且镜像的每一层都可以被共享。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看镜像分层</span></span><br><span class="line">[root@localhost ~]# docker image inspect tomcat:8.0</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;Id&quot;: &quot;sha256:ef6a7c98d192507d6066dcf24e44bec66d07ec9cf7c55d8d3d1ea0a24660bdef&quot;,</span><br><span class="line">        &quot;RepoTags&quot;: [</span><br><span class="line">            &quot;tomcat:8.0&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;RepoDigests&quot;: [</span><br><span class="line">            &quot;tomcat@sha256:8ecb10948deb32c34aeadf7bf95d12a93fbd3527911fa629c1a3e7823b89ce6f&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;Parent&quot;: &quot;&quot;,</span><br><span class="line">        &quot;Comment&quot;: &quot;&quot;,</span><br><span class="line">        &quot;Created&quot;: &quot;2018-09-12T20:42:22.931362721Z&quot;,</span><br><span class="line">        &quot;Container&quot;: &quot;537db43b9934d84b08d1226d9e86480c27d0e76eec5dd044cba72a8edc8e193f&quot;,</span><br><span class="line">        &quot;ContainerConfig&quot;: &#123;</span><br><span class="line">            &quot;Hostname&quot;: &quot;537db43b9934&quot;,</span><br><span class="line">            &quot;Domainname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;User&quot;: &quot;&quot;,</span><br><span class="line">            &quot;AttachStdin&quot;: false,</span><br><span class="line">            &quot;AttachStdout&quot;: false,</span><br><span class="line">            &quot;AttachStderr&quot;: false,</span><br><span class="line">            &quot;ExposedPorts&quot;: &#123;</span><br><span class="line">                &quot;8080/tcp&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Tty&quot;: false,</span><br><span class="line">            &quot;OpenStdin&quot;: false,</span><br><span class="line">            &quot;StdinOnce&quot;: false,</span><br><span class="line">            &quot;Env&quot;: [</span><br><span class="line">                &quot;PATH=/usr/local/tomcat/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;,</span><br><span class="line">                &quot;LANG=C.UTF-8&quot;,</span><br><span class="line">                &quot;JAVA_HOME=/docker-java-home/jre&quot;,</span><br><span class="line">                &quot;JAVA_VERSION=7u181&quot;,</span><br><span class="line">                &quot;JAVA_DEBIAN_VERSION=7u181-2.6.14-1~deb8u1&quot;,</span><br><span class="line">                &quot;CATALINA_HOME=/usr/local/tomcat&quot;,</span><br><span class="line">                &quot;TOMCAT_NATIVE_LIBDIR=/usr/local/tomcat/native-jni-lib&quot;,</span><br><span class="line">                &quot;LD_LIBRARY_PATH=/usr/local/tomcat/native-jni-lib&quot;,</span><br><span class="line">                &quot;OPENSSL_VERSION=1.1.0f-3+deb9u2&quot;,</span><br><span class="line">                &quot;GPG_KEYS=05AB33110949707C93A279E3D3EFE6B686867BA6 07E48665A34DCAFAE522E5E6266191C37C037D42 47309207D818FFD8DCD3F83F1931D684307A10A5 541FBE7D8F78B25E055DDEE13C370389288584E7 61B832AC2F1C5A90F0F9B00A1C506407564C17A3 713DA88BE50911535FE716F5208B0AB1D63011C7 79F7026C690BAA50B92CD8B66A3AD3F4F22C4FED 9BA44C2621385CB966EBA586F72C284D731FABEE A27677289986DB50844682F8ACB77FC2E86E29AC A9C5DF4D22E99998D9875A5110C01C5A2F6059E7 DCFD35E0BF8CA7344752DE8B6FB21E8933C60243 F3A04C595DB5B6A5F1ECA43E3B7BBB100D811BBE F7DA48BB64BCB84ECBA7EE6935CD23C10D498E23&quot;,</span><br><span class="line">                &quot;TOMCAT_MAJOR=8&quot;,</span><br><span class="line">                &quot;TOMCAT_VERSION=8.0.53&quot;,</span><br><span class="line">                &quot;TOMCAT_SHA512=cd8a4e48a629a2f2bb4ce6b101ebcce41da52b506064396ec1b2915c0b0d8d82123091242f2929a649bcd8b65ecf6cd1ab9c7d90ac0e261821097ab6fbe22df9&quot;,</span><br><span class="line">                &quot;TOMCAT_TGZ_URLS=https://www.apache.org/dyn/closer.cgi?action=download&amp;filename=tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz \thttps://www-us.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz \thttps://www.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz \thttps://archive.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz&quot;,</span><br><span class="line">                &quot;TOMCAT_ASC_URLS=https://www.apache.org/dyn/closer.cgi?action=download&amp;filename=tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz.asc \thttps://www-us.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz.asc \thttps://www.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz.asc \thttps://archive.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz.asc&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Cmd&quot;: [</span><br><span class="line">                &quot;/bin/sh&quot;,</span><br><span class="line">                &quot;-c&quot;,</span><br><span class="line">                &quot;#(nop) &quot;,</span><br><span class="line">                &quot;CMD [\&quot;catalina.sh\&quot; \&quot;run\&quot;]&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;ArgsEscaped&quot;: true,</span><br><span class="line">            &quot;Image&quot;: &quot;sha256:1d3fb924acd246fd2804e5907fd81405abf7cc86072703417daf15bbf551f2e1&quot;,</span><br><span class="line">            &quot;Volumes&quot;: null,</span><br><span class="line">            &quot;WorkingDir&quot;: &quot;/usr/local/tomcat&quot;,</span><br><span class="line">            &quot;Entrypoint&quot;: null,</span><br><span class="line">            &quot;OnBuild&quot;: [],</span><br><span class="line">            &quot;Labels&quot;: &#123;&#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;DockerVersion&quot;: &quot;17.06.2-ce&quot;,</span><br><span class="line">        &quot;Author&quot;: &quot;&quot;,</span><br><span class="line">        &quot;Config&quot;: &#123;</span><br><span class="line">            &quot;Hostname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Domainname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;User&quot;: &quot;&quot;,</span><br><span class="line">            &quot;AttachStdin&quot;: false,</span><br><span class="line">            &quot;AttachStdout&quot;: false,</span><br><span class="line">            &quot;AttachStderr&quot;: false,</span><br><span class="line">            &quot;ExposedPorts&quot;: &#123;</span><br><span class="line">                &quot;8080/tcp&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Tty&quot;: false,</span><br><span class="line">            &quot;OpenStdin&quot;: false,</span><br><span class="line">            &quot;StdinOnce&quot;: false,</span><br><span class="line">            &quot;Env&quot;: [</span><br><span class="line">                &quot;PATH=/usr/local/tomcat/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;,</span><br><span class="line">                &quot;LANG=C.UTF-8&quot;,</span><br><span class="line">                &quot;JAVA_HOME=/docker-java-home/jre&quot;,</span><br><span class="line">                &quot;JAVA_VERSION=7u181&quot;,</span><br><span class="line">                &quot;JAVA_DEBIAN_VERSION=7u181-2.6.14-1~deb8u1&quot;,</span><br><span class="line">                &quot;CATALINA_HOME=/usr/local/tomcat&quot;,</span><br><span class="line">                &quot;TOMCAT_NATIVE_LIBDIR=/usr/local/tomcat/native-jni-lib&quot;,</span><br><span class="line">                &quot;LD_LIBRARY_PATH=/usr/local/tomcat/native-jni-lib&quot;,</span><br><span class="line">                &quot;OPENSSL_VERSION=1.1.0f-3+deb9u2&quot;,</span><br><span class="line">                &quot;GPG_KEYS=05AB33110949707C93A279E3D3EFE6B686867BA6 07E48665A34DCAFAE522E5E6266191C37C037D42 47309207D818FFD8DCD3F83F1931D684307A10A5 541FBE7D8F78B25E055DDEE13C370389288584E7 61B832AC2F1C5A90F0F9B00A1C506407564C17A3 713DA88BE50911535FE716F5208B0AB1D63011C7 79F7026C690BAA50B92CD8B66A3AD3F4F22C4FED 9BA44C2621385CB966EBA586F72C284D731FABEE A27677289986DB50844682F8ACB77FC2E86E29AC A9C5DF4D22E99998D9875A5110C01C5A2F6059E7 DCFD35E0BF8CA7344752DE8B6FB21E8933C60243 F3A04C595DB5B6A5F1ECA43E3B7BBB100D811BBE F7DA48BB64BCB84ECBA7EE6935CD23C10D498E23&quot;,</span><br><span class="line">                &quot;TOMCAT_MAJOR=8&quot;,</span><br><span class="line">                &quot;TOMCAT_VERSION=8.0.53&quot;,</span><br><span class="line">                &quot;TOMCAT_SHA512=cd8a4e48a629a2f2bb4ce6b101ebcce41da52b506064396ec1b2915c0b0d8d82123091242f2929a649bcd8b65ecf6cd1ab9c7d90ac0e261821097ab6fbe22df9&quot;,</span><br><span class="line">                &quot;TOMCAT_TGZ_URLS=https://www.apache.org/dyn/closer.cgi?action=download&amp;filename=tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz \thttps://www-us.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz \thttps://www.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz \thttps://archive.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz&quot;,</span><br><span class="line">                &quot;TOMCAT_ASC_URLS=https://www.apache.org/dyn/closer.cgi?action=download&amp;filename=tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz.asc \thttps://www-us.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz.asc \thttps://www.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz.asc \thttps://archive.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz.asc&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Cmd&quot;: [</span><br><span class="line">                &quot;catalina.sh&quot;,</span><br><span class="line">                &quot;run&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;ArgsEscaped&quot;: true,</span><br><span class="line">            &quot;Image&quot;: &quot;sha256:1d3fb924acd246fd2804e5907fd81405abf7cc86072703417daf15bbf551f2e1&quot;,</span><br><span class="line">            &quot;Volumes&quot;: null,</span><br><span class="line">            &quot;WorkingDir&quot;: &quot;/usr/local/tomcat&quot;,</span><br><span class="line">            &quot;Entrypoint&quot;: null,</span><br><span class="line">            &quot;OnBuild&quot;: [],</span><br><span class="line">            &quot;Labels&quot;: null</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Architecture&quot;: &quot;amd64&quot;,</span><br><span class="line">        &quot;Os&quot;: &quot;linux&quot;,</span><br><span class="line">        &quot;Size&quot;: 356245923,</span><br><span class="line">        &quot;VirtualSize&quot;: 356245923,</span><br><span class="line">        &quot;GraphDriver&quot;: &#123;</span><br><span class="line">            &quot;Data&quot;: &#123;</span><br><span class="line">                &quot;LowerDir&quot;: &quot;/var/lib/docker/overlay2/5467095563d0eeb7800cbe149e38b134094b17d8aa7747a3489b3f4cceed84a8/diff:/var/lib/docker/overlay2/89de18b5ee2a1908787b40e6ad5bd86e42d33296f78800cc54db2884d5c58dd9/diff:/var/lib/docker/overlay2/cbb8e55d674460e4665642025d769aea683b17791cf63befd079ff2330b9970a/diff:/var/lib/docker/overlay2/953860e1c90c9c24927507effc2fdf1ba27d26c218e9739bca296e5104793f62/diff:/var/lib/docker/overlay2/8ddf5a9115e182e660f055eb223454d4159bf54b53258ba9d37fd3bb4369e21e/diff:/var/lib/docker/overlay2/4837f5a37d13a562d57675ee0d9c9fa1ef8edaa93b7b4a28cfce280fedcc3785/diff:/var/lib/docker/overlay2/297ed5eb5bca37cbf115cadd1c301c53b982ed69b79ddfbdbf0c54fa79fd1fcf/diff:/var/lib/docker/overlay2/b57865f8cfdecde7d7db93fe4eca53c71843206bf3299452096051233a515ac8/diff:/var/lib/docker/overlay2/0c28360e0ccb7f91776c5cc66f56b092f27618eda1f42549aac9f831ce73e3f8/diff:/var/lib/docker/overlay2/d159fa1ad10d5869ceaea96ba9b743d9ecd989431e9d9934edace1932f14826e/diff&quot;,</span><br><span class="line">                &quot;MergedDir&quot;: &quot;/var/lib/docker/overlay2/0576b5f7dd7201c4de9acdf0e52f895efe3b19c33cd4284823a009a22d9fbd86/merged&quot;,</span><br><span class="line">                &quot;UpperDir&quot;: &quot;/var/lib/docker/overlay2/0576b5f7dd7201c4de9acdf0e52f895efe3b19c33cd4284823a009a22d9fbd86/diff&quot;,</span><br><span class="line">                &quot;WorkDir&quot;: &quot;/var/lib/docker/overlay2/0576b5f7dd7201c4de9acdf0e52f895efe3b19c33cd4284823a009a22d9fbd86/work&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Name&quot;: &quot;overlay2&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;RootFS&quot;: &#123;</span><br><span class="line">            &quot;Type&quot;: &quot;layers&quot;,</span><br><span class="line">            &quot;Layers&quot;: [</span><br><span class="line">                &quot;sha256:8c466bf4ca6ffdda8b7717b1cd6fe31109529ee64e626a003a224fb8bd2bc469&quot;,</span><br><span class="line">                &quot;sha256:daf45b2cad9af3ea091d4376d34fb597a9a67874d48fe5a485e1305df10b3157&quot;,</span><br><span class="line">                &quot;sha256:c596d5191368693d366c9b47cc20007efcedd0873691c8895d3684162d469447&quot;,</span><br><span class="line">                &quot;sha256:425325c72d902feb9c15b3c9204fc7c24435dfaea2e750db3acda5a11c569049&quot;,</span><br><span class="line">                &quot;sha256:fc6174f0df4a7466f749d9ae334872f38336bb761962ba15657b771116cb8546&quot;,</span><br><span class="line">                &quot;sha256:39a6e47c4ae6efdd2a0834d81c1bd2860a16cbe5c3c1de28934ee26721bd98c4&quot;,</span><br><span class="line">                &quot;sha256:81242e1e644e4d52602431e4c847f4e1ec599761f2ca082cfdf3c38508ddd9d4&quot;,</span><br><span class="line">                &quot;sha256:9f052711b40a241eec2783c062a743ad4f7870681024b375714cd277db497ec2&quot;,</span><br><span class="line">                &quot;sha256:f26731984f9bb4dc5f286008361729b717d51c2d60989c5e1b2d07d713d9de1f&quot;,</span><br><span class="line">                &quot;sha256:583dc95d65c92bd5b5fdb57c640f391435078ff6da2cc9653a7d32457d3cd8b7&quot;,</span><br><span class="line">                &quot;sha256:d0f3f4011f287adc910aada9e2fee49c67de366654ea7c02b47d36f9736442fc&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Metadata&quot;: &#123;</span><br><span class="line">            &quot;LastTagTime&quot;: &quot;0001-01-01T00:00:00Z&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、Docker-能做什么"><a href="#二、Docker-能做什么" class="headerlink" title="二、Docker 能做什么"></a>二、Docker 能做什么</h1><h2 id="2-1-多环境的部署切换"><a href="#2-1-多环境的部署切换" class="headerlink" title="2.1 多环境的部署切换"></a>2.1 多环境的部署切换</h2><p>利用 Docker 能够原封不动地将【开发环境】中的一整套东西（JAR 包 + Jdk、Redis集群、MySQL集群、Hadoop 等）迁移到【测试环境】或【生产环境】中，再配合一定的自动化流程即可实现自动发布。</p>
+<h1 id="三、Docker-资源汇总"><a href="#三、Docker-资源汇总" class="headerlink" title="三、Docker 资源汇总"></a>三、Docker 资源汇总</h1><h2 id="Docker-官方英文资源"><a href="#Docker-官方英文资源" class="headerlink" title="Docker 官方英文资源"></a>Docker 官方英文资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.docker.com/">Docker 官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/windows/">Docker windows 入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/linux/">Docker Linux 入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/mac/">Docker mac 入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/userguide/">Docker 用户指引</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.docker.com/">Docker 官方博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/">Docker Hub</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.docker.com/open-source">Docker 开源</a></li>
+</ul>
+<h2 id="Docker-中文资源"><a href="#Docker-中文资源" class="headerlink" title="Docker 中文资源"></a>Docker 中文资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.docker.org.cn/">Docker 中文网站</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.docker.org.cn/book/install.html">Docker 安装手册</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csphere.cn/archives/22">一小时 Docker 教程</a></li>
+<li><a target="_blank" rel="noopener" href="http://dockerpool.com/static/books/docker_practice/index.html">Docker 从入门到实践</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.widuu.com/chinese_docker/index.html">Docker 中文指南</a></li>
+</ul>
+<h2 id="其他资源"><a href="#其他资源" class="headerlink" title="其他资源"></a>其他资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://www.jb51.net/list/list_256_1.htm">http://www.jb51.net/list/list_256_1.htm</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/docker/docker">https://github.com/docker/docker</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.openstack.org/wiki/Docker">https://wiki.openstack.org/wiki/Docker</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Docker">https://wiki.archlinux.org/index.php/Docker</a></li>
+</ul>
+<p></br></br></br></br></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/blog/6489f8a9.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/blog/edc3fdf.html" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Docker安装与配置_Linux
+          
+        </div>
+      </a>
+    
+    
+      <a href="/blog/1f41d3c9.html" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Java之String</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> Liangxj
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Liangxj"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/blog/f0b34752.html">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

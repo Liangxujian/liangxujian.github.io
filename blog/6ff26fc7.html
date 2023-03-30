@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Java之BigDecimal |  Liangxj</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Java之BigDecimal"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Java之BigDecimal
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/6ff26fc7.html" class="article-date">
+  <time datetime="2023-03-24T02:41:58.000Z" itemprop="datePublished">2023-03-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Java/">Java</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">5 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <blockquote>
+<p>摘录自博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37080455/article/details/98964856">java精确除法运算（BigDecimal）_bigdecimal 除法_Evan_su的博客-CSDN博客</a></p>
+</blockquote>
+<h1 id="一、BigDecimal-介绍"><a href="#一、BigDecimal-介绍" class="headerlink" title="一、BigDecimal 介绍"></a>一、BigDecimal 介绍</h1><p>Java 中提供了大数字（超过 16 位有效位）的操作类，即 java.math.BinInteger 类和 java.math.BigDecimal 类，用于高精度计算。</p>
+<p>其中 BigInteger 类是针对大整数的处理类，而 BigDecimal 类则是针对大小数的处理类。</p>
+<p>BigDecimal 类的实现用到了 BigInteger 类，不同的是 BigDecimal 加入了小数的概念。</p>
+<p>float 和 Double 只能用来做科学计算或者是工程计算；在商业计算中，对数字精度要求较高，必须使用 BigInteger 类和 BigDecimal 类，它支持任何精度的定点数，可以用它来精确计算货币值。</p>
+<p>BigDecimal 类创建的是对象，不能使用传统的 +、-、*、&#x2F; 等算术运算符直接对其进行数学运算，而必须调用其对应的方法。方法的参数也必须是 BigDecimal 类型的对象。</p>
+<h1 id="二、BigDecimal-构造方法"><a href="#二、BigDecimal-构造方法" class="headerlink" title="二、BigDecimal 构造方法"></a>二、BigDecimal 构造方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法一：不允许使用</span></span><br><span class="line">BigDecimal <span class="title function_">BigDecimal</span><span class="params">(<span class="type">double</span> d)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法二：常用，推荐使用</span></span><br><span class="line">BigDecimal <span class="title function_">BigDecimal</span><span class="params">(String s)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法三：常用，推荐使用</span></span><br><span class="line"><span class="keyword">static</span> BigDecimal <span class="title function_">valueOf</span><span class="params">(<span class="type">double</span> d)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<p>  　　1. double 参数的构造方法，不允许使用！！！！因为它不能精确的得到相应的值，值会变大<br>        　　2. String 构造方法是完全可预知的：写入 new BigDecimal(“0.1”) 将创建一个 BigDecimal，它正好等于预期的 0.1；因此，通常建议优先使用 String 构造方法<br>            　　3. 静态方法 valueOf(double val) 内部实现，仍是将 double 类型转为 String 类型；这通常是将 double（或 float）转化为 BigDecimal 的首选方法</p>
+<h1 id="三、BigDecimal-类型转换"><a href="#三、BigDecimal-类型转换" class="headerlink" title="三、BigDecimal 类型转换"></a>三、BigDecimal 类型转换</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">toString()    <span class="comment">// 将 BigDecimal 对象的数值转换成字符串</span></span><br><span class="line">doubleValue() <span class="comment">// 将 BigDecimal 对象中的值以双精度数返回</span></span><br><span class="line">floatValue()  <span class="comment">// 将 BigDecimal 对象中的值以单精度数返回</span></span><br><span class="line">longValue()   <span class="comment">// 将 BigDecimal 对象中的值以长整数返回</span></span><br><span class="line">intValue()    <span class="comment">// 将 BigDecimal 对象中的值以整数返回</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="四、BigDecimal-常用方法"><a href="#四、BigDecimal-常用方法" class="headerlink" title="四、BigDecimal 常用方法"></a>四、BigDecimal 常用方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加法，求两个 BigDecimal 类型数据的和</span></span><br><span class="line">BigDecimal <span class="title function_">add</span><span class="params">(BigDecimal value)</span>;</span><br><span class="line"><span class="comment">// 减法，求两个 BigDecimal 类型数据的差</span></span><br><span class="line">BigDecimal <span class="title function_">subtract</span><span class="params">(BigDecimal value)</span>;</span><br><span class="line"><span class="comment">// 乘法，求两个 BigDecimal 类型数据的积</span></span><br><span class="line">BigDecimal <span class="title function_">multiply</span><span class="params">(BigDecimal  value)</span>;</span><br><span class="line"><span class="comment">// 除法，求两个 BigDecimal 类型数据的商</span></span><br><span class="line">BigDecimal <span class="title function_">divide</span><span class="params">(BigDecimal divisor)</span>;</span><br><span class="line"><span class="comment">// 求余数，求 BigDecimal 类型数据除以 divisor 的余数</span></span><br><span class="line">BigDecimal <span class="title function_">remainder</span><span class="params">(BigDecimal divisor)</span>;</span><br><span class="line"><span class="comment">// 最大数，求两个 BigDecimal 类型数据的最大值</span></span><br><span class="line">BigDecimal <span class="title function_">max</span><span class="params">(BigDecimal value)</span>;</span><br><span class="line"><span class="comment">// 最小数，求两个 BigDecimal 类型数据的最小值</span></span><br><span class="line">BigDecimal <span class="title function_">min</span><span class="params">(BigDecimal value)</span>;</span><br><span class="line"><span class="comment">// 绝对值，求 BigDecimal 类型数据的绝对值</span></span><br><span class="line">BigDecimal <span class="title function_">abs</span><span class="params">()</span>;</span><br><span class="line"><span class="comment">// 相反数，求 BigDecimal 类型数据的相反数</span></span><br><span class="line">BigDecimal <span class="title function_">negate</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、BigDecimal-divide"><a href="#五、BigDecimal-divide" class="headerlink" title="五、BigDecimal.divide()"></a>五、BigDecimal.divide()</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> divisor      除数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> scale        小数点后保留位数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> roundingMode 取舍规则</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">BigDecimal.divide(BigDecimal divisor, <span class="type">int</span> scale, RoundingMode roundingMode);</span><br><span class="line"></span><br><span class="line">bd2.divide(bd1, <span class="number">4</span>, BigDecimal.ROUND_HALF_UP).toString(); <span class="comment">// &quot;0.0200&quot;</span></span><br><span class="line"><span class="comment">// 商的小数点后位数是固定的，如果需要去除末尾多余的0，则使用下面方法</span></span><br><span class="line">bd2.divide(bd1, <span class="number">4</span>, BigDecimal.ROUND_HALF_UP).stripTrailingZeros().toPlainString(); <span class="comment">// &quot;0.02&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>因为 BigDecimal 除法可能出现不能整除的情况，比如 4.5&#x2F;1.3，这时会报错【java.lang.ArithmeticException: Non-terminating decimal expansion; no exact representable decimal result】。所以就需要用三个参数的除法方法，规定保留几位小数以及保留的方式，这样就可以避免异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">*ROUND_CEILING*</span><br><span class="line">Rounding mode to round towards positive infinity.</span><br><span class="line">向正无穷方向舍入</span><br><span class="line">正数：<span class="number">1.1</span> -&gt; <span class="number">2</span>   <span class="number">1.5</span>-&gt; <span class="number">2</span>   <span class="number">1.8</span>-&gt; <span class="number">2</span></span><br><span class="line">负数：-<span class="number">1.1</span>-&gt; -<span class="number">1</span>   -<span class="number">1.5</span>-&gt; -<span class="number">1</span>   -<span class="number">1.8</span>-&gt; -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">*ROUND_DOWN*</span><br><span class="line">Rounding mode to round towards zero.</span><br><span class="line">向零方向舍入</span><br><span class="line">正数：<span class="number">1.1</span> -&gt; <span class="number">2</span>   <span class="number">1.5</span>-&gt; <span class="number">2</span>   <span class="number">1.8</span>-&gt; <span class="number">2</span></span><br><span class="line">负数：-<span class="number">1.1</span>-&gt; -<span class="number">1</span>   -<span class="number">1.5</span>-&gt; -<span class="number">1</span>   -<span class="number">1.8</span>-&gt; -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">*ROUND_FLOOR*</span><br><span class="line">Rounding mode to round towards negative infinity.</span><br><span class="line">向负无穷方向舍入</span><br><span class="line">正数: <span class="number">1.1</span>-&gt; <span class="number">1</span>   <span class="number">1.5</span>-&gt; <span class="number">1</span>   <span class="number">1.8</span>-&gt; <span class="number">1</span></span><br><span class="line">负数: -<span class="number">1.1</span>-&gt; -<span class="number">2</span>   -<span class="number">1.5</span>-&gt; -<span class="number">2</span>   -<span class="number">1.8</span>-&gt; -<span class="number">2</span></span><br><span class="line"></span><br><span class="line">*ROUND_HALF_DOWN*</span><br><span class="line">Rounding mode to round towards <span class="string">&quot;nearest neighbor&quot;</span> unless both neighbors are equidistant, in which <span class="keyword">case</span> round down.</span><br><span class="line">向（距离）最近的一边舍入，除非两边（的距离）是相等。如果是这样，向下舍入, 例如 <span class="number">1.55</span> 保留一位小数结果为 <span class="number">1.5</span></span><br><span class="line">正数：<span class="number">1.5</span>-&gt; <span class="number">1</span>   <span class="number">1.6</span>-&gt; <span class="number">2</span></span><br><span class="line">负数：-<span class="number">1.5</span>-&gt; -<span class="number">1</span>   -<span class="number">1.6</span>-&gt; -<span class="number">2</span></span><br><span class="line"></span><br><span class="line">*ROUND_HALF_EVEN* </span><br><span class="line">Rounding mode to round towards the <span class="string">&quot;nearest neighbor&quot;</span> unless both neighbors are equidistant, in which <span class="keyword">case</span>, round towards the even neighbor.</span><br><span class="line">向（距离）最近的一边舍入，除非两边（的距离）是相等。如果是这样，如果保留位数是奇数，使用 ROUND_HALF_UP，如果是偶数，使用*ROUND_HALF_DOWN*（以 <span class="number">5</span> 为分界线，如果是 <span class="number">5</span>，则前一位变偶数）</span><br><span class="line"><span class="number">1.15</span>-&gt; <span class="number">1.2</span>   <span class="number">1.16</span>-&gt; <span class="number">1.2</span>   <span class="number">1.25</span>-&gt; <span class="number">1.2</span>   <span class="number">1.26</span>-&gt; <span class="number">1.3</span></span><br><span class="line"></span><br><span class="line">*ROUND_HALF_UP*</span><br><span class="line">Rounding mode to round towards <span class="string">&quot;nearest neighbor&quot;</span> unless both neighbors are equidistant, in which <span class="keyword">case</span> round up.</span><br><span class="line">向（距离）最近的一边舍入，除非两边（的距离）是相等。如果是这样，向上舍入, <span class="number">1.55</span> 保留一位小数结果为 <span class="number">1.6</span></span><br><span class="line">【四舍五入】</span><br><span class="line"></span><br><span class="line">*ROUND_UNNECESSARY*</span><br><span class="line">Rounding mode to <span class="keyword">assert</span> that the requested operation has an exact result, hence no rounding is necessary.</span><br><span class="line">计算结果是精确的，不需要舍入模式</span><br><span class="line"></span><br><span class="line">*ROUND_UP*</span><br><span class="line">Rounding mode to round away from zero.</span><br><span class="line">向远离 <span class="number">0</span> 的方向舍入</span><br><span class="line">正数：<span class="number">1.1</span>-&gt; <span class="number">2</span>   <span class="number">1.5</span>-&gt; <span class="number">2</span>   <span class="number">1.8</span>-&gt; <span class="number">2</span></span><br><span class="line">负数：-<span class="number">1.1</span>-&gt; -<span class="number">2</span>   -<span class="number">1.5</span>-&gt; -<span class="number">2</span>   -<span class="number">1.8</span>-&gt; -<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="六、BigDecimal-setScale"><a href="#六、BigDecimal-setScale" class="headerlink" title="六、BigDecimal.setScale()"></a>六、BigDecimal.setScale()</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BigDecimal <span class="title function_">setScale</span><span class="params">(<span class="type">int</span> newScale, RoundingMode roundingMode)</span>;</span><br><span class="line"></span><br><span class="line">BigDecimal <span class="title function_">setScale</span><span class="params">(<span class="type">int</span> newScale, <span class="type">int</span> roundingMode)</span>;</span><br><span class="line"></span><br><span class="line">BigDecimal <span class="title function_">setScale</span><span class="params">(<span class="type">int</span> newScale)</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestBigDecimal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;123.564&quot;</span>);</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">b2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;3.3&quot;</span>);</span><br><span class="line">        <span class="type">BigDecimal</span> <span class="variable">divide</span> <span class="operator">=</span> b1.divide(b2, <span class="number">10</span>, RoundingMode.HALF_UP);</span><br><span class="line">        System.out.println(divide);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p></br></br></br></br></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/blog/6ff26fc7.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/blog/1f41d3c9.html" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Java之String
+          
+        </div>
+      </a>
+    
+    
+      <a href="/blog/3ebaa5b9.html" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">MySQL之Date</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> Liangxj
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Liangxj"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/blog/f0b34752.html">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
