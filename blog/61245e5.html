@@ -85,7 +85,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">581</span>
+            <span class="post-count">592</span>
         </span>
     </span>
 
@@ -115,6 +115,7 @@
 <ul>
 <li><a target="_blank" rel="noopener" href="http://nodejs.org/">Node.js</a> (Node.js 版本需不低于 10.13，建议使用 Node.js 12.0 及以上版本)</li>
 <li><a target="_blank" rel="noopener" href="http://git-scm.com/">Git</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.aliyun.com/">阿里云OSS</a>【<a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/173535.htm?spm=a2c4g.450471.0.0.5f3331c9a6KFCy#concept-2558367">流量费用 (aliyun.com)</a>】</li>
 </ul>
 <h1 id="建站指令"><a href="#建站指令" class="headerlink" title="建站指令"></a>建站指令</h1><blockquote>
 <p><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/commands">指令 | Hexo</a></p>
@@ -138,7 +139,7 @@
 <p>安装 npm 包：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
 
-<p>修改<code>_config.yml</code>文件中的配置项（记得把原来的<code>permalink:</code>删除掉）：</p>
+<p>修改 <code>_config.yml </code>文件中的配置项（记得把原来的 <code>permalink:</code> 删除掉）：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="comment"># url: http://example.com</span></span><br><span class="line"><span class="comment"># permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="comment"># permalink_defaults:</span></span><br><span class="line"><span class="comment"># pretty_urls:</span></span><br><span class="line"><span class="comment">#   trailing_index: true # Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line"><span class="comment">#   trailing_html: true # Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br><span class="line"><span class="comment"># hexo-abbrlink</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">blog/:abbrlink.html</span> <span class="comment"># 也可以直接写 :abbrlink/</span></span><br><span class="line"><span class="attr">abbrlink:</span></span><br><span class="line">  <span class="attr">alg:</span> <span class="string">crc32</span> <span class="comment"># 算法： crc16(default) and crc32</span></span><br><span class="line">  <span class="attr">rep:</span> <span class="string">hex</span> <span class="comment"># 进制： dec(default) and hex</span></span><br></pre></td></tr></table></figure>
 
 <p>配置修改完后，需要清除掉之前已生成的网页，然后重新生成</p>
@@ -146,7 +147,7 @@
 
 <p>插件说明：</p>
 <ul>
-<li><code>alg</code>：算法（目前支持<code>crc16</code>和<code>crc32</code>算法，默认值是<code>crc16</code>）</li>
+<li><code>alg</code>：算法（目前支持 <code>crc16</code> 和 <code>crc32</code> 算法，默认值是 <code>crc16</code>）</li>
 <li><code>rep</code>：形式（生成的链接可以是十六进制格式也可以是十进制格式，默认值是十进制格式）</li>
 </ul>
 <p>生成链接样式：</p>
@@ -383,19 +384,9 @@
 <!-- #reward -->
 <div id="reward">
   <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
   <div class="reward-box">
     
-    <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.jpg">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/wechat.jpg">
-      <span class="reward-type">微信</span>
-    </div>
     
   </div>
 </div>

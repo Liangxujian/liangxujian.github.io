@@ -120,7 +120,9 @@
 <h1 id="二、BigDecimal-构造方法"><a href="#二、BigDecimal-构造方法" class="headerlink" title="二、BigDecimal 构造方法"></a>二、BigDecimal 构造方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法一：不允许使用</span></span><br><span class="line">BigDecimal <span class="title function_">BigDecimal</span><span class="params">(<span class="type">double</span> d)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法二：常用，推荐使用</span></span><br><span class="line">BigDecimal <span class="title function_">BigDecimal</span><span class="params">(String s)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法三：常用，推荐使用</span></span><br><span class="line"><span class="keyword">static</span> BigDecimal <span class="title function_">valueOf</span><span class="params">(<span class="type">double</span> d)</span>;</span><br></pre></td></tr></table></figure>
 
 <p>注意：</p>
-<p>  　　1. double 参数的构造方法，不允许使用！！！！因为它不能精确的得到相应的值，值会变大<br>        　　2. String 构造方法是完全可预知的：写入 new BigDecimal(“0.1”) 将创建一个 BigDecimal，它正好等于预期的 0.1；因此，通常建议优先使用 String 构造方法<br>            　　3. 静态方法 valueOf(double val) 内部实现，仍是将 double 类型转为 String 类型；这通常是将 double（或 float）转化为 BigDecimal 的首选方法</p>
+<pre><code> 　　1. double 参数的构造方法，不允许使用！！！！因为它不能精确的得到相应的值，值会变大
+</code></pre>
+<p>  　　2. String 构造方法是完全可预知的：写入 new BigDecimal(“0.1”) 将创建一个 BigDecimal，它正好等于预期的 0.1；因此，通常建议优先使用 String 构造方法<br>     　　3. 静态方法 valueOf(double val) 内部实现，仍是将 double 类型转为 String 类型；这通常是将 double（或 float）转化为 BigDecimal 的首选方法</p>
 <h1 id="三、BigDecimal-类型转换"><a href="#三、BigDecimal-类型转换" class="headerlink" title="三、BigDecimal 类型转换"></a>三、BigDecimal 类型转换</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">toString()    <span class="comment">// 将 BigDecimal 对象的数值转换成字符串</span></span><br><span class="line">doubleValue() <span class="comment">// 将 BigDecimal 对象中的值以双精度数返回</span></span><br><span class="line">floatValue()  <span class="comment">// 将 BigDecimal 对象中的值以单精度数返回</span></span><br><span class="line">longValue()   <span class="comment">// 将 BigDecimal 对象中的值以长整数返回</span></span><br><span class="line">intValue()    <span class="comment">// 将 BigDecimal 对象中的值以整数返回</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="四、BigDecimal-常用方法"><a href="#四、BigDecimal-常用方法" class="headerlink" title="四、BigDecimal 常用方法"></a>四、BigDecimal 常用方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加法，求两个 BigDecimal 类型数据的和</span></span><br><span class="line">BigDecimal <span class="title function_">add</span><span class="params">(BigDecimal value)</span>;</span><br><span class="line"><span class="comment">// 减法，求两个 BigDecimal 类型数据的差</span></span><br><span class="line">BigDecimal <span class="title function_">subtract</span><span class="params">(BigDecimal value)</span>;</span><br><span class="line"><span class="comment">// 乘法，求两个 BigDecimal 类型数据的积</span></span><br><span class="line">BigDecimal <span class="title function_">multiply</span><span class="params">(BigDecimal  value)</span>;</span><br><span class="line"><span class="comment">// 除法，求两个 BigDecimal 类型数据的商</span></span><br><span class="line">BigDecimal <span class="title function_">divide</span><span class="params">(BigDecimal divisor)</span>;</span><br><span class="line"><span class="comment">// 求余数，求 BigDecimal 类型数据除以 divisor 的余数</span></span><br><span class="line">BigDecimal <span class="title function_">remainder</span><span class="params">(BigDecimal divisor)</span>;</span><br><span class="line"><span class="comment">// 最大数，求两个 BigDecimal 类型数据的最大值</span></span><br><span class="line">BigDecimal <span class="title function_">max</span><span class="params">(BigDecimal value)</span>;</span><br><span class="line"><span class="comment">// 最小数，求两个 BigDecimal 类型数据的最小值</span></span><br><span class="line">BigDecimal <span class="title function_">min</span><span class="params">(BigDecimal value)</span>;</span><br><span class="line"><span class="comment">// 绝对值，求 BigDecimal 类型数据的绝对值</span></span><br><span class="line">BigDecimal <span class="title function_">abs</span><span class="params">()</span>;</span><br><span class="line"><span class="comment">// 相反数，求 BigDecimal 类型数据的相反数</span></span><br><span class="line">BigDecimal <span class="title function_">negate</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
@@ -365,19 +367,9 @@
 <!-- #reward -->
 <div id="reward">
   <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
   <div class="reward-box">
     
-    <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.jpg">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/wechat.jpg">
-      <span class="reward-type">微信</span>
-    </div>
     
   </div>
 </div>

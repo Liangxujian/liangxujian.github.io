@@ -112,7 +112,7 @@
   <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/netty/netty">Github 项目地址</a></p>
 </blockquote>
-<h1 id="一、Netty-是什么"><a href="#一、Netty-是什么" class="headerlink" title="一、Netty 是什么"></a>一、Netty 是什么</h1><p><img src="http://localhost:4000/assets/Netty%E4%BB%8B%E7%BB%8D/aa911f591044.png" alt="Netty"></p>
+<h1 id="一、Netty-是什么"><a href="#一、Netty-是什么" class="headerlink" title="一、Netty 是什么"></a>一、Netty 是什么</h1><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/aa911f591044.png"></p>
 <p>Netty 是由 JBOSS 提供的一个 <strong>Java 开源框架</strong>，现为 Github 上的独立项目。Netty 提供异步的、事件驱动的网络应用程序框架和工具，用以快速开发高性能、高可靠性的网络服务器和客户端程序。</p>
 <p>也就是说，Netty 是一个<strong>基于 NIO 的客户、服务器端的编程框架</strong>，使用 Netty 可以确保你快速和简单的开发出一个网络应用，例如实现了某种协议的客户、服务端应用。Netty 相当于简化和流线化了网络应用的编程开发过程，例如：基于 TCP 和 UDP 的 Socket 服务开发。</p>
 <p>“快速”和“简单”并不用产生维护性或性能上的问题。Netty 是一个吸收了多种协议（包括 FTP、SMTP、HTTP 等各种二进制文本协议）的实现经验，并经过相当精心设计的项目。最终，Netty 成功的找到了一种方式，在保证易于开发的同时还保证了其应用的性能，稳定性和伸缩性。</p>
@@ -121,7 +121,7 @@
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903985158045703">如何理解BIO、NIO、AIO的区别？ - 掘金 (juejin.cn)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/386745556">这是我看过对bio，nio，aio解释的最透彻的文章！！！ - 知乎 (zhihu.com)</a></p>
 </blockquote>
-<p><img src="http://localhost:4000/assets/Netty%E4%BB%8B%E7%BB%8D/v2-f49145ba3048ff5fe749353d1710e65b_1440w.jpg" alt="BIO、NIO、AIO"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/BIO%E3%80%81NIO%E3%80%81AIO.jpg"></p>
 <h2 id="2-1-Java-中的-IO-原理"><a href="#2-1-Java-中的-IO-原理" class="headerlink" title="2.1 Java 中的 IO 原理"></a>2.1 Java 中的 IO 原理</h2><p>首先 Java 中的 IO 都是依赖操作系统内核进行的，我们程序中的 IO 读写其实调用的是操作系统内核中的 read&amp;write 两大系统调用。</p>
 <p>那内核是如何进行 IO 交互的呢？</p>
 <ol>
@@ -162,11 +162,11 @@
 <p>哪种方式更有效率呢？是不是一目了然呢？</p>
 </blockquote>
 <h2 id="2-5-BIO"><a href="#2-5-BIO" class="headerlink" title="2.5 BIO"></a>2.5 BIO</h2><p>BIO 全称是 Blocking IO，是 JDK1.4 之前的传统 IO 模型，本身是同步阻塞模式。线程发起 IO 请求后，一直阻塞 IO，直到缓冲区数据就绪后，再进入下一步操作。针对网络通信都是一请求一应答的方式，虽然简化了上层的应用开发，但在性能和可靠性方面存在着巨大瓶颈，试想一下如果每个请求都需要新建一个线程来专门处理，那么在高并发的场景下，机器资源很快就会被耗尽。</p>
-<p><img src="http://localhost:4000/assets/Netty%E4%BB%8B%E7%BB%8D/v2-2e437fe57c8df20d3a57dc18c2d0e234_r.jpg" alt="BIO 通信模型图"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/BIO%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE.jpg"></p>
 <h2 id="2-6-NIO"><a href="#2-6-NIO" class="headerlink" title="2.6 NIO"></a>2.6 NIO</h2><p>NIO 也叫 Non-Blocking IO 是同步非阻塞的 IO 模型。线程发起 IO 请求后，立即返回（非阻塞 IO）。同步指的是必须等待 IO 缓冲区内的数据就绪，而非阻塞指的是，用户线程不原地等待 IO 缓冲区，可以先做一些其他操作，但是要定时轮询检查 IO 缓冲区数据是否就绪。</p>
 <p>Java 中的 NIO 是 new IO 的意思。其实是 NIO 加上 IO 多路复用技术。普通的 NIO 是线程轮询查看一个 IO 缓冲区是否就绪，而 Java 中的 new IO 指的是线程轮询地去查看一堆 IO 缓冲区中哪些就绪，这是一种 IO 多路复用的思想。IO 多路复用模型中，将检查 IO 数据是否就绪的任务，交给系统级别的 select 或 epoll 模型，由系统进行监控，减轻用户线程负担。</p>
 <p>NIO 主要有 buffer、channel、selector 三种技术的整合，通过零拷贝的 buffer 取得数据，每一个客户端通过 channel 在 selector（多路复用器）上进行注册。服务端不断轮询 channel 来获取客户端的信息。channel 上有 connect、accept（阻塞）、read（可读）、write（可写）四种状态标识。根据标识来进行后续操作。所以一个服务端可接收无限多的 channel。不需要新开一个线程。大大提升了性能。</p>
-<p><img src="http://localhost:4000/assets/Netty%E4%BB%8B%E7%BB%8D/v2-c8f57a2bab1cb068615c2c41532cdefb_r.jpg" alt="NIO 通信模型图"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/NIO%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE.jpg"></p>
 <blockquote>
 <p>NIO 的三大核心 API：Buffer、Channel、Selector</p>
 </blockquote>
@@ -185,26 +185,26 @@
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ByteBuffer</span> <span class="variable">bf</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
 
-<p><img src="http://localhost:4000/assets/Netty%E4%BB%8B%E7%BB%8D/1943529272.jpg" alt="ByteBuffer"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1943529272.jpg"></p>
 <ol start="2">
 <li>写入数据</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ByteBuffer buf ByteBuffer.allocate(<span class="number">10</span>);</span><br><span class="line">buf.put(<span class="string">&quot;csc&quot;</span>.getBytes());</span><br></pre></td></tr></table></figure>
 
-<p><img src="http://localhost:4000/assets/Netty%E4%BB%8B%E7%BB%8D/2064948393.jpg" alt="ByteBuffer"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/2064948393.jpg"></p>
 <ol start="3">
 <li>调用 flip 转换缓冲区为读模式</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.flip();</span><br></pre></td></tr></table></figure>
 
-<p><img src="http://localhost:4000/assets/Netty%E4%BB%8B%E7%BB%8D/L2RlZmF1bHQvaW5.jpg" alt="ByteBuffer"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/L2RlZmF1bHQvaW5.jpg"></p>
 <ol start="4">
 <li>读取缓冲区中到内容，buf.get()</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println((<span class="type">char</span>) buf.get());</span><br></pre></td></tr></table></figure>
 
-<p><img src="http://localhost:4000/assets/Netty%E4%BB%8B%E7%BB%8D/EwTmpOa09HRmhZVG.jpg" alt="ByteBuffer"></p>
-<p><img src="http://localhost:4000/assets/Netty%E4%BB%8B%E7%BB%8D/pT0RJME5qSm1Zemsw.jpg" alt="ByteBuffer"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/EwTmpOa09HRmhZVG.jpg"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/pT0RJME5qSm1Zemsw.jpg"></p>
 <ol start="5">
 <li>调用 clear() 或 compact() 转换缓冲区为写模式，循环至步骤 1</li>
 </ol>
@@ -222,7 +222,7 @@
 </ul>
 <p><strong>Netty 的出现很大程度上改善了 JDK 原生 NIO 所存在的一些让人难以忍受的问题。</strong></p>
 <h2 id="2-7-AIO"><a href="#2-7-AIO" class="headerlink" title="2.7 AIO"></a>2.7 AIO</h2><p>AIO 是真正意义上的异步非阻塞 IO 模型。上述 NIO 实现中，需要用户线程定时轮询，去检查 IO 缓冲区数据是否就绪，占用应用程序线程资源，其实轮询相当于还是阻塞的，并非真正解放当前线程，因为它还是需要去查询哪些 IO 就绪。而真正的理想的异步非阻塞 IO 应该让内核系统完成，用户线程只需要告诉内核，当缓冲区就绪后，通知我或者执行我交给你的回调函数。</p>
-<p><img src="http://localhost:4000/assets/Netty%E4%BB%8B%E7%BB%8D/v2-5ccdc3d77174498be63efffc0e4f7783_r.jpg"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/v2-5ccdc3d77174498be63efffc0e4f7783_r.jpg"></p>
 <p>AIO 可以做到真正的异步的操作，但实现起来比较复杂，支持纯异步 IO 的操作系统非常少，目前也就 windows 是 IOCP 技术实现了，而在 Linux 上，底层还是是使用的 epoll 实现的。</p>
 <p>与 NIO 不同，当进行读写操作时，只需直接调用 API 的 read 或 write 方法即可。这两种方法均为异步的，对于读操作而言，当有流可读取时，操作系统会将可读的流传入 read 方法的缓冲区，并通知应用程序；对于写操作而言，当操作系统将 write 方法传递的流写入完毕时，操作系统主动通知应用程序。即可以理解为， read&#x2F;write 方法都是异步的，完成后会主动调用回调函数。 在 JDK1.7 中，这部分内容成为 AIO。</p>
 <h2 id="2-8-适用场景分析"><a href="#2-8-适用场景分析" class="headerlink" title="2.8 适用场景分析"></a>2.8 适用场景分析</h2><p>BIO 方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4 以前的唯一选择，但程序直观简单易理解。</p>
@@ -467,19 +467,9 @@
 <!-- #reward -->
 <div id="reward">
   <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
   <div class="reward-box">
     
-    <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.jpg">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/wechat.jpg">
-      <span class="reward-type">微信</span>
-    </div>
     
   </div>
 </div>

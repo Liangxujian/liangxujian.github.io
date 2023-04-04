@@ -109,18 +109,19 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="一、JDK、JRE、JVM-有什么关系？"><a href="#一、JDK、JRE、JVM-有什么关系？" class="headerlink" title="一、JDK、JRE、JVM 有什么关系？"></a>一、JDK、JRE、JVM 有什么关系？</h1><p><img src="http://localhost:4000/assets/JDK%E3%80%81JRE%E3%80%81JVM/1557711983254.png"></p>
+  <h1 id="一、JDK、JRE、JVM-有什么关系？"><a href="#一、JDK、JRE、JVM-有什么关系？" class="headerlink" title="一、JDK、JRE、JVM 有什么关系？"></a>一、JDK、JRE、JVM 有什么关系？</h1><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1557711983254.png"></p>
 <p>JDK（Java development toolkit）——相当于是 Java 的库函数，是编译、运行 Java 程序的工具包，是一切 Java 应用程序的基础，所有 Java 应用程序是构建在这个之上的。（汽车）</p>
 <p>JRE（Java Runtime Environment）——Java 运行环境，也就是 Java 平台。所有的 Java 程序都要在 JRE 下才能运行。JDK 的工具也是 Java 程序，也需要 JRE 才能运行。（汽车动力系统）</p>
 <p>JVM（Java Virtual Machine）——Java 虚拟机，是 JRE 的一部分。它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。JVM 有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。Java 语言最重要的特点就是跨平台运行。使用 JVM 就是为了支持与操作系统无关，实现跨平台。（汽车轮胎）</p>
-<h1 id="二、JVM-虚拟机"><a href="#二、JVM-虚拟机" class="headerlink" title="二、JVM 虚拟机"></a>二、JVM 虚拟机</h1><h2 id="2-1-JVM-基本结构"><a href="#2-1-JVM-基本结构" class="headerlink" title="2.1  JVM 基本结构"></a>2.1  JVM 基本结构</h2><p><img src="http://localhost:4000/assets/JDK%E3%80%81JRE%E3%80%81JVM/b2e6a2272094c3a0.png"></p>
-<p><img src="http://localhost:4000/assets/JDK%E3%80%81JRE%E3%80%81JVM/2c33c8b5415c6652.png"></p>
+<h1 id="二、JVM-虚拟机"><a href="#二、JVM-虚拟机" class="headerlink" title="二、JVM 虚拟机"></a>二、JVM 虚拟机</h1><h2 id="2-1-JVM-基本结构"><a href="#2-1-JVM-基本结构" class="headerlink" title="2.1  JVM 基本结构"></a>2.1  JVM 基本结构</h2><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/b2e6a2272094c3a0.png"></p>
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/liangxujian/ufl7zk/hh59qa">思维导图（语雀）</a></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/2c33c8b5415c6652.png"></p>
 <h2 id="2-2-JVM-线程共享区和非线程共享区"><a href="#2-2-JVM-线程共享区和非线程共享区" class="headerlink" title="2.2 JVM 线程共享区和非线程共享区"></a>2.2 JVM 线程共享区和非线程共享区</h2><p>概括来说，<strong>JVM 初始运行的时候都会分配好 Method Area（方法区） 和Heap（堆） ，而 JVM 每遇到一个线程，就为其分配一个 Program Counter Register（程序计数器） , VM Stack（虚拟机栈）和Native Method Stack（本地方法栈），当线程终止时，三者（虚拟机栈，本地方法栈和程序计数器）所占用的内存空间也会被释放掉</strong>。</p>
 <p>非线程共享的三个区域的生命周期与所属线程相同，而线程共享的区域与 JAVA 程序运行的生命周期相同，所以这也是系统垃圾回收的场所只发生在线程共享的区域（实际上对大部分虚拟机来说只发生在 Heap（堆区）上）的原因。</p>
 <p>案例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AppMain</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 运行时，JVM把AppMain的信息都放到方法区</span></span><br><span class="line"><span class="comment">     * main方法本身也放入方法区内</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// test1是引用，所以放到栈区中，而Sample是自定义对象，会被放到堆里</span></span><br><span class="line">        <span class="type">Sample</span> <span class="variable">test1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Sample</span>(<span class="string">&quot;测试1&quot;</span>);</span><br><span class="line">        <span class="type">Sample</span> <span class="variable">test2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Sample</span>(<span class="string">&quot;测试2&quot;</span>);</span><br><span class="line"></span><br><span class="line">        test1.printName();</span><br><span class="line">        test2.printName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Sample</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Sample</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * printName方法本身放到方法区中</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printName</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="http://localhost:4000/assets/JDK%E3%80%81JRE%E3%80%81JVM/1557710578795.png"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1557710578795.png"></p>
 <h2 id="2-3-JVM-启动流程（略）"><a href="#2-3-JVM-启动流程（略）" class="headerlink" title="2.3 JVM 启动流程（略）"></a>2.3 JVM 启动流程（略）</h2><ol>
 <li>Java 虚拟机启动的命令是通过 java + xxx(类名，这个类中要有 main 方法)或者 javaw 启动的。</li>
 <li>执行命令后，系统第一步做的就是装载配置，会在当前路径中寻找 JVM 的 config 配置文件。</li>
@@ -158,14 +159,14 @@
 <p><em>注：实施分层编译后，C1 和 C2 将会同时工作，许多代码会被</em><strong>多次编译</strong><em>，用 C1 获取更高的编译速度，用 C2 来获取更好的编译质量，且在解释执行的时候解释器也无须再承担收集性能监控信息的任务</em></p>
 <h1 id="四、新生代、老年代、JavaCG-回收机制"><a href="#四、新生代、老年代、JavaCG-回收机制" class="headerlink" title="四、新生代、老年代、JavaCG 回收机制"></a>四、新生代、老年代、JavaCG 回收机制</h1><p>Java 中的堆是 JVM 所管理的最大的一块内存空间，主要用于存放各种类的实例对象。</p>
 <p>堆的内存模型大致为：</p>
-<p><img src="http://localhost:4000/assets/JDK%E3%80%81JRE%E3%80%81JVM/1678097210489.png"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1678097210489.png"></p>
 <p>从图中可以看出： 堆大小 &#x3D; 新生代 + 老年代。</p>
 <p>JVM 三大性能调优参数： -Xms、-Xmx、-Xss</p>
 <ul>
 <li>参数 –Xms 指定堆的默认值（最小值），参数 -Xmx 指定堆的最大值；</li>
 <li>参数 -Xss 指定每个线程分配的内存大小【JDK 1.4 为 256KB；JDK 1.5+ 为 1M】，这决定了进程的数量。</li>
 </ul>
-<p><img src="http://localhost:4000/assets/JDK%E3%80%81JRE%E3%80%81JVM/JVM%E5%8F%82%E6%95%B0.png"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/JVM%E5%8F%82%E6%95%B0.png"></p>
 <h2 id="4-1-新生代和老年代"><a href="#4-1-新生代和老年代" class="headerlink" title="4.1 新生代和老年代"></a>4.1 新生代和老年代</h2><p>默认的，新生代 ( Young ) 与老年代 ( Old ) 的比例的值为 1:2。其中，新生代 ( Young ) 被细分为 <strong>Eden</strong>（伊甸园）和 两个 Survivor 区域，这两个 Survivor 区域分别被命名为 <strong>from</strong> 和 <strong>to</strong>，以示区分。</p>
 <p><em>注：JVM 每次只会使用 Eden 和其中的一块 Survivor 区域来为对象服务，所以无论什么时候，总是有一块 Survivor 区域是空闲着的。因此，新生代实际可用的内存空间为 9&#x2F;10 ( 即90% )的新生代空间。（ from 和 to 区域位置是平等的）</em></p>
 <h2 id="4-2-JavaCG-垃圾回收机制"><a href="#4-2-JavaCG-垃圾回收机制" class="headerlink" title="4.2 JavaCG 垃圾回收机制"></a>4.2 JavaCG 垃圾回收机制</h2><p>Java 的垃圾回收机制使用的是分代收集算法。</p>
@@ -409,19 +410,9 @@
 <!-- #reward -->
 <div id="reward">
   <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
   <div class="reward-box">
     
-    <div class="reward-item">
-      <img class="reward-img" src="/images/alipay.jpg">
-      <span class="reward-type">支付宝</span>
-    </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="/images/wechat.jpg">
-      <span class="reward-type">微信</span>
-    </div>
     
   </div>
 </div>
