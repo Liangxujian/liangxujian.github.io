@@ -845,7 +845,7 @@
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
-        <category>中间件</category>
+        <category>编程</category>
         <category>Netty</category>
       </categories>
       <tags>
@@ -919,11 +919,12 @@
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
+        <category>编程</category>
         <category>MySQL</category>
-        <category>Database</category>
       </categories>
       <tags>
         <tag>MySQL</tag>
+        <tag>Database</tag>
       </tags>
   </entry>
   <entry>
@@ -937,11 +938,12 @@
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
+        <category>编程</category>
         <category>MySQL</category>
-        <category>Database</category>
       </categories>
       <tags>
         <tag>MySQL</tag>
+        <tag>Database</tag>
       </tags>
   </entry>
   <entry>
@@ -1000,11 +1002,12 @@
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
-        <category>中间件</category>
+        <category>编程</category>
         <category>Docker</category>
       </categories>
       <tags>
         <tag>Docker</tag>
+        <tag>中间件</tag>
       </tags>
   </entry>
   <entry>
@@ -1066,11 +1069,12 @@
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
-        <category>中间件</category>
+        <category>编程</category>
         <category>Docker</category>
       </categories>
       <tags>
         <tag>Docker</tag>
+        <tag>中间件</tag>
       </tags>
   </entry>
   <entry>
@@ -1209,11 +1213,12 @@
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
-        <category>中间件</category>
+        <category>编程</category>
         <category>Docker</category>
       </categories>
       <tags>
         <tag>Docker</tag>
+        <tag>中间件</tag>
       </tags>
   </entry>
   <entry>
