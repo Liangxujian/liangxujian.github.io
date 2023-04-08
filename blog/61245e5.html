@@ -85,7 +85,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">592</span>
+            <span class="post-count">712</span>
         </span>
     </span>
 
@@ -94,7 +94,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">2 分钟</span>
+            <span class="post-count">3 分钟</span>
         </span>
     </span>
 </div>
@@ -137,7 +137,7 @@
 <h2 id="文章永久链接插件"><a href="#文章永久链接插件" class="headerlink" title="文章永久链接插件"></a>文章永久链接插件</h2><p>Hexo 默认的静态 URL 格式是 <code>:year/:month/:day/:title</code>，也就是按照年、月、日、标题来生成固定链接的。如：<code>http://xxx.yy.com/2020/07/06/hello-world</code></p>
 <p>这种默认配置的缺点就是一般文件名是中文，导致 url 链接里有中文出现，这会造成很多问题（例如 md 文件名改变后，访问链接也会跟着变），也不利于 seo，另外就是年月日都会有分隔符。</p>
 <p>安装 npm 包：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-abbrlink --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">npm install hexo-abbrlink --save</span></span><br><span class="line">npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.3.2 (node_modules\fsevents):</span><br><span class="line">npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted &#123;&quot;os&quot;:&quot;darwin&quot;,&quot;arch&quot;:&quot;any&quot;&#125; (current: &#123;&quot;os&quot;:&quot;win32&quot;,&quot;arch&quot;:&quot;x64&quot;&#125;)</span><br><span class="line"></span><br><span class="line">+ hexo-abbrlink@2.2.1</span><br><span class="line">added 5 packages from 9 contributors and audited 248 packages in 5.109s</span><br><span class="line"></span><br><span class="line">22 packages are looking for funding</span><br><span class="line">  run `npm fund` for details</span><br><span class="line"></span><br><span class="line">found 0 vulnerabilities</span><br></pre></td></tr></table></figure>
 
 <p>修改 <code>_config.yml </code>文件中的配置项（记得把原来的 <code>permalink:</code> 删除掉）：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="comment"># url: http://example.com</span></span><br><span class="line"><span class="comment"># permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="comment"># permalink_defaults:</span></span><br><span class="line"><span class="comment"># pretty_urls:</span></span><br><span class="line"><span class="comment">#   trailing_index: true # Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line"><span class="comment">#   trailing_html: true # Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br><span class="line"><span class="comment"># hexo-abbrlink</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">blog/:abbrlink.html</span> <span class="comment"># 也可以直接写 :abbrlink/</span></span><br><span class="line"><span class="attr">abbrlink:</span></span><br><span class="line">  <span class="attr">alg:</span> <span class="string">crc32</span> <span class="comment"># 算法： crc16(default) and crc32</span></span><br><span class="line">  <span class="attr">rep:</span> <span class="string">hex</span> <span class="comment"># 进制： dec(default) and hex</span></span><br></pre></td></tr></table></figure>
@@ -153,6 +153,11 @@
 <p>生成链接样式：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># crc16 &amp; hex</span></span><br><span class="line"><span class="string">https://post.zz173.com/posts/66c8.html</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># crc16 &amp; dec</span></span><br><span class="line"><span class="string">https://post.zz173.com/posts/65535.html</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># crc32 &amp; hex</span></span><br><span class="line"><span class="string">https://post.zz173.com/posts/8ddf18fb.html</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># crc32 &amp; dec</span></span><br><span class="line"><span class="string">https://post.zz173.com/posts/1690090958.html</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="undefined"><a href="#undefined" class="headerlink" title="undefined"></a>undefined</h3><p>如果出现 undefined 的情况，</p>
+<ol>
+<li>检查是否已经执行 hexo clean</li>
+<li>检查 package.json 文件，看看是否已安装 hexo-abbrlink 插件</li>
+</ol>
 <p></br></br></br></br></p>
  
       <!-- reward -->
