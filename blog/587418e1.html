@@ -254,30 +254,30 @@
 <p>实际测试：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;autocommit&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name <span class="operator">|</span> <span class="keyword">Value</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> autocommit    <span class="operator">|</span> <span class="keyword">ON</span>    <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">set</span> autocommit<span class="operator">=</span><span class="number">0</span>;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;autocommit&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name <span class="operator">|</span> <span class="keyword">Value</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> autocommit    <span class="operator">|</span> OFF   <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
 
-<table>
-<thead>
-<tr>
-<th>窗口1</th>
-<th>窗口2</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>mysql&gt; begin;Query OK, 0 rows affected (0.00 sec)</td>
-<td>mysql&gt; begin;Query OK, 0 rows affected (0.00 sec)</td>
-</tr>
-<tr>
-<td>mysql&gt; select * from tt17;+—-+——+——+| id | name | age  |+—-+——+——+|  1 | 1    |    1 ||  2 | 2    |    2 ||  3 | 3    |    3 |+—-+——+——+3 rows in set (0.00 sec)</td>
-<td>mysql&gt; select * from tt17;+—-+——+——+| id | name | age  |+—-+——+——+|  1 | 1    |    1 ||  2 | 2    |    2 ||  3 | 3    |    3 |+—-+——+——+3 rows in set (0.00 sec)</td>
-</tr>
-<tr>
-<td></td>
-<td>mysql&gt; update tt17 set name &#x3D; “zhangsan”;Query OK, 3 rows affected (0.00 sec)Rows matched: 3  Changed: 3  Warnings: 0mysql&gt; commit;Query OK, 0 rows affected (0.04 sec)</td>
-</tr>
-<tr>
-<td>mysql&gt; select * from tt17;+—-+——+——+| id | name | age  |+—-+——+——+|  1 | 1    |    1 ||  2 | 2    |    2 ||  3 | 3    |    3 |+—-+——+——+3 rows in set (0.00 sec)</td>
-<td>mysql&gt; select * from tt17;+—-+———-+——+| id | name     | age  |+—-+———-+——+|  1 | zhangsan |    1 ||  2 | zhangsan |    2 ||  3 | zhangsan |    3 |+—-+———-+——+3 rows in set (0.00 sec)</td>
-</tr>
-</tbody></table>
+<table border="1" style="table-layout:fixed;">
+    <tr>
+        <th style="text-align:center">窗口1</th>
+        <th style="text-align:center">窗口2</th>
+    </tr>
+    <tr>
+        <td>mysql> begin;<br>Query OK, 0 rows affected (0.00 sec)</td>
+        <td>mysql> begin;<br>Query OK, 0 rows affected (0.00 sec)</td>
+    </tr>
+    <tr>
+        <td>mysql> select * from tt17;<br>+----+------+------+<br>| id | name | age  |<br>+----+------+------+<br>|  1 | 1    |    1 |<br>|  2 | 2    |    2 |<br>|  3 | 3    |    3 |<br>+----+------+------+<br>3 rows in set (0.00 sec)</td>
+        <td>mysql> select * from tt17;<br>+----+------+------+<br>| id | name | age  |<br>+----+------+------+<br>|  1 | 1    |    1 |<br>|  2 | 2    |    2 |<br>|  3 | 3    |    3 |<br>+----+------+------+<br>3 rows in set (0.00 sec)</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>mysql> update tt17 set name = "zhangsan";<br>Query OK, 3 rows affected (0.00 sec)<br>Rows matched: 3  Changed: 3  Warnings: 0<br><br>mysql> commit;<br>Query OK, 0 rows affected (0.04 sec)</td>
+    </tr>
+    <tr>
+        <td>mysql> select * from tt17;<br>+----+------+------+<br>| id | name | age  |<br>+----+------+------+<br>|  1 | 1    |    1 |<br>|  2 | 2    |    2 |<br>|  3 | 3    |    3 |<br>+----+------+------+<br>3 rows in set (0.00 sec)</td>
+        <td>mysql> select * from tt17;<br>+----+------+------+<br>| id | name | age  |<br>+----+------+------+<br>|  1 | 1    |    1 |<br>|  2 | 2    |    2 |<br>|  3 | 3    |    3 |<br>+----+------+------+<br>3 rows in set (0.00 sec)</td>
+    </tr>
+</table>
+
+
 <p>此时，在实际测试中，事务2 select ……（快照读）看不到事务4 commit 的记录，与分析结果相反！(╬￣皿￣)</p>
 <p>继续冷静分析：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> @<span class="variable">@transaction</span>_isolation;</span><br><span class="line">ERROR <span class="number">1193</span> (HY000): <span class="literal">Unknown</span> <span class="keyword">system</span> variable <span class="string">&#x27;transaction_isolation&#x27;</span></span><br><span class="line"><span class="comment">-- 这里可能会遇到 mysql-connector-java 的 jar 包版本高，而 mysql 版本低的情况。低版本的 mysql 只识别 tx_isolation，不识别 transaction_isolation</span></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> @<span class="variable">@tx</span>_isolation;</span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="operator">|</span> @<span class="variable">@tx</span>_isolation  <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="operator">|</span> REPEATABLE<span class="operator">-</span>READ <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
