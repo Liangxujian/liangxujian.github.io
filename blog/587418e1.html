@@ -195,64 +195,57 @@
 <li>接着判断 DB_TRX_ID 和 low_limit_id 的关系。如果 DB_TRX_ID &gt;&#x3D; low_limit_id，则代表 DB_TRX_ID 所 commit 的记录是在生成 readview 之后，对于当前事务肯定是不可见的；反之进入下个判断</li>
 <li>最后判断 DB_TRX_ID 和 trx_list 的关系。如果 DB_TRX_ID 存在于 【活跃事务（trx_list）】中，则代表在生成 readview 的时候，DB_TRX_ID 还是处在活跃状态，还没有 commit，因此 DB_TRX_ID update 的数据在当前事务是看不到的；如果不在，则说明这个事务在 readview 生成之前就已经 commit 了，那么DB_TRX_ID update 的结果是能够看见的</li>
 </ol>
-<h4 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h4><table>
-<thead>
-<tr>
-<th>事务1</th>
-<th>事务2</th>
-<th>事务3</th>
-<th>事务4</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>begin（开启）</td>
-<td>begin（开启）</td>
-<td>begin（开启）</td>
-<td>begin（开启）</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td>updatecommit</td>
-</tr>
-<tr>
-<td></td>
-<td>select ……（快照读）</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
+<h4 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h4><table border="1" style="table-layout:fixed;">
+    <tr align="center">
+        <td>事务1</td>
+        <td>事务2</td>
+        <td>事务3</td>
+        <td>事务4</td>
+    </tr>
+    <tr align="center">
+        <td>begin（开启）</td>
+        <td>begin（开启）</td>
+        <td>begin（开启）</td>
+        <td>begin（开启）</td>
+    </tr>
+    <tr align="center">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>update<br>commit</td>
+    </tr>
+    <tr align="center">
+        <td></td>
+        <td>select ……（快照读）</td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
 <p>此时事务2能不能读取到事务4 commit 的记录？</p>
 <p>分析：事务2 select ……（快照读）产生的 readview</p>
-<table>
-<thead>
-<tr>
-<th>trx_list</th>
-<th>1，2，3（因为4已经 commit，因此不是活跃事务）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>up_limit_id</td>
-<td>1</td>
-</tr>
-<tr>
-<td>low_limit_id</td>
-<td>5</td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th>DB_TRX_ID</th>
-<th>4</th>
-</tr>
-</thead>
-<tbody><tr>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
+<table border="1" style="table-layout:fixed;">
+    <tr>
+        <td>low_limit_id</td>
+        <td>1，2，3（因为4已经 commit，因此不是活跃事务）</td>
+    </tr>
+    <tr>
+        <td>up_limit_id</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>low_limit_id</td>
+        <td>5</td>
+    </tr>
+</table>
+
+<table border="1" style="table-layout:fixed;">
+    <tr>
+        <td>DB_TRX_ID</td>
+        <td>4</td>
+    </tr>
+</table>
+
 <ol>
 <li>4 &gt; 1（DB_TRX_ID &gt; update_limit_id），进入下个判断</li>
 <li>4 &lt; 5（DB_TRX_ID &lt; low_limit_id），进入下个判断</li>
@@ -308,7 +301,8 @@
 <p><strong>依赖于其他三个特性来实现</strong></p>
 <h2 id="3-3-I【-Isolation（隔离性）】"><a href="#3-3-I【-Isolation（隔离性）】" class="headerlink" title="3.3 I【 Isolation（隔离性）】"></a>3.3 I【 Isolation（隔离性）】</h2><p>指的是多个事务并发地独立运行，而不能互相干扰，事务提交时根据当前数据库状态进行操作。</p>
 <p><strong>通过【MVCC】来实现</strong></p>
-<h3 id="3-3-1-四种隔离级别"><a href="#3-3-1-四种隔离级别" class="headerlink" title="3.3.1 四种隔离级别"></a>3.3.1 四种隔离级别</h3><h3 id="3-3-2-RR-和-RC"><a href="#3-3-2-RR-和-RC" class="headerlink" title="3.3.2 RR 和 RC"></a>3.3.2 RR 和 RC</h3><p>MVCC 只在 RR 和 RC 两个隔离级别下工作。</p>
+<h3 id="3-3-1-四种隔离级别"><a href="#3-3-1-四种隔离级别" class="headerlink" title="3.3.1 四种隔离级别"></a>3.3.1 四种隔离级别</h3><p><a target="_blank" rel="noopener" href="https://liangxujian.github.io/blog/ebc52c.html">事务的四种隔离级别</a></p>
+<h3 id="3-3-2-RR-和-RC"><a href="#3-3-2-RR-和-RC" class="headerlink" title="3.3.2 RR 和 RC"></a>3.3.2 RR 和 RC</h3><p>MVCC 只在 RR 和 RC 两个隔离级别下工作。</p>
 <ol>
 <li>在 RR 隔离级别下，【事务A】对某些记录的第一次查询会生成一个【快照（readview）】，此后【事务A】对这些记录的查询会继续使用这个【快照（readview）】。这会导致在生成【快照（readview）】之后，其他事务对这些记录的修改对【事务A】不可见；</li>
 <li>在 RC 隔离级别下，【事务B】对某些记录的第一次查询会生成一个【快照（readview）】，但是【事务B】之后对这些记录的查询都会重新生成一个【快照（readview）】。也就是说，其他事务对这些记录的修改对【事务B】可见；</li>
