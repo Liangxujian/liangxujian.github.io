@@ -1211,11 +1211,13 @@
 
 <h2 id="4-2-容器查看命令（ps）"><a href="#4-2-容器查看命令（ps）" class="headerlink" title="4.2 容器查看命令（ps）"></a>4.2 容器查看命令（ps）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker ps [可选参数]</span><br><span class="line">      # 列出当前正在运行的容器</span><br><span class="line">-a    # 列出当前正在运行的容器 + 带出历史运行过的容器</span><br><span class="line">-n=?  # 显示最近创建的几个容器</span><br><span class="line">-q    # 只显示容器的编号</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">示例</span></span><br><span class="line">[root@localhost /]# docker ps</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES</span><br><span class="line">[root@localhost /]# docker ps -a</span><br><span class="line">CONTAINER ID   IMAGE          COMMAND       CREATED          STATUS                       PORTS     NAMES</span><br><span class="line">987ceaa1b6cc   centos         &quot;/bin/bash&quot;   33 minutes ago   Exited (127) 5 minutes ago             gallant_stonebraker</span><br><span class="line">0f4a68190c7a   bf756fb1ae65   &quot;/hello&quot;      8 days ago       Exited (0) 8 days ago                  recursing_lovelace</span><br><span class="line">[root@localhost /]# docker ps -n=1</span><br><span class="line">CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS                       PORTS     NAMES</span><br><span class="line">987ceaa1b6cc   centos    &quot;/bin/bash&quot;   33 minutes ago   Exited (127) 5 minutes ago             gallant_stonebraker</span><br></pre></td></tr></table></figure>
 
-<h2 id="4-3-容器退出命令（exit-p-q）"><a href="#4-3-容器退出命令（exit-p-q）" class="headerlink" title="4.3 容器退出命令（exit|^p + ^q）"></a>4.3 容器退出命令（exit|^p + ^q）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">exit          # 容器停止并退出</span><br><span class="line">Ctrl + p + q  # 容器不停止退出</span><br></pre></td></tr></table></figure>
+<h2 id="4-3-容器进入命令"><a href="#4-3-容器进入命令" class="headerlink" title="4.3 容器进入命令"></a>4.3 容器进入命令</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker exec -it [容器ID || 容器的name] [/bin/bash || bash]</span><br><span class="line">docker attach 容器ID</span><br></pre></td></tr></table></figure>
 
-<h2 id="4-4-容器删除命令（rm）"><a href="#4-4-容器删除命令（rm）" class="headerlink" title="4.4 容器删除命令（rm）"></a>4.4 容器删除命令（rm）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker rm 容器ID                 # 根据ID删除指定容器（如果容器正在运行，则不可删除）</span><br><span class="line">docker rm -f 容器ID              # 根据ID强制删除指定容器</span><br><span class="line">docker rm $(docker ps -aq)       # 遍历删除所有容器</span><br><span class="line">docker rm -f $(docker ps -aq)    # 遍历强制删除所有容器</span><br><span class="line">docker ps -a -q|xargs docker rm  # 删除所有容器</span><br></pre></td></tr></table></figure>
+<h2 id="4-4-容器退出命令（exit-p-q）"><a href="#4-4-容器退出命令（exit-p-q）" class="headerlink" title="4.4 容器退出命令（exit|^p + ^q）"></a>4.4 容器退出命令（exit|^p + ^q）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">exit          # 容器停止并退出</span><br><span class="line">Ctrl + p + q  # 容器不停止退出</span><br></pre></td></tr></table></figure>
 
-<h2 id="4-5-容器启动和停止（start-stop）"><a href="#4-5-容器启动和停止（start-stop）" class="headerlink" title="4.5 容器启动和停止（start|stop）"></a>4.5 容器启动和停止（start|stop）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker start 容器ID    # 启动容器</span><br><span class="line">docker restart 容器ID  # 重启容器</span><br><span class="line">docker stop 容器ID     # 停止当前容器</span><br><span class="line">docker kill 容器ID     # 强制停止当前容器</span><br><span class="line">docker pause 容器ID    # 暂停当前容器</span><br><span class="line">docker unpause 容器ID  # 启动暂停中的容器</span><br></pre></td></tr></table></figure>
+<h2 id="4-5-容器删除命令（rm）"><a href="#4-5-容器删除命令（rm）" class="headerlink" title="4.5 容器删除命令（rm）"></a>4.5 容器删除命令（rm）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker rm 容器ID                  # 根据ID删除指定容器（如果容器正在运行，则不可删除）</span><br><span class="line">docker rm -f 容器ID               # 根据ID强制删除指定容器</span><br><span class="line">docker rm $(docker ps -aq)       # 遍历删除所有容器</span><br><span class="line">docker rm -f $(docker ps -aq)    # 遍历强制删除所有容器</span><br><span class="line">docker ps -a -q|xargs docker rm  # 删除所有容器</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-6-容器启动和停止（start-stop）"><a href="#4-6-容器启动和停止（start-stop）" class="headerlink" title="4.6 容器启动和停止（start|stop）"></a>4.6 容器启动和停止（start|stop）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker start 容器ID    # 启动容器</span><br><span class="line">docker restart 容器ID  # 重启容器</span><br><span class="line">docker stop 容器ID     # 停止当前容器</span><br><span class="line">docker kill 容器ID     # 强制停止当前容器</span><br><span class="line">docker pause 容器ID    # 暂停当前容器</span><br><span class="line">docker unpause 容器ID  # 启动暂停中的容器</span><br></pre></td></tr></table></figure>
 
 <h1 id="五、其他常用命令"><a href="#五、其他常用命令" class="headerlink" title="五、其他常用命令"></a>五、其他常用命令</h1><h2 id="5-1-查看日志（logs）"><a href="#5-1-查看日志（logs）" class="headerlink" title="5.1 查看日志（logs）"></a>5.1 查看日志（logs）</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker logs -t -f --detail 显示日志的条数 容器ID</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">（-t表示显示时间戳；-f表示持续显示）</span></span><br><span class="line">[root@localhost ~]# docker logs --help</span><br><span class="line"></span><br><span class="line">Usage:  docker logs [OPTIONS] CONTAINER</span><br><span class="line"></span><br><span class="line">Fetch the logs of a container</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">      --details        Show extra details provided to logs</span><br><span class="line">  -f, --follow         Follow log output</span><br><span class="line">      --since string   Show logs since timestamp (e.g. 2013-01-02T13:23:37Z)</span><br><span class="line">                       or relative (e.g. 42m for 42 minutes)</span><br><span class="line">  -n, --tail string    Number of lines to show from the end of the logs</span><br><span class="line">                       (default &quot;all&quot;)</span><br><span class="line">  -t, --timestamps     Show timestamps</span><br><span class="line">      --until string   Show logs before a timestamp (e.g.</span><br><span class="line">                       2013-01-02T13:23:37Z) or relative (e.g. 42m for 42</span><br><span class="line">                       minutes)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先编写一段shell脚本作为测试</span></span><br><span class="line">[root@localhost ~]# docker run -d centos /bin/sh -c &quot;while true;do echo liangxj;sleep 1;done&quot;</span><br><span class="line">22b9beab5965eacb2e8f646c1e096ffd10fa7355df47f3da8ff6244ca7497bfb</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# docker ps</span><br><span class="line">CONTAINER ID   IMAGE</span><br><span class="line">22b9beab5965   centos</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示日志</span></span><br><span class="line">[root@localhost ~]# docker logs -tf --tail 10 22b9beab5965</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# docker logs -tf -n 500 服务名称</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-f：持续输出</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-t：展示时间戳</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-n：展示多少行</span></span><br></pre></td></tr></table></figure>
 
@@ -1271,6 +1273,341 @@
       <tags>
         <tag>Docker</tag>
         <tag>中间件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事务的四种隔离级别</title>
+    <url>/blog/ebc52c.html</url>
+    <content><![CDATA[<ol>
+<li>Read Uncommitted（读未提交）：保证了读取过程中不会读取到非法数据。</li>
+<li>READ COMMITTED（读已提交）：大多数主流数据库的默认事务等级，保证了一个事务不会读到另一个并行事务已修改但仍未提交的数据，避免了“脏读”。该级别适用大多数系统。</li>
+<li>REPEATABLE READ（可重复读）：保证了一个事务不会修改已经由另一个事务读取但未提交（回滚）的数据。避免了“脏读”和“不可重复读”，但是带来了更多的性能损失。</li>
+<li>Serializable（串行化）：最严格的级别，事务串行执行，资源消耗最大。</li>
+</ol>
+<table border="1" style="table-layout:fixed;">
+    <tr>
+        <th style="text-align:center">隔离级别</th>
+        <th style="text-align:center">脏读<br>Dirty reads</th>
+        <th style="text-align:center">脏读<br>Dirty reads</th>
+        <th style="text-align:center">幻读<br>phantom</th>
+    </tr>
+    <tr>
+        <td>Read Uncommitted<br>读未提交（不加锁）</td>
+        <td bgcolor="#73d13d">√</td>
+        <td bgcolor="#73d13d">√</td>
+        <td bgcolor="#73d13d">√</td>
+    </tr>
+    <tr>
+        <td>READ COMMITTED<br>读已提交（RC）</td>
+        <td bgcolor="#ff4d4f">×</td>
+        <td bgcolor="#73d13d">√</td>
+        <td bgcolor="#73d13d">√</td>
+    </tr>
+    <tr>
+        <td>REPEATABLE READ<br>可重复读（RR）（默认）</td>
+        <td bgcolor="#ff4d4f">×</td>
+        <td bgcolor="#ff4d4f">×</td>
+        <td bgcolor="#73d13d">√</td>
+    </tr>
+    <tr>
+        <td>Serializable<br>串行化（全程加锁）</td>
+        <td bgcolor="#ff4d4f">×</td>
+        <td bgcolor="#ff4d4f">×</td>
+        <td bgcolor="#ff4d4f">×</td>
+    </tr>
+</table>
+
+
+<ul>
+<li>脏读：读到了其他事务未提交的脏数据。<br>例如：事务 B 执行过程中修改了数据 X，在未提交前，事务 A 也读取了 X，但事务 B 却回滚了，这样事务 A 就形成了脏读。</li>
+<li>不可重复读：在一个事务内，最开始读到的数据和事务结束前任意时刻读到的同一批数据出现不一致的情况。<br>例如：事务 A 先读取了一条数据，然后再执行逻辑的时候，事务 B 将这条数据改变了，然后事务 A 再次读取该数据，发现数据不匹配，这就是所谓的不可重复读。</li>
+<li>幻读：事务的某次 select 操作得到的结果所表示的数据状态无法支撑其后续的业务操作。<br>例如：事务 A select 某条记录是否存在，不存在，准备插入此记录，但执行 insert 操作的时候发现此记录已存在，此时就产生了幻读。</li>
+</ul>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Database</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库事务</title>
+    <url>/blog/587418e1.html</url>
+    <content><![CDATA[<p>数据库事务就是一组 SQL 语句，这组 SQL 语句是一个逻辑工作单元。该单元<strong>作为一个整体永久性地修改</strong>或<strong>作为一个整体取消</strong>对数据库的修改。</p>
+<p>定义事务的语句一般有三条：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> TRANSACTION; <span class="comment">-- 表示事务开始</span></span><br><span class="line"><span class="keyword">COMMIT</span>;            <span class="comment">-- 表示事务提交</span></span><br><span class="line"><span class="keyword">ROLLBACK</span>;          <span class="comment">-- 表示事务回滚</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="一、-当前读和快照读"><a href="#一、-当前读和快照读" class="headerlink" title="一、 当前读和快照读"></a>一、 当前读和快照读</h1><h2 id="1-1-当前读"><a href="#1-1-当前读" class="headerlink" title="1.1 当前读"></a>1.1 当前读</h2><p>当前读<strong>读取的是数据的最新版本</strong>，要保证其他并发事务不能修改当前记录，所以会对读取的记录进行加锁。</p>
+<p>像 select …… lock in share mode（共享锁）；select …… for update，update，insert，delete（排他锁）这些操作都会触发当前读。</p>
+<h2 id="1-2-快照读"><a href="#1-2-快照读" class="headerlink" title="1.2 快照读"></a>1.2 快照读</h2><p>像不加锁的 select …… 操作就是快照读，即不加锁的非阻塞读。</p>
+<p>快照读的前提是：<strong>隔离级别不是串行级别</strong>，串行级别下的快照读会退化成当前读。</p>
+<p>之所以出现快照读的情况，是基于提高并发性能的考虑，快照读的实现是基于多版本并发控制，即 MVCC，可以认为 MVCC 是行锁的一个变种，但它在很多情况下，避免了加锁操作，降低了开销；既然是基于多版本，即快照读<strong>可能读到的并不一定是数据的最新版本，而有可能是之前的历史版本</strong>。</p>
+<h1 id="二、MVCC（多版本并发控制）"><a href="#二、MVCC（多版本并发控制）" class="headerlink" title="二、MVCC（多版本并发控制）"></a>二、MVCC（多版本并发控制）</h1><p>MVCC（Multi-Version Concurrency Control），即多版本并发控制，是 MySQL 事务隔离级别中的一个重要概念。</p>
+<p>这是一种并发控制的方法，一般在数据库管理系统中，实现对数据库的并发访问，在编程语言中实现事务内存。</p>
+<p>MVCC 在 MySQL InnoDB 中的实现主要是为了提高数据库并发性能，用更好的方式去处理读-写冲突，做到即使有读写冲突时，也能做到不加锁，非阻塞并发读。</p>
+<p>这仅仅只是一种理想的概念，即：维持一个数据的多个版本，使得读写操作没有冲突。</p>
+<p>快照读就是 MySQL 为了实现 MVCC 理想模型，的其中一个具体非阻塞读功能。</p>
+<h2 id="2-1-MVCC-实现原理"><a href="#2-1-MVCC-实现原理" class="headerlink" title="2.1 MVCC 实现原理"></a>2.1 MVCC 实现原理</h2><p>MySQL 4.1开始支持每个 InnoDB 引擎的表单独放到一个表空间里。InnoDB 通过使用 MVCC 来获取高并发性，并且实现 SQL 标准的 4 种隔离级别，同时使用一种被称为 next-key locking 的策略来避免幻读（phantom）现象。</p>
+<p>除此之外 InnoDB 引擎还提供了插入缓存（insert buffer）、二次写（double write）、自适应哈西索引（adaptive hash index）、预读（read ahead）等高性能技术。</p>
+<h3 id="2-1-1-隐式字段"><a href="#2-1-1-隐式字段" class="headerlink" title="2.1.1 隐式字段"></a>2.1.1 隐式字段</h3><ul>
+<li>DB_TRX_ID：6byte，创建或者最后一次修改该记录的事务 ID</li>
+<li>DB_ROW_ID：6byte，隐藏主键【如果当前表有主键，则隐藏主键&#x3D;主键；如果没有主键，则 InnoDB 会自动以 DB_ROW_ID 产生一个聚簇索引】</li>
+<li>DB_ROLL_PTR：7byte，回滚指针【如果是新插入的数据，回滚指针为null】</li>
+</ul>
+<p>例如：insert 一条数据</p>
+<table border="1" style="table-layout:fixed;">
+    <tr>
+        <th style="text-align:center" bgcolor="#91d5ff">name</th>
+        <th style="text-align:center" bgcolor="#91d5ff">age</th>
+        <th style="text-align:center" bgcolor="#91d5ff">gender</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_TRX_ID</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_ROLL_PTR</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_ROW_ID</th>
+    </tr>
+    <tr align="center">
+        <td bgcolor="#91d5ff">李四</td>
+        <td bgcolor="#91d5ff">12</td>
+        <td bgcolor="#91d5ff">man</td>
+        <td bgcolor="#ffa940">1</td>
+        <td bgcolor="#ffa940">1</td>
+        <td bgcolor="#ffa940">null</td>
+    </tr>
+    <tr align="center">
+        <td colspan="3">对用户可见</td>
+        <td colspan="3">对用户不可见</td>
+    </tr>
+</table>
+
+<h3 id="2-1-2-undolog（回滚日志）"><a href="#2-1-2-undolog（回滚日志）" class="headerlink" title="2.1.2 undolog（回滚日志）"></a>2.1.2 undolog（回滚日志）</h3><p>同一条数据，多次修改会存在多个历史版本，保存在 undolog 中，形成一个<strong>线性表（链表）</strong>。其中链首存储的是最新的历史记录，链尾是最早的历史记录。</p>
+<p>数据表中有多条数据，多条数据发生了多次修改，那么则会存在多个链表。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> table_a <span class="keyword">SET</span> name <span class="operator">=</span> &quot;李四&quot;;</span><br></pre></td></tr></table></figure>
+
+<table border="1" style="table-layout:fixed;">
+    <tr>
+        <th style="text-align:center" bgcolor="#40a9ff">name</th>
+        <th style="text-align:center" bgcolor="#40a9ff">age</th>
+        <th style="text-align:center" bgcolor="#40a9ff">gender</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_TRX_ID</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_ROLL_PTR</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_ROW_ID</th>
+    </tr>
+    <tr align="center">
+        <td bgcolor="#40a9ff">李四</td>
+        <td bgcolor="#40a9ff">12</td>
+        <td bgcolor="#40a9ff">man</td>
+        <td bgcolor="#ffa940">2</td>
+        <td bgcolor="#ffa940">1</td>
+        <td bgcolor="#ffa940">0x123</td>
+    </tr>
+    <tr align="center">
+        <td colspan="3">对用户可见</td>
+        <td colspan="3">对用户不可见</td>
+    </tr>
+</table>
+这时旧数据会保存到 undolog 中，新数据的【回滚指针（DB_ROLL_PTR）】指向 undolog 中旧数据的【回滚指针（DB_ROLL_PTR）】
+
+<h3 id="2-1-3-readview（读视图）"><a href="#2-1-3-readview（读视图）" class="headerlink" title="2.1.3 readview（读视图）"></a>2.1.3 readview（读视图）</h3><p>事务在进行快照读（select ……）的时候，会产生【readview（读视图）】</p>
+<p>事务在执行快照读的那一刻，会生成数据库系统当前的一个快照。记录并维护系统当前活跃事务的ID（当每个事务开启时，都会被分配一个ID, 这个ID是递增的，所以最新的事务，ID值越大）</p>
+<ul>
+<li>trx_list：系统活跃的事务 ID</li>
+<li>up_limit_id：列表中事务最小的 ID</li>
+<li>low_limit_id：系统尚未分配的下一个事务 ID</li>
+</ul>
+<p>当一个事务在进行快照读时，能否读取到其他事务刚刚 update 并 commit 的记录？</p>
+<ol>
+<li>首先判断 DB_TRX_ID 和 update_limit_id 的关系。如果 DB_TRX_ID &lt; update_limit_id，则当前事务能看到 DB_TRX_ID 所 commit 的记录；否则进入下个判断</li>
+<li>接着判断 DB_TRX_ID 和 low_limit_id 的关系。如果 DB_TRX_ID &gt;&#x3D; low_limit_id，则代表 DB_TRX_ID 所 commit 的记录是在生成 readview 之后，对于当前事务肯定是不可见的；反之进入下个判断</li>
+<li>最后判断 DB_TRX_ID 和 trx_list 的关系。如果 DB_TRX_ID 存在于 【活跃事务（trx_list）】中，则代表在生成 readview 的时候，DB_TRX_ID 还是处在活跃状态，还没有 commit，因此 DB_TRX_ID update 的数据在当前事务是看不到的；如果不在，则说明这个事务在 readview 生成之前就已经 commit 了，那么DB_TRX_ID update 的结果是能够看见的</li>
+</ol>
+<h4 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h4><table>
+<thead>
+<tr>
+<th>事务1</th>
+<th>事务2</th>
+<th>事务3</th>
+<th>事务4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>begin（开启）</td>
+<td>begin（开启）</td>
+<td>begin（开启）</td>
+<td>begin（开启）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>updatecommit</td>
+</tr>
+<tr>
+<td></td>
+<td>select ……（快照读）</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>此时事务2能不能读取到事务4 commit 的记录？</p>
+<p>分析：事务2 select ……（快照读）产生的 readview</p>
+<table>
+<thead>
+<tr>
+<th>trx_list</th>
+<th>1，2，3（因为4已经 commit，因此不是活跃事务）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>up_limit_id</td>
+<td>1</td>
+</tr>
+<tr>
+<td>low_limit_id</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>DB_TRX_ID</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ol>
+<li>4 &gt; 1（DB_TRX_ID &gt; update_limit_id），进入下个判断</li>
+<li>4 &lt; 5（DB_TRX_ID &lt; low_limit_id），进入下个判断</li>
+<li>4 不存在于 trx_list 中，事务2 select ……（快照读）能够看到事务4 commit 的记录。</li>
+</ol>
+<p>实际测试：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;autocommit&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name <span class="operator">|</span> <span class="keyword">Value</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> autocommit    <span class="operator">|</span> <span class="keyword">ON</span>    <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">set</span> autocommit<span class="operator">=</span><span class="number">0</span>;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;autocommit&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name <span class="operator">|</span> <span class="keyword">Value</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> autocommit    <span class="operator">|</span> OFF   <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>窗口1</th>
+<th>窗口2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mysql&gt; begin;Query OK, 0 rows affected (0.00 sec)</td>
+<td>mysql&gt; begin;Query OK, 0 rows affected (0.00 sec)</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from tt17;+—-+——+——+| id | name | age  |+—-+——+——+|  1 | 1    |    1 ||  2 | 2    |    2 ||  3 | 3    |    3 |+—-+——+——+3 rows in set (0.00 sec)</td>
+<td>mysql&gt; select * from tt17;+—-+——+——+| id | name | age  |+—-+——+——+|  1 | 1    |    1 ||  2 | 2    |    2 ||  3 | 3    |    3 |+—-+——+——+3 rows in set (0.00 sec)</td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; update tt17 set name &#x3D; “zhangsan”;Query OK, 3 rows affected (0.00 sec)Rows matched: 3  Changed: 3  Warnings: 0mysql&gt; commit;Query OK, 0 rows affected (0.04 sec)</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from tt17;+—-+——+——+| id | name | age  |+—-+——+——+|  1 | 1    |    1 ||  2 | 2    |    2 ||  3 | 3    |    3 |+—-+——+——+3 rows in set (0.00 sec)</td>
+<td>mysql&gt; select * from tt17;+—-+———-+——+| id | name     | age  |+—-+———-+——+|  1 | zhangsan |    1 ||  2 | zhangsan |    2 ||  3 | zhangsan |    3 |+—-+———-+——+3 rows in set (0.00 sec)</td>
+</tr>
+</tbody></table>
+<p>此时，在实际测试中，事务2 select ……（快照读）看不到事务4 commit 的记录，与分析结果相反！(╬￣皿￣)</p>
+<p>继续冷静分析：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> @<span class="variable">@transaction</span>_isolation;</span><br><span class="line">ERROR <span class="number">1193</span> (HY000): <span class="literal">Unknown</span> <span class="keyword">system</span> variable <span class="string">&#x27;transaction_isolation&#x27;</span></span><br><span class="line"><span class="comment">-- 这里可能会遇到 mysql-connector-java 的 jar 包版本高，而 mysql 版本低的情况。低版本的 mysql 只识别 tx_isolation，不识别 transaction_isolation</span></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> @<span class="variable">@tx</span>_isolation;</span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="operator">|</span> @<span class="variable">@tx</span>_isolation  <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="operator">|</span> REPEATABLE<span class="operator">-</span>READ <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>可知当前数据的隔离级别为默认的可重复读（RR）。</p>
+<p>因为<strong>可重复读（RR）和读已提交（RC）生成 readview 的时机是不同的</strong>。</p>
+<ul>
+<li>读已提交（RC）每次在进行 select ……（快照读）的时候都会生成新的 readview；</li>
+<li>可重复读（RR）只有在第一次进行 select ……（快照读）的时候才会生成 readview，之后的读操作都只会用第一次生成的 readview</li>
+</ul>
+<p>在实际测试时，是先进行了一次 select ……（快照读），生成了 readview，与分析案例有出入，此时事务4仍然在 trx_list 中，在第三步判断时，commit 发生于生成快照读之后，因此看不到是正常现象。</p>
+<p>总结：</p>
+<ul>
+<li>隔离级别为读已提交（RC）的时候，事务2 select ……（快照读）可以看到事务4 commit 的记录；</li>
+<li>隔离级别为可重复读（RR）的时候，事务2 select ……（快照读）看不到事务4 commit 的记录</li>
+</ul>
+<h1 id="三、事务的-ACID-特性"><a href="#三、事务的-ACID-特性" class="headerlink" title="三、事务的 ACID 特性"></a>三、事务的 ACID 特性</h1><h2 id="3-1-A【Atomicity（原子性）】"><a href="#3-1-A【Atomicity（原子性）】" class="headerlink" title="3.1 A【Atomicity（原子性）】"></a>3.1 A【Atomicity（原子性）】</h2><p>一个事务中所包含的全部 SQL 语句是一个执行整体，不可分割，要么全执行，要么全取消。</p>
+<p><strong>通过【回滚日志（undolog）】来实现</strong></p>
+<h2 id="3-2-C【Consistency（一致性）】"><a href="#3-2-C【Consistency（一致性）】" class="headerlink" title="3.2 C【Consistency（一致性）】"></a>3.2 C【Consistency（一致性）】</h2><p>即数据库在事务操作前和事务处理后，其中的数据必须都要满足业务规范约束。如果在事务中出现错误，那么系统中的所有变化将自动地回滚，系统返回到原始状态。</p>
+<p>（例如：银行转账，应先减后加，如果减后断电没有加上，不满足业务规范的约束，事务就要回滚，转账取消）</p>
+<p><strong>依赖于其他三个特性来实现</strong></p>
+<h2 id="3-3-I【-Isolation（隔离性）】"><a href="#3-3-I【-Isolation（隔离性）】" class="headerlink" title="3.3 I【 Isolation（隔离性）】"></a>3.3 I【 Isolation（隔离性）】</h2><p>指的是多个事务并发地独立运行，而不能互相干扰，事务提交时根据当前数据库状态进行操作。</p>
+<p><strong>通过【MVCC】来实现</strong></p>
+<h3 id="3-3-1-四种隔离级别"><a href="#3-3-1-四种隔离级别" class="headerlink" title="3.3.1 四种隔离级别"></a>3.3.1 四种隔离级别</h3><h3 id="3-3-2-RR-和-RC"><a href="#3-3-2-RR-和-RC" class="headerlink" title="3.3.2 RR 和 RC"></a>3.3.2 RR 和 RC</h3><p>MVCC 只在 RR 和 RC 两个隔离级别下工作。</p>
+<ol>
+<li>在 RR 隔离级别下，【事务A】对某些记录的第一次查询会生成一个【快照（readview）】，此后【事务A】对这些记录的查询会继续使用这个【快照（readview）】。这会导致在生成【快照（readview）】之后，其他事务对这些记录的修改对【事务A】不可见；</li>
+<li>在 RC 隔离级别下，【事务B】对某些记录的第一次查询会生成一个【快照（readview）】，但是【事务B】之后对这些记录的查询都会重新生成一个【快照（readview）】。也就是说，其他事务对这些记录的修改对【事务B】可见；</li>
+<li>RC 的性能比 RR 好，因为 RC 允许【不可重复读】和【幻读】。</li>
+</ol>
+<h3 id="3-3-3-怎么处理幻读"><a href="#3-3-3-怎么处理幻读" class="headerlink" title="3.3.3 怎么处理幻读"></a>3.3.3 怎么处理幻读</h3><p>处理幻读有两种方案：</p>
+<ul>
+<li>将隔离级别提高到 Serializable 级别</li>
+<li>加 Next-Key Lock 锁</li>
+</ul>
+<p>一般不会将数据库的隔离级别设置为 Serializable，加 Next-Key Lock 锁是比较常用的方法。</p>
+<p>InnoDB 有三种锁算法：</p>
+<ul>
+<li>记录锁（Record Lock）：单个行记录加锁</li>
+<li>间隙锁（Gap Lock）：锁定一个范围，但不含记录本身</li>
+<li>临键锁（Next-Key Lock）：Record Lock + Gap Lock</li>
+</ul>
+<p>table_a 表中有如下数据：</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/20230423170339990.png"></p>
+<p>这里可知有：</p>
+<ul>
+<li>间隙锁：（-∞，1）</li>
+<li>记录锁：1</li>
+<li>间隙锁：（1，10）</li>
+<li>记录锁：10</li>
+<li>间隙锁：（10，30）</li>
+<li>记录锁：30</li>
+<li>间隙锁：（30，+∞）</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- uid列为主键</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> uid <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="comment">-- 主键uid=10记录存在，只对id=10的记录加Record Lock</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> uid <span class="operator">=</span> <span class="number">8</span>;</span><br><span class="line"><span class="comment">-- 主键uid=8记录不存在，加间隙锁Gap Lock：（1, 10）</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> uid <span class="operator">&gt;</span> <span class="number">12</span>;</span><br><span class="line"><span class="comment">-- 主键使用范围查询，上锁范围为：（10,30）∪30∪（30，+∞）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- age列为索引列</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> age <span class="operator">=</span> <span class="number">30</span>;</span><br><span class="line"><span class="comment">-- 条件过滤对应记录存在，除了会对主键uid=10的记录加Record Lock，</span></span><br><span class="line"><span class="comment">-- 还会对普通索引字段加锁：[10，50]</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> age <span class="operator">=</span> <span class="number">40</span>;</span><br><span class="line"><span class="comment">-- 条件过滤对应记录不存在，只会对普通索引字段加锁：(30，50]</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> age <span class="operator">&gt;</span> <span class="number">40</span>;</span><br><span class="line"><span class="comment">-- 普通索引使用范围查询，上锁范围为：（30，+∞）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;AAA&#x27;</span>;</span><br><span class="line"><span class="comment">-- name列没有索引，则会进行全表扫描，所有记录都会加上临键锁，相当于锁表</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-4-D【Durability（持久性）】"><a href="#3-4-D【Durability（持久性）】" class="headerlink" title="3.4 D【Durability（持久性）】"></a>3.4 D【Durability（持久性）】</h2><p>也称为永久性，指的是事务在处理结束后，对数据库的修改是永久性的，即使系统故障也不会丢失。</p>
+<p><strong>通过【redolog】来实现</strong></p>
+<h3 id="3-4-1-数据更新流程"><a href="#3-4-1-数据更新流程" class="headerlink" title="3.4.1 数据更新流程"></a>3.4.1 数据更新流程</h3><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/20230423170339991.png"></p>
+<ol>
+<li>执行器先从 InnoDB 引擎中找到数据，如果在 Buffer Pool 内存中则直接返回；如果不在则【随机读】查询磁盘文件后返回</li>
+<li>执行器拿到数据之后会先修改数据，然后调用 InnoDB 引擎接口重新写入数据</li>
+<li>InnoDB 引擎将数据更新到内存，同时【顺序写】数据到 redolog 中，此时 redolog 状态为 prepare</li>
+<li>执行器生成这个操作的 binlog</li>
+<li>执行器调用 InnoDB 引擎的事务提交接口，InnoDB 引擎把刚刚写完的 redolog 状态改为 commit，数据更新完成</li>
+</ol>
+<h3 id="3-4-2-【随机读写】和【顺序读写】"><a href="#3-4-2-【随机读写】和【顺序读写】" class="headerlink" title="3.4.2 【随机读写】和【顺序读写】"></a>3.4.2 【随机读写】和【顺序读写】</h3><p>因为，【顺序读写】的效率远远高于【随机读写】。</p>
+<p>所以，为了保证数据的一致性，会先将数据的更新结果【顺序写】入到 redolog 日志文件中，然后再将数据写入到对应的磁盘文件中【WAL（write ahead log）机制：先写日志，再写数据】。这样的设计，其效率优于直接随机读写磁盘文件。</p>
+<p>由此可知，如果发生异常情况，导致实际数据未能写入到磁盘，只要日志文件保存成功了，那么数据就不会丢失，可以根据日志来进行数据恢复。</p>
+<h3 id="3-4-3-数据恢复分析"><a href="#3-4-3-数据恢复分析" class="headerlink" title="3.4.3 数据恢复分析"></a>3.4.3 数据恢复分析</h3><ul>
+<li>redolog 处于 prepare 状态，binlog 未写入，干掉 redolog 的 prepare 状态，数据更新操作丢失、回滚；</li>
+<li>redolog 处于 prepare 状态，binlog 已写入，redolog 的 prepare 状态改为 commit，更新数据提交</li>
+</ul>
+<h1 id="四、不能用于事务的操作"><a href="#四、不能用于事务的操作" class="headerlink" title="四、不能用于事务的操作"></a>四、不能用于事务的操作</h1><ul>
+<li>创建数据库（create database）</li>
+<li>修改数据库（alter database）</li>
+<li>删除数据库（drop database）</li>
+<li>恢复数据库（restore database）</li>
+<li>加载数据库（load database）</li>
+<li>备份日志文件（backup log）</li>
+<li>恢复日志文件（restore log）</li>
+<li>更新统计数据（update statitics）</li>
+<li>授权操作（grant）</li>
+<li>复制事务日志（dump tran）</li>
+<li>磁盘初始化（disk init）</li>
+<li>更新使用sp_configure后的系统配置（reconfigure）</li>
+</ul>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Database</tag>
       </tags>
   </entry>
 </search>

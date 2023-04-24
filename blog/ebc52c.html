@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>Tag: MySQL |  Liangxj</title>
+      <title>事务的四种隔离级别 |  Liangxj</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,131 +53,214 @@
       
     <main class="content on">
       <section class="outer">
-  
-  
-  <article class="articles">
+  <article
+  id="post-事务的四种隔离级别"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">#&nbspMySQL</h1>
-    
-    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  事务的四种隔离级别
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/ebc52c.html" class="article-date">
+  <time datetime="2023-04-24T03:18:56.000Z" itemprop="datePublished">2023-04-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/MySQL/">MySQL</a>
+  </div>
   
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2023" class="archive-year">2023</a>
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">474</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">1 分钟</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
-    <div class="archives">
       
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/587418e1.html" class="archive-article-date">
-  <time datetime="2023-04-24T03:37:42.000Z" itemprop="datePublished">04/24</time>
-</a>
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/587418e1.html"
-    >数据库事务</a> 
-</h2>
+  <ol>
+<li>Read Uncommitted（读未提交）：保证了读取过程中不会读取到非法数据。</li>
+<li>READ COMMITTED（读已提交）：大多数主流数据库的默认事务等级，保证了一个事务不会读到另一个并行事务已修改但仍未提交的数据，避免了“脏读”。该级别适用大多数系统。</li>
+<li>REPEATABLE READ（可重复读）：保证了一个事务不会修改已经由另一个事务读取但未提交（回滚）的数据。避免了“脏读”和“不可重复读”，但是带来了更多的性能损失。</li>
+<li>Serializable（串行化）：最严格的级别，事务串行执行，资源消耗最大。</li>
+</ol>
+<table border="1" style="table-layout:fixed;">
+    <tr>
+        <th style="text-align:center">隔离级别</th>
+        <th style="text-align:center">脏读<br>Dirty reads</th>
+        <th style="text-align:center">脏读<br>Dirty reads</th>
+        <th style="text-align:center">幻读<br>phantom</th>
+    </tr>
+    <tr>
+        <td>Read Uncommitted<br>读未提交（不加锁）</td>
+        <td bgcolor="#73d13d">√</td>
+        <td bgcolor="#73d13d">√</td>
+        <td bgcolor="#73d13d">√</td>
+    </tr>
+    <tr>
+        <td>READ COMMITTED<br>读已提交（RC）</td>
+        <td bgcolor="#ff4d4f">×</td>
+        <td bgcolor="#73d13d">√</td>
+        <td bgcolor="#73d13d">√</td>
+    </tr>
+    <tr>
+        <td>REPEATABLE READ<br>可重复读（RR）（默认）</td>
+        <td bgcolor="#ff4d4f">×</td>
+        <td bgcolor="#ff4d4f">×</td>
+        <td bgcolor="#73d13d">√</td>
+    </tr>
+    <tr>
+        <td>Serializable<br>串行化（全程加锁）</td>
+        <td bgcolor="#ff4d4f">×</td>
+        <td bgcolor="#ff4d4f">×</td>
+        <td bgcolor="#ff4d4f">×</td>
+    </tr>
+</table>
+
+
+<ul>
+<li>脏读：读到了其他事务未提交的脏数据。<br>例如：事务 B 执行过程中修改了数据 X，在未提交前，事务 A 也读取了 X，但事务 B 却回滚了，这样事务 A 就形成了脏读。</li>
+<li>不可重复读：在一个事务内，最开始读到的数据和事务结束前任意时刻读到的同一批数据出现不一致的情况。<br>例如：事务 A 先读取了一条数据，然后再执行逻辑的时候，事务 B 将这条数据改变了，然后事务 A 再次读取该数据，发现数据不匹配，这就是所谓的不可重复读。</li>
+<li>幻读：事务的某次 select 操作得到的结果所表示的数据状态无法支撑其后续的业务操作。<br>例如：事务 A select 某条记录是否存在，不存在，准备插入此记录，但执行 insert 操作的时候发现此记录已存在，此时就产生了幻读。</li>
+</ul>
+<p></br></br></br></br></p>
  
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Database/" rel="tag">Database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
-
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/ebc52c.html" class="archive-article-date">
-  <time datetime="2023-04-24T03:18:56.000Z" itemprop="datePublished">04/24</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/ebc52c.html"
-    >事务的四种隔离级别</a> 
-</h2>
- 
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Database/" rel="tag">Database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
-
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/3ebaa5b9.html" class="archive-article-date">
-  <time datetime="2023-03-24T02:16:14.000Z" itemprop="datePublished">03/24</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/3ebaa5b9.html"
-    >MySQL之Date</a> 
-</h2>
- 
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Database/" rel="tag">Database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
-
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/45b6c374.html" class="archive-article-date">
-  <time datetime="2023-03-24T02:15:18.000Z" itemprop="datePublished">03/24</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/45b6c374.html"
-    >MySQL之CRUD</a> 
-</h2>
- 
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Database/" rel="tag">Database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
-
-    
-  </div>
-</article>
-      
+      <!-- reward -->
       
     </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/blog/ebc52c.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Database/" rel="tag">Database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
   </div>
-  
-  
+
+   
+  <nav class="article-nav">
+    
+      <a href="/blog/587418e1.html" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            数据库事务
+          
+        </div>
+      </a>
+    
+    
+      <a href="/blog/c034f861.html" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">椰汁南瓜西米露</div>
+      </a>
+    
+  </nav>
 
   
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -312,6 +395,22 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link

@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>数据库事务 |  Liangxj</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-数据库事务"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  数据库事务
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/587418e1.html" class="article-date">
+  <time datetime="2023-04-24T03:37:42.000Z" itemprop="datePublished">2023-04-24</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/MySQL/">MySQL</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">3.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">13 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>数据库事务就是一组 SQL 语句，这组 SQL 语句是一个逻辑工作单元。该单元<strong>作为一个整体永久性地修改</strong>或<strong>作为一个整体取消</strong>对数据库的修改。</p>
+<p>定义事务的语句一般有三条：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> TRANSACTION; <span class="comment">-- 表示事务开始</span></span><br><span class="line"><span class="keyword">COMMIT</span>;            <span class="comment">-- 表示事务提交</span></span><br><span class="line"><span class="keyword">ROLLBACK</span>;          <span class="comment">-- 表示事务回滚</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="一、-当前读和快照读"><a href="#一、-当前读和快照读" class="headerlink" title="一、 当前读和快照读"></a>一、 当前读和快照读</h1><h2 id="1-1-当前读"><a href="#1-1-当前读" class="headerlink" title="1.1 当前读"></a>1.1 当前读</h2><p>当前读<strong>读取的是数据的最新版本</strong>，要保证其他并发事务不能修改当前记录，所以会对读取的记录进行加锁。</p>
+<p>像 select …… lock in share mode（共享锁）；select …… for update，update，insert，delete（排他锁）这些操作都会触发当前读。</p>
+<h2 id="1-2-快照读"><a href="#1-2-快照读" class="headerlink" title="1.2 快照读"></a>1.2 快照读</h2><p>像不加锁的 select …… 操作就是快照读，即不加锁的非阻塞读。</p>
+<p>快照读的前提是：<strong>隔离级别不是串行级别</strong>，串行级别下的快照读会退化成当前读。</p>
+<p>之所以出现快照读的情况，是基于提高并发性能的考虑，快照读的实现是基于多版本并发控制，即 MVCC，可以认为 MVCC 是行锁的一个变种，但它在很多情况下，避免了加锁操作，降低了开销；既然是基于多版本，即快照读<strong>可能读到的并不一定是数据的最新版本，而有可能是之前的历史版本</strong>。</p>
+<h1 id="二、MVCC（多版本并发控制）"><a href="#二、MVCC（多版本并发控制）" class="headerlink" title="二、MVCC（多版本并发控制）"></a>二、MVCC（多版本并发控制）</h1><p>MVCC（Multi-Version Concurrency Control），即多版本并发控制，是 MySQL 事务隔离级别中的一个重要概念。</p>
+<p>这是一种并发控制的方法，一般在数据库管理系统中，实现对数据库的并发访问，在编程语言中实现事务内存。</p>
+<p>MVCC 在 MySQL InnoDB 中的实现主要是为了提高数据库并发性能，用更好的方式去处理读-写冲突，做到即使有读写冲突时，也能做到不加锁，非阻塞并发读。</p>
+<p>这仅仅只是一种理想的概念，即：维持一个数据的多个版本，使得读写操作没有冲突。</p>
+<p>快照读就是 MySQL 为了实现 MVCC 理想模型，的其中一个具体非阻塞读功能。</p>
+<h2 id="2-1-MVCC-实现原理"><a href="#2-1-MVCC-实现原理" class="headerlink" title="2.1 MVCC 实现原理"></a>2.1 MVCC 实现原理</h2><p>MySQL 4.1开始支持每个 InnoDB 引擎的表单独放到一个表空间里。InnoDB 通过使用 MVCC 来获取高并发性，并且实现 SQL 标准的 4 种隔离级别，同时使用一种被称为 next-key locking 的策略来避免幻读（phantom）现象。</p>
+<p>除此之外 InnoDB 引擎还提供了插入缓存（insert buffer）、二次写（double write）、自适应哈西索引（adaptive hash index）、预读（read ahead）等高性能技术。</p>
+<h3 id="2-1-1-隐式字段"><a href="#2-1-1-隐式字段" class="headerlink" title="2.1.1 隐式字段"></a>2.1.1 隐式字段</h3><ul>
+<li>DB_TRX_ID：6byte，创建或者最后一次修改该记录的事务 ID</li>
+<li>DB_ROW_ID：6byte，隐藏主键【如果当前表有主键，则隐藏主键&#x3D;主键；如果没有主键，则 InnoDB 会自动以 DB_ROW_ID 产生一个聚簇索引】</li>
+<li>DB_ROLL_PTR：7byte，回滚指针【如果是新插入的数据，回滚指针为null】</li>
+</ul>
+<p>例如：insert 一条数据</p>
+<table border="1" style="table-layout:fixed;">
+    <tr>
+        <th style="text-align:center" bgcolor="#91d5ff">name</th>
+        <th style="text-align:center" bgcolor="#91d5ff">age</th>
+        <th style="text-align:center" bgcolor="#91d5ff">gender</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_TRX_ID</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_ROLL_PTR</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_ROW_ID</th>
+    </tr>
+    <tr align="center">
+        <td bgcolor="#91d5ff">李四</td>
+        <td bgcolor="#91d5ff">12</td>
+        <td bgcolor="#91d5ff">man</td>
+        <td bgcolor="#ffa940">1</td>
+        <td bgcolor="#ffa940">1</td>
+        <td bgcolor="#ffa940">null</td>
+    </tr>
+    <tr align="center">
+        <td colspan="3">对用户可见</td>
+        <td colspan="3">对用户不可见</td>
+    </tr>
+</table>
+
+<h3 id="2-1-2-undolog（回滚日志）"><a href="#2-1-2-undolog（回滚日志）" class="headerlink" title="2.1.2 undolog（回滚日志）"></a>2.1.2 undolog（回滚日志）</h3><p>同一条数据，多次修改会存在多个历史版本，保存在 undolog 中，形成一个<strong>线性表（链表）</strong>。其中链首存储的是最新的历史记录，链尾是最早的历史记录。</p>
+<p>数据表中有多条数据，多条数据发生了多次修改，那么则会存在多个链表。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> table_a <span class="keyword">SET</span> name <span class="operator">=</span> &quot;李四&quot;;</span><br></pre></td></tr></table></figure>
+
+<table border="1" style="table-layout:fixed;">
+    <tr>
+        <th style="text-align:center" bgcolor="#40a9ff">name</th>
+        <th style="text-align:center" bgcolor="#40a9ff">age</th>
+        <th style="text-align:center" bgcolor="#40a9ff">gender</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_TRX_ID</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_ROLL_PTR</th>
+        <th style="text-align:center" bgcolor="#ffa940">DB_ROW_ID</th>
+    </tr>
+    <tr align="center">
+        <td bgcolor="#40a9ff">李四</td>
+        <td bgcolor="#40a9ff">12</td>
+        <td bgcolor="#40a9ff">man</td>
+        <td bgcolor="#ffa940">2</td>
+        <td bgcolor="#ffa940">1</td>
+        <td bgcolor="#ffa940">0x123</td>
+    </tr>
+    <tr align="center">
+        <td colspan="3">对用户可见</td>
+        <td colspan="3">对用户不可见</td>
+    </tr>
+</table>
+这时旧数据会保存到 undolog 中，新数据的【回滚指针（DB_ROLL_PTR）】指向 undolog 中旧数据的【回滚指针（DB_ROLL_PTR）】
+
+<h3 id="2-1-3-readview（读视图）"><a href="#2-1-3-readview（读视图）" class="headerlink" title="2.1.3 readview（读视图）"></a>2.1.3 readview（读视图）</h3><p>事务在进行快照读（select ……）的时候，会产生【readview（读视图）】</p>
+<p>事务在执行快照读的那一刻，会生成数据库系统当前的一个快照。记录并维护系统当前活跃事务的ID（当每个事务开启时，都会被分配一个ID, 这个ID是递增的，所以最新的事务，ID值越大）</p>
+<ul>
+<li>trx_list：系统活跃的事务 ID</li>
+<li>up_limit_id：列表中事务最小的 ID</li>
+<li>low_limit_id：系统尚未分配的下一个事务 ID</li>
+</ul>
+<p>当一个事务在进行快照读时，能否读取到其他事务刚刚 update 并 commit 的记录？</p>
+<ol>
+<li>首先判断 DB_TRX_ID 和 update_limit_id 的关系。如果 DB_TRX_ID &lt; update_limit_id，则当前事务能看到 DB_TRX_ID 所 commit 的记录；否则进入下个判断</li>
+<li>接着判断 DB_TRX_ID 和 low_limit_id 的关系。如果 DB_TRX_ID &gt;&#x3D; low_limit_id，则代表 DB_TRX_ID 所 commit 的记录是在生成 readview 之后，对于当前事务肯定是不可见的；反之进入下个判断</li>
+<li>最后判断 DB_TRX_ID 和 trx_list 的关系。如果 DB_TRX_ID 存在于 【活跃事务（trx_list）】中，则代表在生成 readview 的时候，DB_TRX_ID 还是处在活跃状态，还没有 commit，因此 DB_TRX_ID update 的数据在当前事务是看不到的；如果不在，则说明这个事务在 readview 生成之前就已经 commit 了，那么DB_TRX_ID update 的结果是能够看见的</li>
+</ol>
+<h4 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h4><table>
+<thead>
+<tr>
+<th>事务1</th>
+<th>事务2</th>
+<th>事务3</th>
+<th>事务4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>begin（开启）</td>
+<td>begin（开启）</td>
+<td>begin（开启）</td>
+<td>begin（开启）</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>updatecommit</td>
+</tr>
+<tr>
+<td></td>
+<td>select ……（快照读）</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>此时事务2能不能读取到事务4 commit 的记录？</p>
+<p>分析：事务2 select ……（快照读）产生的 readview</p>
+<table>
+<thead>
+<tr>
+<th>trx_list</th>
+<th>1，2，3（因为4已经 commit，因此不是活跃事务）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>up_limit_id</td>
+<td>1</td>
+</tr>
+<tr>
+<td>low_limit_id</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>DB_TRX_ID</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ol>
+<li>4 &gt; 1（DB_TRX_ID &gt; update_limit_id），进入下个判断</li>
+<li>4 &lt; 5（DB_TRX_ID &lt; low_limit_id），进入下个判断</li>
+<li>4 不存在于 trx_list 中，事务2 select ……（快照读）能够看到事务4 commit 的记录。</li>
+</ol>
+<p>实际测试：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;autocommit&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name <span class="operator">|</span> <span class="keyword">Value</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> autocommit    <span class="operator">|</span> <span class="keyword">ON</span>    <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">set</span> autocommit<span class="operator">=</span><span class="number">0</span>;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;autocommit&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> Variable_name <span class="operator">|</span> <span class="keyword">Value</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="operator">|</span> autocommit    <span class="operator">|</span> OFF   <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+-------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>窗口1</th>
+<th>窗口2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mysql&gt; begin;Query OK, 0 rows affected (0.00 sec)</td>
+<td>mysql&gt; begin;Query OK, 0 rows affected (0.00 sec)</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from tt17;+—-+——+——+| id | name | age  |+—-+——+——+|  1 | 1    |    1 ||  2 | 2    |    2 ||  3 | 3    |    3 |+—-+——+——+3 rows in set (0.00 sec)</td>
+<td>mysql&gt; select * from tt17;+—-+——+——+| id | name | age  |+—-+——+——+|  1 | 1    |    1 ||  2 | 2    |    2 ||  3 | 3    |    3 |+—-+——+——+3 rows in set (0.00 sec)</td>
+</tr>
+<tr>
+<td></td>
+<td>mysql&gt; update tt17 set name &#x3D; “zhangsan”;Query OK, 3 rows affected (0.00 sec)Rows matched: 3  Changed: 3  Warnings: 0mysql&gt; commit;Query OK, 0 rows affected (0.04 sec)</td>
+</tr>
+<tr>
+<td>mysql&gt; select * from tt17;+—-+——+——+| id | name | age  |+—-+——+——+|  1 | 1    |    1 ||  2 | 2    |    2 ||  3 | 3    |    3 |+—-+——+——+3 rows in set (0.00 sec)</td>
+<td>mysql&gt; select * from tt17;+—-+———-+——+| id | name     | age  |+—-+———-+——+|  1 | zhangsan |    1 ||  2 | zhangsan |    2 ||  3 | zhangsan |    3 |+—-+———-+——+3 rows in set (0.00 sec)</td>
+</tr>
+</tbody></table>
+<p>此时，在实际测试中，事务2 select ……（快照读）看不到事务4 commit 的记录，与分析结果相反！(╬￣皿￣)</p>
+<p>继续冷静分析：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> @<span class="variable">@transaction</span>_isolation;</span><br><span class="line">ERROR <span class="number">1193</span> (HY000): <span class="literal">Unknown</span> <span class="keyword">system</span> variable <span class="string">&#x27;transaction_isolation&#x27;</span></span><br><span class="line"><span class="comment">-- 这里可能会遇到 mysql-connector-java 的 jar 包版本高，而 mysql 版本低的情况。低版本的 mysql 只识别 tx_isolation，不识别 transaction_isolation</span></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> @<span class="variable">@tx</span>_isolation;</span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="operator">|</span> @<span class="variable">@tx</span>_isolation  <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="operator">|</span> REPEATABLE<span class="operator">-</span>READ <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+
+<p>可知当前数据的隔离级别为默认的可重复读（RR）。</p>
+<p>因为<strong>可重复读（RR）和读已提交（RC）生成 readview 的时机是不同的</strong>。</p>
+<ul>
+<li>读已提交（RC）每次在进行 select ……（快照读）的时候都会生成新的 readview；</li>
+<li>可重复读（RR）只有在第一次进行 select ……（快照读）的时候才会生成 readview，之后的读操作都只会用第一次生成的 readview</li>
+</ul>
+<p>在实际测试时，是先进行了一次 select ……（快照读），生成了 readview，与分析案例有出入，此时事务4仍然在 trx_list 中，在第三步判断时，commit 发生于生成快照读之后，因此看不到是正常现象。</p>
+<p>总结：</p>
+<ul>
+<li>隔离级别为读已提交（RC）的时候，事务2 select ……（快照读）可以看到事务4 commit 的记录；</li>
+<li>隔离级别为可重复读（RR）的时候，事务2 select ……（快照读）看不到事务4 commit 的记录</li>
+</ul>
+<h1 id="三、事务的-ACID-特性"><a href="#三、事务的-ACID-特性" class="headerlink" title="三、事务的 ACID 特性"></a>三、事务的 ACID 特性</h1><h2 id="3-1-A【Atomicity（原子性）】"><a href="#3-1-A【Atomicity（原子性）】" class="headerlink" title="3.1 A【Atomicity（原子性）】"></a>3.1 A【Atomicity（原子性）】</h2><p>一个事务中所包含的全部 SQL 语句是一个执行整体，不可分割，要么全执行，要么全取消。</p>
+<p><strong>通过【回滚日志（undolog）】来实现</strong></p>
+<h2 id="3-2-C【Consistency（一致性）】"><a href="#3-2-C【Consistency（一致性）】" class="headerlink" title="3.2 C【Consistency（一致性）】"></a>3.2 C【Consistency（一致性）】</h2><p>即数据库在事务操作前和事务处理后，其中的数据必须都要满足业务规范约束。如果在事务中出现错误，那么系统中的所有变化将自动地回滚，系统返回到原始状态。</p>
+<p>（例如：银行转账，应先减后加，如果减后断电没有加上，不满足业务规范的约束，事务就要回滚，转账取消）</p>
+<p><strong>依赖于其他三个特性来实现</strong></p>
+<h2 id="3-3-I【-Isolation（隔离性）】"><a href="#3-3-I【-Isolation（隔离性）】" class="headerlink" title="3.3 I【 Isolation（隔离性）】"></a>3.3 I【 Isolation（隔离性）】</h2><p>指的是多个事务并发地独立运行，而不能互相干扰，事务提交时根据当前数据库状态进行操作。</p>
+<p><strong>通过【MVCC】来实现</strong></p>
+<h3 id="3-3-1-四种隔离级别"><a href="#3-3-1-四种隔离级别" class="headerlink" title="3.3.1 四种隔离级别"></a>3.3.1 四种隔离级别</h3><h3 id="3-3-2-RR-和-RC"><a href="#3-3-2-RR-和-RC" class="headerlink" title="3.3.2 RR 和 RC"></a>3.3.2 RR 和 RC</h3><p>MVCC 只在 RR 和 RC 两个隔离级别下工作。</p>
+<ol>
+<li>在 RR 隔离级别下，【事务A】对某些记录的第一次查询会生成一个【快照（readview）】，此后【事务A】对这些记录的查询会继续使用这个【快照（readview）】。这会导致在生成【快照（readview）】之后，其他事务对这些记录的修改对【事务A】不可见；</li>
+<li>在 RC 隔离级别下，【事务B】对某些记录的第一次查询会生成一个【快照（readview）】，但是【事务B】之后对这些记录的查询都会重新生成一个【快照（readview）】。也就是说，其他事务对这些记录的修改对【事务B】可见；</li>
+<li>RC 的性能比 RR 好，因为 RC 允许【不可重复读】和【幻读】。</li>
+</ol>
+<h3 id="3-3-3-怎么处理幻读"><a href="#3-3-3-怎么处理幻读" class="headerlink" title="3.3.3 怎么处理幻读"></a>3.3.3 怎么处理幻读</h3><p>处理幻读有两种方案：</p>
+<ul>
+<li>将隔离级别提高到 Serializable 级别</li>
+<li>加 Next-Key Lock 锁</li>
+</ul>
+<p>一般不会将数据库的隔离级别设置为 Serializable，加 Next-Key Lock 锁是比较常用的方法。</p>
+<p>InnoDB 有三种锁算法：</p>
+<ul>
+<li>记录锁（Record Lock）：单个行记录加锁</li>
+<li>间隙锁（Gap Lock）：锁定一个范围，但不含记录本身</li>
+<li>临键锁（Next-Key Lock）：Record Lock + Gap Lock</li>
+</ul>
+<p>table_a 表中有如下数据：</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/20230423170339990.png"></p>
+<p>这里可知有：</p>
+<ul>
+<li>间隙锁：（-∞，1）</li>
+<li>记录锁：1</li>
+<li>间隙锁：（1，10）</li>
+<li>记录锁：10</li>
+<li>间隙锁：（10，30）</li>
+<li>记录锁：30</li>
+<li>间隙锁：（30，+∞）</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- uid列为主键</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> uid <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="comment">-- 主键uid=10记录存在，只对id=10的记录加Record Lock</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> uid <span class="operator">=</span> <span class="number">8</span>;</span><br><span class="line"><span class="comment">-- 主键uid=8记录不存在，加间隙锁Gap Lock：（1, 10）</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> uid <span class="operator">&gt;</span> <span class="number">12</span>;</span><br><span class="line"><span class="comment">-- 主键使用范围查询，上锁范围为：（10,30）∪30∪（30，+∞）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- age列为索引列</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> age <span class="operator">=</span> <span class="number">30</span>;</span><br><span class="line"><span class="comment">-- 条件过滤对应记录存在，除了会对主键uid=10的记录加Record Lock，</span></span><br><span class="line"><span class="comment">-- 还会对普通索引字段加锁：[10，50]</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> age <span class="operator">=</span> <span class="number">40</span>;</span><br><span class="line"><span class="comment">-- 条件过滤对应记录不存在，只会对普通索引字段加锁：(30，50]</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> age <span class="operator">&gt;</span> <span class="number">40</span>;</span><br><span class="line"><span class="comment">-- 普通索引使用范围查询，上锁范围为：（30，+∞）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_a <span class="keyword">WHERE</span> name <span class="operator">=</span> <span class="string">&#x27;AAA&#x27;</span>;</span><br><span class="line"><span class="comment">-- name列没有索引，则会进行全表扫描，所有记录都会加上临键锁，相当于锁表</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-4-D【Durability（持久性）】"><a href="#3-4-D【Durability（持久性）】" class="headerlink" title="3.4 D【Durability（持久性）】"></a>3.4 D【Durability（持久性）】</h2><p>也称为永久性，指的是事务在处理结束后，对数据库的修改是永久性的，即使系统故障也不会丢失。</p>
+<p><strong>通过【redolog】来实现</strong></p>
+<h3 id="3-4-1-数据更新流程"><a href="#3-4-1-数据更新流程" class="headerlink" title="3.4.1 数据更新流程"></a>3.4.1 数据更新流程</h3><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/20230423170339991.png"></p>
+<ol>
+<li>执行器先从 InnoDB 引擎中找到数据，如果在 Buffer Pool 内存中则直接返回；如果不在则【随机读】查询磁盘文件后返回</li>
+<li>执行器拿到数据之后会先修改数据，然后调用 InnoDB 引擎接口重新写入数据</li>
+<li>InnoDB 引擎将数据更新到内存，同时【顺序写】数据到 redolog 中，此时 redolog 状态为 prepare</li>
+<li>执行器生成这个操作的 binlog</li>
+<li>执行器调用 InnoDB 引擎的事务提交接口，InnoDB 引擎把刚刚写完的 redolog 状态改为 commit，数据更新完成</li>
+</ol>
+<h3 id="3-4-2-【随机读写】和【顺序读写】"><a href="#3-4-2-【随机读写】和【顺序读写】" class="headerlink" title="3.4.2 【随机读写】和【顺序读写】"></a>3.4.2 【随机读写】和【顺序读写】</h3><p>因为，【顺序读写】的效率远远高于【随机读写】。</p>
+<p>所以，为了保证数据的一致性，会先将数据的更新结果【顺序写】入到 redolog 日志文件中，然后再将数据写入到对应的磁盘文件中【WAL（write ahead log）机制：先写日志，再写数据】。这样的设计，其效率优于直接随机读写磁盘文件。</p>
+<p>由此可知，如果发生异常情况，导致实际数据未能写入到磁盘，只要日志文件保存成功了，那么数据就不会丢失，可以根据日志来进行数据恢复。</p>
+<h3 id="3-4-3-数据恢复分析"><a href="#3-4-3-数据恢复分析" class="headerlink" title="3.4.3 数据恢复分析"></a>3.4.3 数据恢复分析</h3><ul>
+<li>redolog 处于 prepare 状态，binlog 未写入，干掉 redolog 的 prepare 状态，数据更新操作丢失、回滚；</li>
+<li>redolog 处于 prepare 状态，binlog 已写入，redolog 的 prepare 状态改为 commit，更新数据提交</li>
+</ul>
+<h1 id="四、不能用于事务的操作"><a href="#四、不能用于事务的操作" class="headerlink" title="四、不能用于事务的操作"></a>四、不能用于事务的操作</h1><ul>
+<li>创建数据库（create database）</li>
+<li>修改数据库（alter database）</li>
+<li>删除数据库（drop database）</li>
+<li>恢复数据库（restore database）</li>
+<li>加载数据库（load database）</li>
+<li>备份日志文件（backup log）</li>
+<li>恢复日志文件（restore log）</li>
+<li>更新统计数据（update statitics）</li>
+<li>授权操作（grant）</li>
+<li>复制事务日志（dump tran）</li>
+<li>磁盘初始化（disk init）</li>
+<li>更新使用sp_configure后的系统配置（reconfigure）</li>
+</ul>
+<p></br></br></br></br></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/blog/587418e1.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Database/" rel="tag">Database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/blog/ebc52c.html" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">事务的四种隔离级别</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> Liangxj
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Liangxj"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/blog/f0b34752.html">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
