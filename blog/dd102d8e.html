@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>编程 |  Liangxj</title>
+      <title>nvm使用与报错 |  Liangxj</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -53,306 +53,189 @@
       
     <main class="content on">
       <section class="outer">
-  
-  
-  <article class="articles">
+  <article
+  id="post-nvm使用与报错"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">编程</h1>
-    
-    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  nvm使用与报错
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/dd102d8e.html" class="article-date">
+  <time datetime="2023-06-09T03:32:21.000Z" itemprop="datePublished">2023-06-09</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/NodeJS/">NodeJS</a>
+  </div>
   
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2023" class="archive-year">2023</a>
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">506</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">2 分钟</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
-    <div class="archives">
       
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/a3f5c67b.html" class="archive-article-date">
-  <time datetime="2023-06-09T09:46:19.000Z" itemprop="datePublished">06/09</time>
-</a>
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/a3f5c67b.html"
-    >NodeJS安装</a> 
-</h2>
+  <p>nvm 安装后建议修改镜像地址，否则 nodejs 下载会很慢</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm node_mirror https://npm.taobao.org/mirrors/node/</span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm npm_mirror https://npm.taobao.org/mirrors/npm/</span><br></pre></td></tr></table></figure>
+
+<h1 id="nvm-list"><a href="#nvm-list" class="headerlink" title="nvm list"></a>nvm list</h1><p>查看已安装的 nodejs版本</p>
+<h1 id="nvm-install"><a href="#nvm-install" class="headerlink" title="nvm install"></a>nvm install</h1><h1 id="nvm-uninstall"><a href="#nvm-uninstall" class="headerlink" title="nvm uninstall"></a>nvm uninstall</h1><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm list</span><br><span class="line"></span><br><span class="line">  * <span class="number">16.18</span>.<span class="number">0</span> (Currently <span class="keyword">using</span> 64-bit executable)</span><br><span class="line">    <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm install <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line">Downloading node.js version <span class="number">12.22</span>.<span class="number">12</span> (<span class="number">64</span><span class="literal">-bit</span>)...</span><br><span class="line">Complete</span><br><span class="line">Creating D:\nvm\temp</span><br><span class="line"></span><br><span class="line">Downloading npm version <span class="number">6.14</span>.<span class="number">16</span>... Complete</span><br><span class="line">Installing npm v6.<span class="number">14.16</span>...</span><br><span class="line"></span><br><span class="line">Installation complete. <span class="keyword">If</span> you want to use this version, <span class="built_in">type</span></span><br><span class="line"></span><br><span class="line">nvm use <span class="number">12.22</span>.<span class="number">12</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="nvm-use-报错"><a href="#nvm-use-报错" class="headerlink" title="nvm use 报错"></a>nvm use 报错</h1><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm list</span><br><span class="line"></span><br><span class="line">  * <span class="number">16.18</span>.<span class="number">0</span> (Currently <span class="keyword">using</span> 64-bit executable)</span><br><span class="line">    <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm use <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="keyword">exit</span> status <span class="number">145</span>: Ŀ¼���ǿյġ�</span><br><span class="line"></span><br><span class="line"><span class="keyword">exit</span> status <span class="number">1</span>: ���ļ��Ѵ���ʱ���޷��������ļ���</span><br></pre></td></tr></table></figure>
+
+<h2 id="exit-status-1-乱码"><a href="#exit-status-1-乱码" class="headerlink" title="exit status 1: 乱码"></a>exit status 1: 乱码</h2><p>报错原因：当前的CMD窗口没有执行该命令的权限，需要使用管理员权限打开的窗口执行nvm use命令</p>
+<p>报错原因：之前多次安装 node，出错了就删除包，再次安装，在 C:\Program Files 下是有一个 nodejs 的，但是由于已经删除了 node 的包，所以这个 nodejs 是个无效文件</p>
+<p>报错解决：重新安装该版本 nodejs</p>
+<h2 id="exit-status-5-乱码"><a href="#exit-status-5-乱码" class="headerlink" title="exit status 5: 乱码"></a>exit status 5: 乱码</h2><p>报错原因：nvm 不是安装在 C 盘，且当前命令提示符窗口是 user 权限</p>
+<p>报错解决：cmd 窗口使用管理员权限打开即可</p>
+<h2 id="exit-status-145-乱码"><a href="#exit-status-145-乱码" class="headerlink" title="exit status 145: 乱码"></a>exit status 145: 乱码</h2><p>报错原因：安装 nvm 或 nodejs 的文件本身或路径有误</p>
+<p>报错解决：如果是覆盖旧的 nvm 安装，建议删除 nvm 文件夹，然后重新安装 nvm</p>
+<ol>
+<li>检查安装 nvm 路径与设置放置 nodejs 的路径或文件，是否出现空格或中文，比如默认安装路径 C:\Program Files 中出现了空格。如果有，更改路径或文件夹名称后再使用 nvm use</li>
+<li>安装 nvm 前是否原本就有 nodejs 其它版本。如果有，且安装过程中选择合并了以前版本，可以删除 nvm 中所有 nodejs 版本（主要是安装 nvm 前就有的版本），重新安装所需 nodejs，再运行 nvm use</li>
+</ol>
  
-
-    </header>
-    
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/NodeJS/">NodeJS</a>
-  </div>
-
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/ff8c64c0.html" class="archive-article-date">
-  <time datetime="2023-06-09T03:33:37.000Z" itemprop="datePublished">06/09</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/ff8c64c0.html"
-    >NodeJS简介</a> 
-</h2>
- 
-
-    </header>
-    
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/NodeJS/">NodeJS</a>
-  </div>
-
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/dd102d8e.html" class="archive-article-date">
-  <time datetime="2023-06-09T03:32:21.000Z" itemprop="datePublished">06/09</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/dd102d8e.html"
-    >nvm使用与报错</a> 
-</h2>
- 
-
-    </header>
-    
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/NodeJS/">NodeJS</a>
-  </div>
-
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/47f664bf.html" class="archive-article-date">
-  <time datetime="2023-06-09T03:29:49.000Z" itemprop="datePublished">06/09</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/47f664bf.html"
-    >Lombok注解记录</a> 
-</h2>
- 
-
-    </header>
-    
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Lombok/">Lombok</a>
-  </div>
-
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/b369cd6a.html" class="archive-article-date">
-  <time datetime="2023-06-09T03:27:08.000Z" itemprop="datePublished">06/09</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/b369cd6a.html"
-    >Lombok介绍</a> 
-</h2>
- 
-
-    </header>
-    
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Lombok/">Lombok</a>
-  </div>
-
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/c0ad33ff.html" class="archive-article-date">
-  <time datetime="2023-06-09T00:51:04.000Z" itemprop="datePublished">06/09</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/c0ad33ff.html"
-    >JDK1.8之Lambda写法记录</a> 
-</h2>
- 
-
-    </header>
-    
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Java/">Java</a>
-  </div>
-
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/587418e1.html" class="archive-article-date">
-  <time datetime="2023-04-24T03:37:42.000Z" itemprop="datePublished">04/24</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/587418e1.html"
-    >数据库事务</a> 
-</h2>
- 
-
-    </header>
-    
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/MySQL/">MySQL</a>
-  </div>
-
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/ebc52c.html" class="archive-article-date">
-  <time datetime="2023-04-24T03:18:56.000Z" itemprop="datePublished">04/24</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/ebc52c.html"
-    >事务的四种隔离级别</a> 
-</h2>
- 
-
-    </header>
-    
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/MySQL/">MySQL</a>
-  </div>
-
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/3cd84c3d.html" class="archive-article-date">
-  <time datetime="2023-03-28T09:16:18.000Z" itemprop="datePublished">03/28</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/3cd84c3d.html"
-    >Docker命令与操作</a> 
-</h2>
- 
-
-    </header>
-    
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Docker/">Docker</a>
-  </div>
-
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/edc3fdf.html" class="archive-article-date">
-  <time datetime="2023-03-28T09:12:33.000Z" itemprop="datePublished">03/28</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/edc3fdf.html"
-    >Docker安装与配置_Linux</a> 
-</h2>
- 
-
-    </header>
-    
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Docker/">Docker</a>
-  </div>
-
-    
-    
-  </div>
-</article>
-      
+      <!-- reward -->
       
     </div>
-  </div>
-  
-  
-
-  
-  <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/categories/%E7%BC%96%E7%A8%8B/page/2/">2</a><a class="extend next" rel="next" href="/categories/%E7%BC%96%E7%A8%8B/page/2/">下一页</a>
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/blog/dd102d8e.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/" rel="tag">NodeJS</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/blog/ff8c64c0.html" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            NodeJS简介
+          
+        </div>
+      </a>
+    
+    
+      <a href="/blog/47f664bf.html" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Lombok注解记录</div>
+      </a>
+    
   </nav>
+
   
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -487,6 +370,22 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link
