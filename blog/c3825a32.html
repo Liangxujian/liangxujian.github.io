@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Nginx安装与使用 |  Liangxj</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/lxj.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Nginx安装与使用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Nginx安装与使用
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/c3825a32.html" class="article-date">
+  <time datetime="2023-07-17T03:43:49.000Z" itemprop="datePublished">2023-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Nginx/">Nginx</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <blockquote>
+<p>参考自博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/w410589502/article/details/70787468">linux nginx安装以及配置</a></p>
+</blockquote>
+<h1 id="一、Nginx-Linux-版本的基本使用"><a href="#一、Nginx-Linux-版本的基本使用" class="headerlink" title="一、Nginx Linux 版本的基本使用"></a>一、Nginx Linux 版本的基本使用</h1><p>下载地址：<a target="_blank" rel="noopener" href="http://nginx.org/">Nginx官方网址</a></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1565086188620.png" alt="1565086188620"></p>
+<p><em>其中，mainline 表示主线（最新）版本；stable 表示稳定版本</em></p>
+<p>或者</p>
+<p>在 Linux 中使用 wget 命令下载：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -c https://nginx.org/download/nginx-1.16.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1565086440569.png" alt="1565086440569"></p>
+<h1 id="二-安装步骤"><a href="#二-安装步骤" class="headerlink" title="二 安装步骤"></a>二 安装步骤</h1><h2 id="2-1-解压安装包"><a href="#2-1-解压安装包" class="headerlink" title="2.1 解压安装包"></a>2.1 解压安装包</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nginx-1.16.0.tar.gztar -zxvf nginx-1.16.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-进入安装目录"><a href="#2-2-进入安装目录" class="headerlink" title="2.2 进入安装目录"></a>2.2 进入安装目录</h2><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564470825825.png" alt="1564470825825"></p>
+<h2 id="2-3-Nginx-配置"><a href="#2-3-Nginx-配置" class="headerlink" title="2.3 Nginx 配置"></a>2.3 Nginx 配置</h2><h3 id="2-3-1-使用默认配置（推荐）"><a href="#2-3-1-使用默认配置（推荐）" class="headerlink" title="2.3.1 使用默认配置（推荐）"></a>2.3.1 使用默认配置（推荐）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure./configure</span><br></pre></td></tr></table></figure>
+
+<p>这时一般会出现错误，提示我们添加 gcc 环境</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564471268289.png" alt="1564471268289"></p>
+<h4 id="2-3-1-1-安装-gcc-环境"><a href="#2-3-1-1-安装-gcc-环境" class="headerlink" title="2.3.1.1 安装 gcc 环境"></a>2.3.1.1 安装 gcc 环境</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc-c++yum install gcc-c++</span><br></pre></td></tr></table></figure>
+
+<p><em>注：若 Linux 系统版本是 aliyun，一般已经安装了 gcc 环境；而 centos7 等系统大都需要用户安装</em></p>
+<h4 id="2-3-1-2-继续使用默认配置"><a href="#2-3-1-2-继续使用默认配置" class="headerlink" title="2.3.1.2 继续使用默认配置"></a>2.3.1.2 继续使用默认配置</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装到指定路径</span></span><br><span class="line">./configure --prefix=/usr/local/nginx./configure</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装到指定路径</span></span><br><span class="line">./configure --prefix=/usr/local/nginx</span><br></pre></td></tr></table></figure>
+
+<p>这里提示我们需要安装 PCRE 依赖库：</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564473284232.png" alt="1564473284232"></p>
+<h4 id="2-3-1-3-安装-PCRE-依赖库"><a href="#2-3-1-3-安装-PCRE-依赖库" class="headerlink" title="2.3.1.3 安装 PCRE 依赖库"></a>2.3.1.3 安装 PCRE 依赖库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y pcre pcre-develyum install -y pcre pcre-devel</span><br></pre></td></tr></table></figure>
+
+<p><em>PCRE（Perl Compatible Regular Expressions）是一个 Perl 库，包括 perl 兼容的</em>***正则表达式库***<em>。nginx 的 http 模块使用 pcre 来解析正则表达式，所以需要在 linux 上安装 pcre 库，pcre-devel 是使用 pcre 开发的一个二次开发库。</em></p>
+<h4 id="2-3-1-4-安装-zlib-依赖库"><a href="#2-3-1-4-安装-zlib-依赖库" class="headerlink" title="2.3.1.4 安装 zlib 依赖库"></a>2.3.1.4 安装 zlib 依赖库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y zlib zlib-develyum install -y zlib zlib-devel</span><br></pre></td></tr></table></figure>
+
+
+
+<p><em>zlib 库提供了很多种压缩和解压缩的方式， nginx 使用 zlib 对 http 包的内容进行 gzip ，所以需要在 Centos 上安装 zlib 库。</em></p>
+<h4 id="2-3-1-5-安装-OpenSSL-安全套接字层密码库"><a href="#2-3-1-5-安装-OpenSSL-安全套接字层密码库" class="headerlink" title="2.3.1.5 安装 OpenSSL 安全套接字层密码库"></a>2.3.1.5 安装 OpenSSL 安全套接字层密码库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openssl openssl-develyum install -y openssl openssl-devel</span><br></pre></td></tr></table></figure>
+
+<p><em>OpenSSL 是一个强大的安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及 SSL 协议，并提供丰富的应用程序供测试或其它目的使用。</em></p>
+<p><em>nginx 不仅支持 http 协议，还支持 https（即在 ssl 协议上传输 http），所以需要在 Centos 安装 OpenSSL 库。</em></p>
+<h4 id="2-3-1-6-最后再次执行默认配置"><a href="#2-3-1-6-最后再次执行默认配置" class="headerlink" title="2.3.1.6 最后再次执行默认配置"></a>2.3.1.6 最后再次执行默认配置</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564473993088.png" alt="1564473993088"></p>
+<p>成功！</p>
+<p>同时，<code>./configure</code>命令会创建一个 Makefile 文件，为 C 语言提供编译需要</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564474485304.png" alt="1564474485304"></p>
+<h4 id="1-2-3-2-自定义配置（不推荐）"><a href="#1-2-3-2-自定义配置（不推荐）" class="headerlink" title="1.2.3.2 自定义配置（不推荐）"></a>1.2.3.2 自定义配置（不推荐）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">./configure \</span><br><span class="line">--prefix=/usr/local/nginx \</span><br><span class="line">--conf-path=/usr/local/nginx/conf/nginx.conf \</span><br><span class="line">--pid-path=/usr/local/nginx/conf/nginx.pid \</span><br><span class="line">--lock-path=/var/lock/nginx.lock \</span><br><span class="line">--error-log-path=/var/log/nginx/error.log \</span><br><span class="line">--http-log-path=/var/log/nginx/access.log \</span><br><span class="line">--with-http_gzip_static_module \</span><br><span class="line">--http-client-body-temp-path=/var/temp/nginx/client \</span><br><span class="line">--http-proxy-temp-path=/var/temp/nginx/proxy \</span><br><span class="line">--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \</span><br><span class="line">--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \</span><br><span class="line">--http-scgi-temp-path=/var/temp/nginx/scgi./configure \</span><br><span class="line">--prefix=/usr/local/nginx \</span><br><span class="line">--conf-path=/usr/local/nginx/conf/nginx.conf \</span><br><span class="line">--pid-path=/usr/local/nginx/conf/nginx.pid \</span><br><span class="line">--lock-path=/var/lock/nginx.lock \</span><br><span class="line">--error-log-path=/var/log/nginx/error.log \</span><br><span class="line">--http-log-path=/var/log/nginx/access.log \</span><br><span class="line">--with-http_gzip_static_module \</span><br><span class="line">--http-client-body-temp-path=/var/temp/nginx/client \</span><br><span class="line">--http-proxy-temp-path=/var/temp/nginx/proxy \</span><br><span class="line">--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \</span><br><span class="line">--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \</span><br><span class="line">--http-scgi-temp-path=/var/temp/nginx/scgi</span><br></pre></td></tr></table></figure>
+
+<p><em>注：将临时文件目录指定为：&#x2F;var&#x2F;temp&#x2F;nginx，需要在 &#x2F;var 下创建 temp 及 nginx 目录</em></p>
+<h4 id="1-2-3-3-编译并安装-Nginx"><a href="#1-2-3-3-编译并安装-Nginx" class="headerlink" title="1.2.3.3 编译并安装 Nginx"></a>1.2.3.3 编译并安装 Nginx</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span></span><br><span class="line">make &amp;&amp; make installmake install</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span></span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<p>make ：编译，它从 Makefile 中读取指令，然后编译。</p>
+<p>make install ：安装，它从 Makefile 中读取指令，安装到指定的位置。</p>
+<h4 id="1-2-3-4-查看安装路径"><a href="#1-2-3-4-查看安装路径" class="headerlink" title="1.2.3.4 查看安装路径"></a>1.2.3.4 查看安装路径</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis nginx</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564474774892.png" alt="1564474774892"></p>
+<h4 id="1-2-3-5-安装目录文件分析"><a href="#1-2-3-5-安装目录文件分析" class="headerlink" title="1.2.3.5 安装目录文件分析"></a>1.2.3.5 安装目录文件分析</h4><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1565089768083.png" alt="1565089768083"></p>
+<ul>
+<li>conf：配置文件</li>
+<li>html：网页文件</li>
+<li>logs：日志文件</li>
+<li>sbin：主要二进制程序</li>
+</ul>
+<h2 id="2-4-启动、停止-Nginx"><a href="#2-4-启动、停止-Nginx" class="headerlink" title="2.4 启动、停止 Nginx"></a>2.4 启动、停止 Nginx</h2><p>进入 Nginx 安装目录（并不是 Nginx 的解压目录），执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">./sbin/nginx # 启动</span><br><span class="line">./nginx # 启动</span><br><span class="line">./nginx -s stop # 停止（此方式相当于先查出nginx进程id再使用kill命令强制杀掉进程）</span><br><span class="line">./nginx -s quit # 停止（此方式停止步骤是待nginx进程处理任务完毕进行停止）</span><br><span class="line">./nginx -s reload # 在提供服务的时候，重新刷新配置文件</span><br><span class="line">kill -INT 5531 # 其中5531就是nginx的主进程号，这种方法叫做nginx信号控制</span><br><span class="line">kill -HUP 5531 # 软重启</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">其实在nginx启动后，会在logs下有一个nginx.pid文件用于记录主进程号</span></span><br><span class="line">kill -INT &#x27;cat logs/nginx.pid&#x27;</span><br><span class="line">kill -HUP &#x27;cat logs/nginx.pid&#x27;./sbin/nginx # 启动</span><br><span class="line">./nginx # 启动</span><br><span class="line">./nginx -s stop # 停止（此方式相当于先查出nginx进程id再使用kill命令强制杀掉进程）</span><br><span class="line">./nginx -s quit # 停止（此方式停止步骤是待nginx进程处理任务完毕进行停止）</span><br><span class="line">./nginx -s reload # 在提供服务的时候，重新刷新配置文件</span><br><span class="line">kill -INT 5531 # 其中5531就是nginx的主进程号，这种方法叫做nginx信号控制</span><br><span class="line">kill -HUP 5531 # 软重启</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">其实在nginx启动后，会在logs下有一个nginx.pid文件用于记录主进程号</span></span><br><span class="line">kill -INT &#x27;cat logs/nginx.pid&#x27;</span><br><span class="line">kill -HUP &#x27;cat logs/nginx.pid&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-1-Nginx-信号控制"><a href="#2-4-1-Nginx-信号控制" class="headerlink" title="2.4.1 Nginx 信号控制"></a>2.4.1 Nginx 信号控制</h3><table>
+<thead>
+<tr>
+<th>信号</th>
+<th>信号说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TERM, INT</td>
+<td>Quick shutdown</td>
+</tr>
+<tr>
+<td>QUIT</td>
+<td>Graceful shutdown 优雅地关闭线程，即等请求结束后再关闭</td>
+</tr>
+<tr>
+<td>KILL</td>
+<td>Halts a stubborn process 停止一个顽固的过程</td>
+</tr>
+<tr>
+<td>HUP</td>
+<td>Configuration reload 配置重新加载 Start the new worker processes with a new configuration 使用新配置启动新的工作进程 Gracefully shutdown the old worker processes 优雅地关闭旧的工作进程，即工作中的暂时不变，先变工作中的进程 该命令也称为：软重启</td>
+</tr>
+<tr>
+<td>USR1</td>
+<td>Reopen the log files 重新打开日志文件 重读日志，在日志按月&#x2F;日分割时有用 例如我需要每天一个日志文件，但nginx认的并不是文件名，而是内存节点 就算重命名或新建名称一致的文件，还是一直往旧日志文件上写，这时就用USER1</td>
+</tr>
+<tr>
+<td>USR2</td>
+<td>Upgrade Executable on the fly 动态升级可执行文件（平滑地升级）</td>
+</tr>
+<tr>
+<td>WINCH</td>
+<td>Gracefully shutdown the worker processes 正常关闭工作进程（配合USER2来进行升级）</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-2-查看-Nginx-配置是否有误"><a href="#2-4-2-查看-Nginx-配置是否有误" class="headerlink" title="2.4.2 查看 Nginx 配置是否有误"></a>2.4.2 查看 Nginx 配置是否有误</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./sbin/nginx -t./sbin/nginx -t</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-3-查看-Nginx-是否启动成功"><a href="#2-4-3-查看-Nginx-是否启动成功" class="headerlink" title="2.4.3 查看 Nginx 是否启动成功"></a>2.4.3 查看 Nginx 是否启动成功</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps aux|grep nginx</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这里能够看到，nginx分为两个进程：主进程-子进程，子进程负责工作，主进程负责管控子进程</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564475996668.png" alt="1564475996668"></p>
+<p>或者</p>
+<p>看能不能访问 Nginx 欢迎首页</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564479236790.png" alt="1564479236790"></p>
+<p>同时，也可以在外部局域网内使用浏览器进行访问欢迎页面</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564479385795.png" alt="1564479385795"></p>
+<p><em>PS：如果 curl 访问成功了，但在外部访问失败，则应该是 Linux 防火墙对端口进行了拦截</em></p>
+<h2 id="2-5-修改-Nginx-端口号"><a href="#2-5-修改-Nginx-端口号" class="headerlink" title="2.5 修改 Nginx 端口号"></a>2.5 修改 Nginx 端口号</h2><p>Nginx 的默认端口号为：80</p>
+<h3 id="2-5-1-进入配置文件文件夹"><a href="#2-5-1-进入配置文件文件夹" class="headerlink" title="2.5.1 进入配置文件文件夹"></a>2.5.1 进入配置文件文件夹</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx/confcd /usr/local/nginx/conf</span><br></pre></td></tr></table></figure>
+
+<p><em>注：这里是usr下的安装路径，不是我们解压的安装包路径</em></p>
+<h3 id="2-5-2-备份配置文件（可略）"><a href="#2-5-2-备份配置文件（可略）" class="headerlink" title="2.5.2 备份配置文件（可略）"></a>2.5.2 备份配置文件（可略）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp nginx.conf nginx.conf.backcp nginx.conf nginx.conf.back</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-3-编辑-nginx-conf-配置文件"><a href="#2-5-3-编辑-nginx-conf-配置文件" class="headerlink" title="2.5.3 编辑 nginx.conf 配置文件"></a>2.5.3 编辑 nginx.conf 配置文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi nginx.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564475593864.png" alt="1564475593864"></p>
+<p>将端口号修改为 81（自定）；Esc + :wq（保存并退出）</p>
+<p>记住需要重新启动（推荐）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./nginx -s quit</span><br><span class="line">./nginx./nginx -s quit</span><br><span class="line">./nginx</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<p>重新刷新配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx -s reload./nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-6-设置-Nginx-开机自启动"><a href="#2-6-设置-Nginx-开机自启动" class="headerlink" title="2.6 设置 Nginx 开机自启动"></a>2.6 设置 Nginx 开机自启动</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/rc.localvi /etc/rc.local</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-1-添加语句"><a href="#2-6-1-添加语句" class="headerlink" title="2.6.1 添加语句"></a>2.6.1 添加语句</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/nginx/sbin/nginx</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564476563993.png" alt="1564476563993"></p>
+<h3 id="2-6-2-设置权限"><a href="#2-6-2-设置权限" class="headerlink" title="2.6.2 设置权限"></a>2.6.2 设置权限</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 /etc/rc.local</span><br></pre></td></tr></table></figure>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/blog/c3825a32.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/blog/ad720447.html" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Nginx配置
+          
+        </div>
+      </a>
+    
+    
+      <a href="/blog/b54088f4.html" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">nginx.conf文件解析</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> Liangxj
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/lxj-side.svg" alt="Liangxj"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/blog/f0b34752.html">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
