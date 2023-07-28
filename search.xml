@@ -458,52 +458,7 @@
 <blockquote>
 <p>NIO 的三大核心 API：Buffer、Channel、Selector</p>
 </blockquote>
-<h3 id="2-6-1-Buffer（缓冲区）"><a href="#2-6-1-Buffer（缓冲区）" class="headerlink" title="2.6.1 Buffer（缓冲区）"></a>2.6.1 Buffer（缓冲区）</h3><p>IO 面向流（Stream oriented），NIO 面向缓冲区（Buffer oriented）。</p>
-<p>Buffer 是一个对象，它包含一些要写入或者要读出的数据。在面向流的 I&#x2F;O 中·可以将数据直接写入或者将数据直接读到 Stream 对象中。虽然 Stream 中也有 Buffer 开头的扩展类，但只是流的包装类，还是从流读到缓冲区，而 NIO 却是直接读到 Buffer 中进行操作。</p>
-<p>在 NIO 厍中，所有数据都是用缓冲区处理的。在读取数据时，它是直接读到缓冲区中的；在写入数据时，写入到缓冲区中。任何时候访问 NIO 中的数据，都是通过缓冲区进行操作。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Buffer</span> &#123;</span><br><span class="line">    <span class="comment">// 关系: mark &lt;= position &lt;= limit &lt;= capacity</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">mark</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 下一个要被读写的byte元素的下标索引</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">position</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 缓冲区中第一个不能读写的元素的数组下标索引，也可以认为是缓冲区中实际元素的数量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> limit;</span><br><span class="line">    <span class="comment">// 缓冲区能够容纳元素的最大数量，这个值在缓冲区创建时被设定，而且不能够改变</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> capacity;</span><br><span class="line">    <span class="type">long</span> address; <span class="comment">// Used only by direct buffers，直接内存的地址</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="ByteBuffer"><a href="#ByteBuffer" class="headerlink" title="ByteBuffer"></a>ByteBuffer</h4><p>最常用的缓冲区是 ByteBuffer，一个 ByteBuffer 提供了一组功能用于操作 byte 数组。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">ByteBuffer</span> <span class="keyword">extends</span> <span class="title class_">Buffer</span> <span class="keyword">implements</span> <span class="title class_">Comparable</span>&lt;ByteBuffer&gt; &#123;</span><br><span class="line">    <span class="comment">// 仅限堆内内存使用</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">byte</span>[] hb;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> offset;</span><br><span class="line">    <span class="type">boolean</span> isReadOnly;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="ByteBuffer-API"><a href="#ByteBuffer-API" class="headerlink" title="ByteBuffer.API"></a>ByteBuffer.API</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 申请堆外内存</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">allocateDirect</span><span class="params">(<span class="type">int</span> capacity)</span></span><br><span class="line"><span class="comment">// 申请堆内内存</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">allocate</span><span class="params">(<span class="type">int</span> capacity)</span> </span><br><span class="line"><span class="comment">// 原始字节包装成ByteBuffer</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">wrap</span><span class="params">(<span class="type">byte</span>[] array, <span class="type">int</span> offset, <span class="type">int</span> length)</span></span><br><span class="line"><span class="comment">// 原始字节包装成ByteBuffer</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">wrap</span><span class="params">(<span class="type">byte</span>[] array)</span></span><br><span class="line"><span class="comment">// 创建共享此缓冲区内容的新字节缓冲区</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">duplicate</span><span class="params">()</span></span><br><span class="line"><span class="comment">// 分片，创建一个新的字节缓冲区</span></span><br><span class="line"><span class="comment">// 新ByteBuffer的开始位置是此缓冲区的当前位置position</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">slice</span><span class="params">()</span></span><br><span class="line"><span class="comment">// 获取字节内容</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="type">byte</span> <span class="title function_">get</span><span class="params">()</span></span><br><span class="line"><span class="comment">// 从ByteBuffer偏移offset的位置，获取length长的字节数组，然后返回当前ByteBuffer对象</span></span><br><span class="line"><span class="keyword">public</span> ByteBuffer <span class="title function_">get</span><span class="params">(<span class="type">byte</span>[] dst, <span class="type">int</span> offset, <span class="type">int</span> length)</span></span><br><span class="line"><span class="comment">// 设置byte内存</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">put</span><span class="params">(<span class="type">byte</span> b)</span>;</span><br><span class="line"><span class="comment">// 以offset为起始位置设置length长src的内容，并返回当前ByteBuffer对象</span></span><br><span class="line"><span class="keyword">public</span> ByteBuffer <span class="title function_">put</span><span class="params">(<span class="type">byte</span>[] src, <span class="type">int</span> offset, <span class="type">int</span> length)</span>;</span><br><span class="line"><span class="comment">// 将没有读完的数据移到到缓冲区的初始位置，position设置为最后一没读字节数据的下个索引，limit重置为为capacity</span></span><br><span class="line"><span class="comment">// 读-&gt;写模式，相当于flip的反向操作</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">compact</span><span class="params">()</span>;</span><br><span class="line"><span class="comment">// 是否是直接内存</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="type">boolean</span> <span class="title function_">isDirect</span><span class="params">()</span>;</span><br><span class="line"><span class="comment">// 转换缓冲区为写模式</span></span><br><span class="line"><span class="keyword">public</span> ByteBuffer <span class="title function_">clear</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>创建大小为 10 的 ByteBuffer 对象</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">ByteBuffer</span> <span class="variable">bf</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1943529272.jpg"></p>
-<ol start="2">
-<li>写入数据</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ByteBuffer buf ByteBuffer.allocate(<span class="number">10</span>);</span><br><span class="line">buf.put(<span class="string">&quot;csc&quot;</span>.getBytes());</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/2064948393.jpg"></p>
-<ol start="3">
-<li>调用 flip 转换缓冲区为读模式</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">buf.flip();</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/L2RlZmF1bHQvaW5.jpg"></p>
-<ol start="4">
-<li>读取缓冲区中到内容，buf.get()</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">System.out.println((<span class="type">char</span>) buf.get());</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/EwTmpOa09HRmhZVG.jpg"></p>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/pT0RJME5qSm1Zemsw.jpg"></p>
-<ol start="5">
-<li>调用 clear() 或 compact() 转换缓冲区为写模式，循环至步骤 1</li>
-</ol>
-<p>除了 ByteBuffer，还有其他的一些缓冲区，事实上，每一种 Java 基本类型（除了 Boolean 类型）都对应有一种缓冲区。</p>
-<h3 id="2-6-2-Channel（通道）"><a href="#2-6-2-Channel（通道）" class="headerlink" title="2.6.2 Channel（通道）"></a>2.6.2 Channel（通道）</h3><p>NIO 通过 Channel（通道）进行读写。</p>
-<p>通道是双向的，可读也可写，而流的读写是单向的。</p>
-<p>无论读写，通道只能和 Buffer 交互。因为 Buffer，通道可以异步地读写。</p>
-<h3 id="2-6-3-Selector（选择器）"><a href="#2-6-3-Selector（选择器）" class="headerlink" title="2.6.3 Selector（选择器）"></a>2.6.3 Selector（选择器）</h3><p>NIO 有选择器，而 IO 没有。</p>
-<p>选择器满足了单个线程处理多个通道的效果，因此大大减少了线程的数量。</p>
-<p>因为线程之间的切换对于操作系统来说是昂贵的（每次切换线程都要重新读取线程之前的状态、值、上下文等信息），因此选择器提高了系统的效率。</p>
-<h3 id="2-6-4-原生-NIO-缺点"><a href="#2-6-4-原生-NIO-缺点" class="headerlink" title="2.6.4 原生 NIO 缺点"></a>2.6.4 原生 NIO 缺点</h3><p>然而，JDK 原生的 NIO 很难用。除了编程复杂、编程模型难之外，它还有以下让人诟病的问题：</p>
+<h3 id="原生-NIO-的一些缺点"><a href="#原生-NIO-的一些缺点" class="headerlink" title="原生 NIO 的一些缺点"></a>原生 NIO 的一些缺点</h3><p>JDK 原生的 NIO 并不好用，除了编程复杂、编程模型难之外，它还有以下让人诟病的问题：</p>
 <ul>
 <li>JDK 的 NIO 底层由 epoll 实现，该实现饱受诟病的空轮询 BUG 会导致 CPU 飙升 100%</li>
 <li>项目庞大后，自行实现的 NIO 很容易出现各类 BUG，维护成本较高</li>
@@ -516,14 +471,6 @@
 <h2 id="2-8-适用场景分析"><a href="#2-8-适用场景分析" class="headerlink" title="2.8 适用场景分析"></a>2.8 适用场景分析</h2><p>BIO 方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4 以前的唯一选择，但程序直观简单易理解。</p>
 <p>NIO 方式适用于连接数目多且连接比较短（轻操作）的架构，比如聊天服务器，并发局限于应用中，编程比较复杂，JDK1.4 开始支持。</p>
 <p>AIO 方式使用于连接数目多且连接比较长（重操作）的架构，比如相册服务器，充分调用 OS 参与并发操作，编程比较复杂，JDK7 开始支持。</p>
-<h1 id="三、一些关键类"><a href="#三、一些关键类" class="headerlink" title="三、一些关键类"></a>三、一些关键类</h1><h2 id="ServerBootstrap"><a href="#ServerBootstrap" class="headerlink" title="ServerBootstrap"></a>ServerBootstrap</h2><p>Netty 建立服务端的辅助类。</p>
-<h2 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h2><p>频道、通道的意思。</p>
-<p>是传入（入站）或者传出（出站）数据的载体。</p>
-<p>可以被打开或者被关闭，连接或者断开连接。</p>
-<p>在内部会为每个 Channel 分配一个 EventLoop，用以处理所有事件。</p>
-<h2 id="EventLoop"><a href="#EventLoop" class="headerlink" title="EventLoop"></a>EventLoop</h2><h2 id="EventLoopGroup"><a href="#EventLoopGroup" class="headerlink" title="EventLoopGroup"></a>EventLoopGroup</h2><p>是一组 EventLoop</p>
-<h2 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h2><h2 id="ChannelHandle"><a href="#ChannelHandle" class="headerlink" title="ChannelHandle"></a>ChannelHandle</h2><p>通道处理者，是所有处理入站和出站数据的应用程序逻辑的容器。</p>
-<h3 id="ChannelHandlerAdapter"><a href="#ChannelHandlerAdapter" class="headerlink" title="ChannelHandlerAdapter"></a>ChannelHandlerAdapter</h3><h3 id="ChannelInboundHandlerAdapter"><a href="#ChannelInboundHandlerAdapter" class="headerlink" title="ChannelInboundHandlerAdapter"></a>ChannelInboundHandlerAdapter</h3><p>Netty 接收数据 Handler 处理器。</p>
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
@@ -1616,6 +1563,7 @@
 
 <h1 id="Map-取-Key-补集和差集"><a href="#Map-取-Key-补集和差集" class="headerlink" title="Map 取 Key 补集和差集"></a>Map 取 Key 补集和差集</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> com.google.common.collect.Maps;</span><br><span class="line"><span class="keyword">import</span> com.google.common.collect.Sets;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NapUtil</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 取Map集合的差集</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;S,T&gt; Map&lt;S, T&gt; <span class="title function_">getDifferenceSetByGuava</span><span class="params">(Map&lt;S, T&gt; leftMap, Map&lt;S, T&gt; rightMap)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> != leftMap &amp;&amp; <span class="literal">null</span> != rightMap) &#123;</span><br><span class="line"></span><br><span class="line">            Set&lt;S&gt; leftMapKey = leftMap.keySet();</span><br><span class="line">            Set&lt;S&gt; rightMapKey = rightMap.keySet();</span><br><span class="line">            Set&lt;S&gt; differenceSet = Sets.difference(leftMapKey, rightMapKey);</span><br><span class="line">            Map&lt;S, T&gt; result = Maps.newHashMap();</span><br><span class="line">            <span class="keyword">for</span> (S key : differenceSet) &#123;</span><br><span class="line">                result.put(key, leftMap.get(key));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 取Map集合的并集</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;S,T&gt; Map&lt;S, T&gt; <span class="title function_">getUnionSetByGuava</span><span class="params">(Map&lt;S, T&gt; leftMap, Map&lt;S, T&gt; rightMap)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> != leftMap &amp;&amp; <span class="literal">null</span> != rightMap) &#123;</span><br><span class="line"></span><br><span class="line">            Set&lt;S&gt; leftMapKey = leftMap.keySet();</span><br><span class="line">            Set&lt;S&gt; rightMapKey = rightMap.keySet();</span><br><span class="line">            Set&lt;S&gt; differenceSet = Sets.union(leftMapKey, rightMapKey);</span><br><span class="line">            Map&lt;S, T&gt; result = Maps.newHashMap();</span><br><span class="line">            <span class="keyword">for</span> (S key : differenceSet) &#123;</span><br><span class="line">                <span class="keyword">if</span> (leftMap.containsKey(key)) &#123;</span><br><span class="line">                    result.put(key, leftMap.get(key));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    result.put(key, rightMap.get(key));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 取Map集合的交集（String,String）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;S,T&gt; Map&lt;S, T&gt; <span class="title function_">getIntersectionSetByGuava</span><span class="params">(Map&lt;S, T&gt; leftMap, Map&lt;S, T&gt; rightMap)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> != leftMap &amp;&amp; <span class="literal">null</span> != rightMap) &#123;</span><br><span class="line"></span><br><span class="line">            Set&lt;S&gt; leftMapKey = leftMap.keySet();</span><br><span class="line">            Set&lt;S&gt; rightMapKey = rightMap.keySet();</span><br><span class="line">            Set&lt;S&gt; differenceSet = Sets.intersection(leftMapKey, rightMapKey);</span><br><span class="line">            Map&lt;S, T&gt; result = Maps.newHashMap();</span><br><span class="line">            <span class="keyword">for</span> (S key : differenceSet) &#123;</span><br><span class="line">                result.put(key, leftMap.get(key));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        Map&lt;String, Person&gt; map1 = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        map1.put(<span class="string">&quot;a&quot;</span>, <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="number">1</span>));</span><br><span class="line">        map1.put(<span class="string">&quot;b&quot;</span>, <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="number">2</span>));</span><br><span class="line">        map1.put(<span class="string">&quot;c&quot;</span>, <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="number">3</span>));</span><br><span class="line"></span><br><span class="line">        Map&lt;String, Person&gt; map2 = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        map2.put(<span class="string">&quot;c&quot;</span>, <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="number">3</span>));</span><br><span class="line">        map2.put(<span class="string">&quot;d&quot;</span>, <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="number">4</span>));</span><br><span class="line">        map2.put(<span class="string">&quot;e&quot;</span>, <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="number">5</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Map&lt;String, Person&gt; diffMap1 = getDifferenceSetByGuava(map1, map2);</span><br><span class="line">        System.out.println(<span class="string">&quot;-------------差集结果,入参:A,B  出参:A-B后A中剩余的  -----------&quot;</span>);</span><br><span class="line">        diffMap1.forEach((k, v) -&gt; System.out.println(k + <span class="string">&quot;:&quot;</span> + v));</span><br><span class="line"></span><br><span class="line">        Map&lt;String, Person&gt; diffMap2 = getDifferenceSetByGuava(map2, map1);</span><br><span class="line">        System.out.println(<span class="string">&quot;-------------差集结果,入参:B,A  出参:B-A后B中剩余的  -----------&quot;</span>);</span><br><span class="line">        diffMap2.forEach((k, v) -&gt; System.out.println(k + <span class="string">&quot;:&quot;</span> + v));</span><br><span class="line"></span><br><span class="line">        Map&lt;String, Person&gt; unionMap = getUnionSetByGuava(map1, map2);</span><br><span class="line">        System.out.println(<span class="string">&quot;-------------并集结果-----------&quot;</span>);</span><br><span class="line">        unionMap.forEach((k, v) -&gt; System.out.println(k + <span class="string">&quot;:&quot;</span> + v));</span><br><span class="line"></span><br><span class="line">        Map&lt;String, Person&gt; intersectionMap = getIntersectionSetByGuava(map1, map2);</span><br><span class="line">        System.out.println(<span class="string">&quot;-------------交结果-----------&quot;</span>);</span><br><span class="line">        intersectionMap.forEach((k, v) -&gt; System.out.println(k + <span class="string">&quot;:&quot;</span> + v));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -1630,6 +1578,7 @@
     <url>/blog/b369cd6a.html</url>
     <content><![CDATA[<h1 id="一、Lombok-是什么"><a href="#一、Lombok-是什么" class="headerlink" title="一、Lombok 是什么"></a>一、Lombok 是什么</h1><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1672124784402-4a31184d-a98c-4c97-a15c-d0a900b54c4f.png"></p>
 <p>Lombok 项目是一个 <strong>Java 库</strong>，它可以自动插入到编辑器和构建工具中，增强 Java 的性能。不需要再写 getter、setter 或 equals方法，只要有一个注解，你的类就有一个功能齐全的构建器、自动记录变量等等。</p>
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -1680,6 +1629,7 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译前代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor(force = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String gender;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译后代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">gender</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">UserInfo</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="AllArgsConstructor"><a href="#AllArgsConstructor" class="headerlink" title="@AllArgsConstructor"></a>@AllArgsConstructor</h1><p>生成全参的构造方法。</p>
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -1700,6 +1650,7 @@
 <h1 id="NodeJS-安装"><a href="#NodeJS-安装" class="headerlink" title="NodeJS 安装"></a>NodeJS 安装</h1><p>一直 next 直至安装完成，安装位置建议：D:&#x2F;nodejs&#x2F;</p>
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1671692749278-1f23235d-a537-45ce-9c76-ca2de0bf3900.png"></p>
 <h1 id="NodeJS-安装完成检查"><a href="#NodeJS-安装完成检查" class="headerlink" title="NodeJS 安装完成检查"></a>NodeJS 安装完成检查</h1><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1671692930610-af309999-e17a-4346-b17a-b8e0f21e4c9a.png"></p>
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -1714,7 +1665,8 @@
     <title>NodeJS简介</title>
     <url>/blog/ff8c64c0.html</url>
     <content><![CDATA[<blockquote>
-<p>笔记参考自博客：<a href="https://www.cnblogs.com/yinzhengjie/p/14219259.html">NodeJS简介</a></p>
+<p>参考自博客：</p>
+<p><a href="https://www.cnblogs.com/yinzhengjie/p/14219259.html">NodeJS简介</a></p>
 <p><a href="https://nodejs.org/zh-cn/docs/">NodeJS doc</a></p>
 </blockquote>
 <h1 id="关于-NodeJS"><a href="#关于-NodeJS" class="headerlink" title="关于 NodeJS"></a>关于 NodeJS</h1><p>Node.js 是一个大部分基本模块都用 JavaScript 编写的，能够在服务器端运行的 JavaScript 的开放源代码，跨平台 JavaScript 运行环境。</p>
@@ -1731,7 +1683,8 @@
 <h1 id="NodeJS-VS-JavaScript"><a href="#NodeJS-VS-JavaScript" class="headerlink" title="NodeJS VS JavaScript"></a>NodeJS VS JavaScript</h1><p>JavaScript 是在浏览器中运行的代码，他的作用域只在浏览器中，并不能超出浏览器所有的权限，而 Node.js 则跳出了浏览器的限制，可以像 Java，Python，Golang 这样的编程语言一样，可以直接和操作系统进行交互。</p>
 <p>从 C&#x2F;S 架构来说，JavaScript 是在客户端浏览器上渲染的程序，而 Node.js 既可以充当 Client 角色，也可以充当 Server 端角色。</p>
 <h1 id="关于-npm"><a href="#关于-npm" class="headerlink" title="关于 npm"></a>关于 npm</h1><p>npm 是 Node 的包管理器。</p>
-<h1 id="关于-yarn"><a href="#关于-yarn" class="headerlink" title="关于 yarn"></a>关于 yarn</h1>]]></content>
+<h1 id="关于-yarn"><a href="#关于-yarn" class="headerlink" title="关于 yarn"></a>关于 yarn</h1><p></br></br></br></br></p>
+]]></content>
       <categories>
         <category>编程</category>
         <category>NodeJS</category>
@@ -1763,6 +1716,7 @@
 <li>检查安装 nvm 路径与设置放置 nodejs 的路径或文件，是否出现空格或中文，比如默认安装路径 C:\Program Files 中出现了空格。如果有，更改路径或文件夹名称后再使用 nvm use</li>
 <li>安装 nvm 前是否原本就有 nodejs 其它版本。如果有，且安装过程中选择合并了以前版本，可以删除 nvm 中所有 nodejs 版本（主要是安装 nvm 前就有的版本），重新安装所需 nodejs，再运行 nvm use</li>
 </ol>
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -1844,6 +1798,7 @@
 
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;docs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;_index&quot;</span><span class="punctuation">:</span> <span class="string">&quot;users:&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;_doc&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_version&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_seq_no&quot;</span><span class="punctuation">:</span> <span class="number">27</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_primary_term&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;found&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_source&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;wupx&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="string">&quot;18&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;job&quot;</span><span class="punctuation">:</span> <span class="string">&quot;coder&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hello world&quot;</span></span><br><span class="line">		<span class="punctuation">&#125;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;_index&quot;</span><span class="punctuation">:</span> <span class="string">&quot;users&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;_doc&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;3&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_version&quot;</span><span class="punctuation">:</span> <span class="number">7</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_seq_no&quot;</span><span class="punctuation">:</span> <span class="number">24</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_primary_term&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;found&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_source&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;wumx&quot;</span></span><br><span class="line">		<span class="punctuation">&#125;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -2016,7 +1971,8 @@
 <h2 id="5-2-引用类型变量"><a href="#5-2-引用类型变量" class="headerlink" title="5.2 引用类型变量"></a>5.2 引用类型变量</h2><p>如果是引用类型的话就不会报错，因为 Lambda 能够感知外部对引用类型变量的改变，不会出现数据不同步的问题（静态变量和实例变量也是不会报错）</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LambdaDemo06</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        list.add(<span class="string">&quot;111&quot;</span>);</span><br><span class="line">        <span class="type">StrToInt06</span> <span class="variable">sti</span> <span class="operator">=</span> (str -&gt; Integer.parseInt(list.get(<span class="number">0</span>)));</span><br><span class="line">        System.out.println(sti.change(<span class="string">&quot;000&quot;</span>));</span><br><span class="line">        list.set(<span class="number">0</span>, <span class="string">&quot;666&quot;</span>);</span><br><span class="line">        System.out.println(sti.change(<span class="string">&quot;000&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 接口定义</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">StrToInt06</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 定义一个String转化成Integer的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">int</span> <span class="title function_">change</span><span class="params">(String s)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="六、Lambda：访问局部变量"><a href="#六、Lambda：访问局部变量" class="headerlink" title="六、Lambda：访问局部变量"></a>六、Lambda：访问局部变量</h1><h1 id="七、Lambda：访问对象字段与静态变量"><a href="#七、Lambda：访问对象字段与静态变量" class="headerlink" title="七、Lambda：访问对象字段与静态变量"></a>七、Lambda：访问对象字段与静态变量</h1><h1 id="八、Lambda：访问接口的默认方法"><a href="#八、Lambda：访问接口的默认方法" class="headerlink" title="八、Lambda：访问接口的默认方法"></a>八、Lambda：访问接口的默认方法</h1>]]></content>
+<h1 id="六、Lambda：访问局部变量"><a href="#六、Lambda：访问局部变量" class="headerlink" title="六、Lambda：访问局部变量"></a>六、Lambda：访问局部变量</h1><h1 id="七、Lambda：访问对象字段与静态变量"><a href="#七、Lambda：访问对象字段与静态变量" class="headerlink" title="七、Lambda：访问对象字段与静态变量"></a>七、Lambda：访问对象字段与静态变量</h1><h1 id="八、Lambda：访问接口的默认方法"><a href="#八、Lambda：访问接口的默认方法" class="headerlink" title="八、Lambda：访问接口的默认方法"></a>八、Lambda：访问接口的默认方法</h1><p></br></br></br></br></p>
+]]></content>
       <categories>
         <category>编程</category>
         <category>Java</category>
@@ -2058,6 +2014,7 @@
 <p><ruby>連<rp>（</rp><rt>つ</rt><rp>）</rp></ruby>れていって<br>请带我走吧</p>
 <p>せつなさが<ruby>追<rp>（</rp><rt>お</rt><rp>）</rp></ruby>いつかないように<br>但愿可以成功摆脱悲伤</p>
 <p>【<ruby>终<rp>（</rp><rt>お</rt><rp>）</rp></ruby>わった】</p>
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>生活</category>
@@ -2073,6 +2030,7 @@
     <content><![CDATA[<h1 id="一、Nginx-是什么"><a href="#一、Nginx-是什么" class="headerlink" title="一、Nginx 是什么"></a>一、Nginx 是什么</h1><p>Nginx 是一个 web 服务器，也可以用来做【负载均衡】及【反向代理】使用，目前使用最多的就是负载均衡。</p>
 <h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>负载均衡就是把请求分摊到集群的多个服务上执行，例如在那个集约化改造项目的时候，我们就使用了 Nginx 的负载均衡功能，然后使用的是 ip_hash 的策略，保证每个访客访问的是同一个服务器，由此解决了 session 的问题。</p>
 <h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>反向代理就是用户只需要把请求发给特定的反向代理服务器，由 Nginx 完成对请求的分发处理，例如一个商场项目，分为商品（shopping）、订单（order）、交易（business）等服务，但是对客户端来说只需要正常的访问，然后在 url 中标识要请求的服务即可。</p>
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -2220,6 +2178,7 @@
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564476563993.png" alt="1564476563993"></p>
 <h3 id="2-6-2-设置权限"><a href="#2-6-2-设置权限" class="headerlink" title="2.6.2 设置权限"></a>2.6.2 设置权限</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 755 /etc/rc.local</span><br></pre></td></tr></table></figure>
 
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -2336,6 +2295,7 @@
 <li>Access-Control-Request-Headers</li>
 </ul>
 <p>其中最敏感的就是 Access-Control-Allow-Origin 这个 Header，它是 W3C 标准里用来检查该跨域请求是否可以被通过（Access Control Check）。如果需要跨域，解决方法就是在资源的头中加入 Access-Control-Allow-Origin 指定你授权的域。</p>
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -2349,47 +2309,48 @@
   <entry>
     <title>ONE DAY-The ROOTLESS</title>
     <url>/blog/29bc4ab0.html</url>
-    <content><![CDATA[<h1 id="ONE-DAY-The-ROOTLESS"><a href="#ONE-DAY-The-ROOTLESS" class="headerlink" title="ONE DAY - The ROOTLESS"></a>ONE DAY - The ROOTLESS</h1><p>雨上がりの空を仰ぐ度</p>
-<p>泣き虫だった頃の僕を想う</p>
-<p>誰かの背中を</p>
-<p>がむしゃらに追いかけた</p>
-<p>「強くなりたい」って</p>
-<p>今は風に消えた「ありがとう」</p>
-<p>僕は強くなれているのかな?</p>
-<p>答えはまだ出そうにないからさ</p>
-<p>やっぱりまだ</p>
-<p>歩いていくよ</p>
-<p>さあ行こう</p>
-<p>立ち止まることなく</p>
-<p>流れる時に負けないように</p>
-<p>何度も立ち向かい続けよう</p>
-<p>大切なもの失 いたくないから</p>
-<p>夕暮れに舞う鳥の様に</p>
-<p>見えない明日を探してる</p>
-<p>躓きながら 怖くても</p>
-<p>足元に目は落とさないよ</p>
-<p>諦める言葉は</p>
-<p>転がってるけど</p>
-<p>諦めないゴールは一つだけ</p>
-<p>喜び悲しみ乗り越えては</p>
-<p>少しずつ歩いてくよ</p>
-<p>果てしない空に</p>
-<p>手をかざそう</p>
-<p>たった一つの未来を信じながら</p>
-<p>戻らない 时は移ろうけど</p>
-<p>大切なもの失 いたくないから</p>
-<p>僕の中に流れる声は</p>
-<p>ずっとずっと僕を支えてる</p>
-<p>イタズラな雨が邪魔するけど</p>
-<p>逃げ出さないから</p>
+    <content><![CDATA[<h1 id="ONE-DAY-The-ROOTLESS"><a href="#ONE-DAY-The-ROOTLESS" class="headerlink" title="ONE DAY - The ROOTLESS"></a>ONE DAY - The ROOTLESS</h1><p><ruby><rt></rt>雨<rp>（</rp><rt>あめ</rt><rp>）</rp><rt></rt>上<rp>（</rp><rt>あ</rt><rp>）</rp></ruby>がりの<ruby><rt></rt>空<rp>（</rp><rt>そら</rt><rp>）</rp></ruby>を<ruby><rt></rt>仰<rp>（</rp><rt>あお</rt><rp>）</rp></ruby>ぐ<ruby><rt></rt>度<rp>（</rp><rt>たび</rt><rp>）</rp></ruby><br>每当仰望雨后的天空</p>
+<p><ruby><rt></rt>泣<rp>（</rp><rt>な</rt><rp>）</rp></ruby>き<ruby><rt></rt>虫<rp>（</rp><rt>むし</rt><rp>）</rp></ruby>だった<ruby><rt></rt>頃<rp>（</rp><rt>ころ</rt><rp>）</rp></ruby>の<ruby><rt></rt>僕<rp>（</rp><rt>ぼく</rt><rp>）</rp></ruby>を<ruby><rt></rt>想<rp>（</rp><rt>おも</rt><rp>）</rp></ruby>う<br>就会浮现出那个爱哭的自己</p>
+<p><ruby><rt></rt>誰<rp>（</rp><rt>たれ</rt><rp>）</rp></ruby>たれかの<ruby><rt></rt>背<rp>（</rp><rt>せ</rt><rp>）</rp><rt></rt>中<rp>（</rp><rt>なが</rt><rp>）</rp></ruby>を<br>某人的背影</p>
+<p>がむしゃらに<ruby><rt></rt>追<rp>（</rp><rt>お</rt><rp>）</rp></ruby>いかけた<br>曾经疯狂地追赶着某个人</p>
+<p>「<ruby><rt></rt>強<rp>（</rp><rt>つよ</rt><rp>）</rp></ruby>くなりたい」って<br>曾经希望能变得更强大</p>
+<p><ruby><rt></rt>今<rp>（</rp><rt>いま</rt><rp>）</rp></ruby>は<ruby><rt></rt>風<rp>（</rp><rt>かぜ</rt><rp>）</rp></ruby>に<ruby><rt></rt>消<rp>（</rp><rt>き</rt><rp>）</rp></ruby>えた「ありがとう」<br>现在消失在风中的那声谢谢你</p>
+<p><ruby><rt></rt>僕<rp>（</rp><rt>ぼく</rt><rp>）</rp></ruby>は<ruby><rt></rt>強<rp>（</rp><rt>つよ</rt><rp>）</rp></ruby>くなれているのかな?<br>我到底成长了没有呢</p>
+<p><ruby><rt></rt>答<rp>（</rp><rt>こた</rt><rp>）</rp></ruby>えはまだ<ruby><rt></rt>出<rp>（</rp><rt>で</rt><rp>）</rp></ruby>そうにないからさ<br>这个问题还没有确切的答案</p>
+<p>やっぱりまだ<br>还需要继续</p>
+<p><ruby><rt></rt>歩<rp>（</rp><rt>ある</rt><rp>）</rp></ruby>いていくよ<br>努力向前</p>
+<p>さあ<ruby><rt></rt>行<rp>（</rp><rt>ゆ</rt><rp>）</rp></ruby>こう<br>出发吧</p>
+<p><ruby><rt></rt>立<rp>（</rp><rt>た</rt><rp>）</rp></ruby>ち<ruby><rt></rt>止<rp>（</rp><rt>ど</rt><rp>）</rp></ruby>まることなく<br>永不停息</p>
+<p><ruby><rt></rt>流<rp>（</rp><rt>なが</rt><rp>）</rp></ruby>れる<ruby><rt></rt>時<rp>（</rp><rt>とき</rt><rp>）</rp></ruby>に<ruby><rt></rt>負<rp>（</rp><rt>ま</rt><rp>）</rp></ruby>けないように<br>为了不输给时代的浪潮</p>
+<p><ruby><rt></rt>何度<rp>（</rp><rt>なんど</rt><rp>）</rp></ruby>も<ruby><rt></rt>立<rp>（</rp><rt>た</rt><rp>）</rp></ruby>ち<ruby><rt></rt>向<rp>（</rp><rt>む</rt><rp>）</rp></ruby>かい<ruby><rt></rt>続<rp>（</rp><rt>つづ</rt><rp>）</rp></ruby>けよう<br>一次又一次奋勇向前</p>
+<p><ruby><rt></rt>大<rp>（</rp><rt>たい</rt><rp>）</rp><rt></rt>切<rp>（</rp><rt>せつ</rt><rp>）</rp></ruby>なもの<ruby><rt></rt>失<rp>（</rp><rt>うしな</rt><rp>）</rp></ruby> いたくないから<br>不想再失去重要的人</p>
+<p><ruby><rt></rt>夕暮<rp>（</rp><rt>ゆうぐ</rt><rp>）</rp></ruby>れに<ruby><rt></rt>舞<rp>（</rp><rt>ま</rt><rp>）</rp></ruby>う<ruby><rt></rt>鳥<rp>（</rp><rt></rt><rp>）</rp></ruby>の<ruby><rt></rt>様<rp>（</rp><rt>よう</rt><rp>）</rp></ruby>に<br>宛如夕阳下起舞的鸟儿</p>
+<p><ruby><rt></rt>見<rp>（</rp><rt>み</rt><rp>）</rp></ruby>えない<ruby><rt></rt>明日<rp>（</rp><rt>あす</rt><rp>）</rp></ruby>を<ruby><rt></rt>探<rp>（</rp><rt>さが</rt><rp>）</rp></ruby>してる<br>奋力追寻着未知的明日</p>
+<p><ruby><rt></rt>躓<rp>（</rp><rt>つまず</rt><rp>）</rp></ruby>きながら <ruby><rt></rt>怖<rp>（</rp><rt>こわ</rt><rp>）</rp></ruby>くても<br>纵使害怕受到挫折</p>
+<p><ruby><rt></rt>足元<rp>（</rp><rt>あしもと</rt><rp>）</rp></ruby>に<ruby><rt></rt>目<rp>（</rp><rt>め</rt><rp>）</rp></ruby>は<ruby><rt></rt>落<rp>（</rp><rt>お</rt><rp>）</rp></ruby>と  さないよ<br>也绝不付下视线  勇敢面对</p>
+<p><ruby><rt></rt>諦<rp>（</rp><rt>あきら</rt><rp>）</rp></ruby>める<ruby><rt></rt>言葉<rp>（</rp><rt>ことば</rt><rp>）</rp></ruby>は<br>虽然泄气的话</p>
+<p><ruby><rt></rt>転<rp>（</rp><rt>こ</rt><rp>）</rp></ruby>がってるけど<br>满口尽是</p>
+<p><ruby><rt></rt>諦<rp>（</rp><rt>あきら</rt><rp>）</rp></ruby>めないゴールは<ruby><rt></rt>一<rp>（</rp><rt>ひと</rt><rp>）</rp></ruby>つだけ<br>然而不愿放弃的目标唯有一个</p>
+<p><ruby><rt></rt>喜<rp>（</rp><rt>よろこ</rt><rp>）</rp></ruby>び<ruby><rt></rt>悲<rp>（</rp><rt>かな</rt><rp>）</rp></ruby>しみ<ruby><rt></rt>乗<rp>（</rp><rt>の</rt><rp>）</rp></ruby>り<ruby><rt></rt>越<rp>（</rp><rt>こ</rt><rp>）</rp></ruby>えては<br>经历过种种喜怒哀乐之后</p>
+<p><ruby><rt></rt>少<rp>（</rp><rt>そこ</rt><rp>）</rp></ruby>しずつ<ruby><rt></rt>歩<rp>（</rp><rt>ある</rt><rp>）</rp></ruby>いてくよ<br>再一步步稳定向前</p>
+<p><ruby><rt></rt>果<rp>（</rp><rt>は</rt><rp>）</rp></ruby>てしない<ruby><rt></rt>空<rp>（</rp><rt>そら</rt><rp>）</rp></ruby>に<br>把手伸向</p>
+<p><ruby><rt></rt>手<rp>（</rp><rt>て</rt><rp>）</rp></ruby>をかざそう<br>无边无际的天空吧</p>
+<p>たった<ruby><rt></rt>一<rp>（</rp><rt>ひと</rt><rp>）</rp></ruby>つの<ruby><rt></rt>未来<rp>（</rp><rt>みらい</rt><rp>）</rp></ruby>を<ruby><rt></rt>信<rp>（</rp><rt>しん</rt><rp>）</rp></ruby>じながら<br>内心坚信着唯独仅有的未来</p>
+<p><ruby><rt></rt>戾<rp>（</rp><rt>もと</rt><rp>）</rp></ruby>らない <ruby><rt></rt>時<rp>（</rp><rt>とき</rt><rp>）</rp></ruby>は<ruby><rt></rt>移<rp>（</rp><rt>うつ</rt><rp>）</rp></ruby>ろうけど<br>哪怕宝贵的时光已轻逝</p>
+<p><ruby><rt></rt>大切<rp>（</rp><rt>たいせつ</rt><rp>）</rp></ruby>なもの<ruby><rt></rt>失<rp>（</rp><rt>うしな</rt><rp>）</rp></ruby> いたくないから<br>我亦不愿再失去重要的人</p>
+<p><ruby><rt></rt>僕<rp>（</rp><rt>ぼく</rt><rp>）</rp></ruby>の<ruby><rt></rt>中<rp>（</rp><rt>なか</rt><rp>）</rp></ruby>に<ruby><rt></rt>流<rp>（</rp><rt>なが</rt><rp>）</rp></ruby>れる<ruby><rt></rt>声<rp>（</rp><rt>かえ</rt><rp>）</rp></ruby>は<br>响彻我胸口的声音</p>
+<p>ずっとずっと<ruby><rt></rt>僕<rp>（</rp><rt>ぼく</rt><rp>）</rp></ruby>を<ruby><rt></rt>支<rp>（</rp><rt>ささ</rt><rp>）</rp></ruby>えてる<br>一直一直都支撑着我</p>
+<p>イタズラな<ruby><rt></rt>雨<rp>（</rp><rt>あめ</rt><rp>）</rp></ruby>が<ruby><rt></rt>邪魔<rp>（</rp><rt>じゃま</rt><rp>）</rp></ruby>するけど<br>虽然那淘气的雨前来阻止</p>
+<p><ruby><rt></rt>逃<rp>（</rp><rt>に</rt><rp>）</rp></ruby>げ<ruby><rt></rt>出<rp>（</rp><rt>だ</rt><rp>）</rp></ruby>さないから<br>我也再不会逃避了</p>
 <p>Oh</p>
-<p>さあ行こう</p>
-<p>立ち止まることなく</p>
-<p>流れる時に負けないように</p>
-<p>何度も立ち向かい続けよう</p>
-<p>大切なもの失 いたくないから</p>
-<p>信じたその先へと</p>
+<p>さあ<ruby><rt></rt>行<rp>（</rp><rt>ゆ</rt><rp>）</rp></ruby>こう<br>好了出发吧</p>
+<p><ruby><rt></rt>立<rp>（</rp><rt>た</rt><rp>）</rp></ruby>ち<ruby><rt></rt>止<rp>（</rp><rt>ど</rt><rp>）</rp></ruby>まることなく<br>永不停息</p>
+<p><ruby><rt></rt>流<rp>（</rp><rt>なが</rt><rp>）</rp></ruby>れる<ruby><rt></rt>時<rp>（</rp><rt>とき</rt><rp>）</rp></ruby>に<ruby><rt></rt>負<rp>（</rp><rt>ま</rt><rp>）</rp></ruby>けないように<br>为了不输给时代的潮流</p>
+<p><ruby><rt></rt>何度<rp>（</rp><rt>なんど</rt><rp>）</rp></ruby>も<ruby><rt></rt>立<rp>（</rp><rt>た</rt><rp>）</rp></ruby>ち<ruby><rt></rt>向<rp>（</rp><rt>む</rt><rp>）</rp></ruby>かい<ruby><rt></rt>続<rp>（</rp><rt>つづ</rt><rp>）</rp></ruby>けよう<br>无论几度亦奋勇面对</p>
+<p><ruby><rt></rt>大切<rp>（</rp><rt>たいせつ</rt><rp>）</rp></ruby>なもの<ruby><rt></rt>失<rp>（</rp><rt>うしな</rt><rp>）</rp></ruby> いたくないから<br>只因不愿再失去重要的人</p>
+<p><ruby><rt></rt>信<rp>（</rp><rt>しん</rt><rp>）</rp></ruby>じたその<ruby><rt></rt>先<rp>（</rp><rt>さき</rt><rp>）</rp></ruby>へと<br>迈向深信的未来</p>
 <p>【<ruby>终<rp>（</rp><rt>お</rt><rp>）</rp></ruby>わった】</p>
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>生活</category>
@@ -2404,6 +2365,7 @@
     <url>/blog/b54088f4.html</url>
     <content><![CDATA[<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">全局区</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">user  nobody;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">表示有1个工作的子进程，可以自行修改，但太大无益，因为都需要争夺CPU，设置为 CPU数*核数 最优</span></span><br><span class="line">worker_processes  1;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">error_log  logs/error.log;</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">error_log  logs/error.log  notice;</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">error_log  logs/error.log  info;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">pid        logs/nginx.pid;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">一般是配置nginx进程与连接的特性，如几个同事工作</span></span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">这里表示一个子进程worker最大允许有1024个连接</span></span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里配置http服务器的主要段</span></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    #log_format  main  &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br><span class="line">    #                  &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">    #                  &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><span class="line"></span><br><span class="line">    #access_log  logs/access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line">    #tcp_nopush     on;</span><br><span class="line"></span><br><span class="line">    #keepalive_timeout  0;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    #gzip  on;</span><br><span class="line">    </span><br><span class="line"><span class="meta prompt_">	# </span><span class="language-bash">这是虚拟主机段</span></span><br><span class="line">    server &#123;</span><br><span class="line">    	# nginx监听哪个端口</span><br><span class="line">        listen       8081;</span><br><span class="line">        # nginx监听哪个域名</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        #charset koi8-r;</span><br><span class="line"></span><br><span class="line">        #access_log  logs/host.access.log  main;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">		# </span><span class="language-bash">定位，把特殊的路径或文件再次定位，如image目录单独处理；.php单独处理等</span></span><br><span class="line">        location / &#123;</span><br><span class="line">        	# 默认</span><br><span class="line">            root   html;</span><br><span class="line">            # 默认主页</span><br><span class="line">            index  index.html index.htm;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #error_page  404              /404.html;</span><br><span class="line"></span><br><span class="line">        # redirect server error pages to the static page /50x.html</span><br><span class="line">        #</span><br><span class="line">        error_page   500 502 503 504  /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        # proxy the PHP scripts to Apache listening on 127.0.0.1:80</span><br><span class="line">        #</span><br><span class="line">        #location ~ \.php$ &#123;</span><br><span class="line">        #    proxy_pass   http://127.0.0.1;</span><br><span class="line">        #&#125;</span><br><span class="line"></span><br><span class="line">        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">        #</span><br><span class="line">        #location ~ \.php$ &#123;</span><br><span class="line">        #    root           html;</span><br><span class="line">        #    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">        #    fastcgi_index  index.php;</span><br><span class="line">        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span><br><span class="line">        #    include        fastcgi_params;</span><br><span class="line">        #&#125;</span><br><span class="line"></span><br><span class="line">        # deny access to .htaccess files, if Apache&#x27;s document root</span><br><span class="line">        # concurs with nginx&#x27;s one</span><br><span class="line">        #</span><br><span class="line">        #location ~ /\.ht &#123;</span><br><span class="line">        #    deny  all;</span><br><span class="line">        #&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    # another virtual host using mix of IP-, name-, and port-based configuration</span><br><span class="line">    #</span><br><span class="line">    #server &#123;</span><br><span class="line">    #    listen       8000;</span><br><span class="line">    #    listen       somename:8080;</span><br><span class="line">    #    server_name  somename  alias  another.alias;</span><br><span class="line"></span><br><span class="line">    #    location / &#123;</span><br><span class="line">    #        root   html;</span><br><span class="line">    #        index  index.html index.htm;</span><br><span class="line">    #    &#125;</span><br><span class="line">    #&#125;</span><br><span class="line">    include vhost/*.conf;</span><br><span class="line"></span><br><span class="line">    # HTTPS server</span><br><span class="line">    #</span><br><span class="line">    #server &#123;</span><br><span class="line">    #    listen       443 ssl;</span><br><span class="line">    #    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    #    ssl_certificate      cert.pem;</span><br><span class="line">    #    ssl_certificate_key  cert.key;</span><br><span class="line"></span><br><span class="line">    #    ssl_session_cache    shared:SSL:1m;</span><br><span class="line">    #    ssl_session_timeout  5m;</span><br><span class="line"></span><br><span class="line">    #    ssl_ciphers  HIGH:!aNULL:!MD5;</span><br><span class="line">    #    ssl_prefer_server_ciphers  on;</span><br><span class="line"></span><br><span class="line">    #    location / &#123;</span><br><span class="line">    #        root   html;</span><br><span class="line">    #        index  index.html index.htm;</span><br><span class="line">    #    &#125;</span><br><span class="line">    #&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -2412,6 +2374,104 @@
       <tags>
         <tag>Java</tag>
         <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Netty学习</title>
+    <url>/blog/cfd68dd0.html</url>
+    <content><![CDATA[<h1 id="一、Buffer（缓冲区）"><a href="#一、Buffer（缓冲区）" class="headerlink" title="一、Buffer（缓冲区）"></a>一、Buffer（缓冲区）</h1><p>IO 面向流（Stream oriented），NIO 面向缓冲区（Buffer oriented）。</p>
+<p>Buffer 是一个对象，它包含一些要写入或者要读出的数据。在面向流的 I&#x2F;O 中可以将数据直接写入或者将数据直接读到 Stream 对象中。虽然 Stream 中也有 Buffer 开头的扩展类，但只是流的包装类，还是从流读到缓冲区，而 NIO 却是直接读到 Buffer 中进行操作。</p>
+<p>在 NIO 厍中，所有数据都是用缓冲区处理的。在读取数据时，它是直接读到缓冲区中的；在写入数据时，写入到缓冲区中。任何时候访问 NIO 中的数据，都是通过缓冲区进行操作。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Buffer</span> &#123;</span><br><span class="line">    <span class="comment">// 关系: mark &lt;= position &lt;= limit &lt;= capacity</span></span><br><span class="line">    <span class="comment">// 标记字节内容中的某个元素，配合reset()方法可以从这个标记的位置反复读取内容</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">mark</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 下一个要被读写的byte元素的下标索引</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">position</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 缓冲区中第一个不能读写的元素的数组下标索引，也可以认为是缓冲区中实际元素的数量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> limit;</span><br><span class="line">    <span class="comment">// 缓冲区能够容纳元素的最大数量，这个值在缓冲区创建时被设定，而且不能够改变</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> capacity;</span><br><span class="line">    <span class="type">long</span> address; <span class="comment">// Used only by direct buffers，直接内存的地址</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-1-ByteBuffer"><a href="#1-1-ByteBuffer" class="headerlink" title="1.1 ByteBuffer"></a>1.1 ByteBuffer</h2><p>最常用的缓冲区是 ByteBuffer，一个 ByteBuffer 提供了一组功能用于操作 byte 数组。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">ByteBuffer</span> <span class="keyword">extends</span> <span class="title class_">Buffer</span> <span class="keyword">implements</span> <span class="title class_">Comparable</span>&lt;ByteBuffer&gt; &#123;</span><br><span class="line">    <span class="comment">// 仅限堆内内存使用</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">byte</span>[] hb;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> offset;</span><br><span class="line">    <span class="type">boolean</span> isReadOnly;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-ByteBuffer-API"><a href="#1-2-ByteBuffer-API" class="headerlink" title="1.2 ByteBuffer.API"></a>1.2 ByteBuffer.API</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 申请堆外内存（直接内存，少一次拷贝，读写效率高，分配效率低，不受 GC 影响）</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">allocateDirect</span><span class="params">(<span class="type">int</span> capacity)</span></span><br><span class="line"><span class="comment">// 申请堆内内存（读写效率低，分配效率高，受到 GC 的影响）</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">allocate</span><span class="params">(<span class="type">int</span> capacity)</span> </span><br><span class="line"><span class="comment">// 原始字节包装成ByteBuffer</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">wrap</span><span class="params">(<span class="type">byte</span>[] array, <span class="type">int</span> offset, <span class="type">int</span> length)</span></span><br><span class="line"><span class="comment">// 原始字节包装成ByteBuffer</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">wrap</span><span class="params">(<span class="type">byte</span>[] array)</span></span><br><span class="line"><span class="comment">// 创建共享此缓冲区内容的新字节缓冲区</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">duplicate</span><span class="params">()</span></span><br><span class="line"><span class="comment">// 分片，创建一个新的字节缓冲区</span></span><br><span class="line"><span class="comment">// 新ByteBuffer的开始位置是此缓冲区的当前位置position</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">slice</span><span class="params">()</span></span><br><span class="line"><span class="comment">// 获取字节内容</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="type">byte</span> <span class="title function_">get</span><span class="params">()</span></span><br><span class="line"><span class="comment">// 从ByteBuffer偏移offset的位置，获取length长的字节数组，然后返回当前ByteBuffer对象</span></span><br><span class="line"><span class="keyword">public</span> ByteBuffer <span class="title function_">get</span><span class="params">(<span class="type">byte</span>[] dst, <span class="type">int</span> offset, <span class="type">int</span> length)</span></span><br><span class="line"><span class="comment">// 设置byte内存</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">put</span><span class="params">(<span class="type">byte</span> b)</span>;</span><br><span class="line"><span class="comment">// 以offset为起始位置设置length长src的内容，并返回当前ByteBuffer对象</span></span><br><span class="line"><span class="keyword">public</span> ByteBuffer <span class="title function_">put</span><span class="params">(<span class="type">byte</span>[] src, <span class="type">int</span> offset, <span class="type">int</span> length)</span>;</span><br><span class="line"><span class="comment">// 将没有读完的数据移到到缓冲区的初始位置，position设置为最后一没读字节数据的下个索引，limit重置为capacity</span></span><br><span class="line"><span class="comment">// 读-&gt;写模式，相当于flip的反向操作</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">compact</span><span class="params">()</span>;</span><br><span class="line"><span class="comment">// 是否是直接内存</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="type">boolean</span> <span class="title function_">isDirect</span><span class="params">()</span>;</span><br><span class="line"><span class="comment">// 转换缓冲区为写模式</span></span><br><span class="line"><span class="keyword">public</span> ByteBuffer <span class="title function_">clear</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>创建大小为 10 的 ByteBuffer 对象</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">ByteBuffer</span> <span class="variable">bf</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1943529272.jpg"></p>
+<ol start="2">
+<li>写入数据</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">ByteBuffer</span> <span class="variable">buf</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">10</span>);</span><br><span class="line">buf.put(<span class="string">&quot;csc&quot;</span>.getBytes());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/2064948393.jpg"></p>
+<ol start="3">
+<li>调用 flip 转换缓冲区为读模式</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">buf.flip();</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/L2RlZmF1bHQvaW5.jpg"></p>
+<ol start="4">
+<li>读取缓冲区中到内容，buf.get()</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">System.out.println((<span class="type">char</span>) buf.get());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/EwTmpOa09HRmhZVG.jpg"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/pT0RJME5qSm1Zemsw.jpg"></p>
+<ol start="5">
+<li>调用 clear() 或 compact() 转换缓冲区为写模式，循环至步骤 1</li>
+</ol>
+<p>除了 ByteBuffer，还有其他的一些缓冲区，事实上，每一种 Java 基本类型（除了 Boolean 类型）都对应有一种缓冲区。</p>
+<h2 id="1-3-Scattering-Reads（分散读取）"><a href="#1-3-Scattering-Reads（分散读取）" class="headerlink" title="1.3 Scattering Reads（分散读取）"></a>1.3 Scattering Reads（分散读取）</h2><p>需要在已知所需文本信息长度的前提下，将文本分割后，分散填充至不同的 buffer 中。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 读取一个文本文件 HelloWord.txt，然后将数据填充至多个 buffer</span></span><br><span class="line"><span class="keyword">try</span> (<span class="type">RandomAccessFile</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RandomAccessFile</span>(<span class="string">&quot;HelloWorld.txt&quot;</span>, <span class="string">&quot;rw&quot;</span>)) &#123;</span><br><span class="line">	<span class="type">FileChannel</span> <span class="variable">channel</span> <span class="operator">=</span> file.getChannel();</span><br><span class="line">	<span class="type">ByteBuffer</span> <span class="variable">bba</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">3</span>);</span><br><span class="line">	<span class="type">ByteBuffer</span> <span class="variable">bbb</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">3</span>);</span><br><span class="line">	<span class="type">ByteBuffer</span> <span class="variable">bbc</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">5</span>);</span><br><span class="line">	channel.read(<span class="keyword">new</span> <span class="title class_">ByteBuffer</span>[]&#123;bba, bbb, bbc&#125;);</span><br><span class="line">	bba.flip();</span><br><span class="line">	bbb.flip();</span><br><span class="line">	bbc.flip();</span><br><span class="line">	debugAll(bba);</span><br><span class="line">	debugAll(bbb);</span><br><span class="line">	debugAll(bbc);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4-Gatering-Writes（集中写入）"><a href="#1-4-Gatering-Writes（集中写入）" class="headerlink" title="1.4 Gatering Writes（集中写入）"></a>1.4 Gatering Writes（集中写入）</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">ByteBuffer</span> <span class="variable">bba</span> <span class="operator">=</span> StandardCharsets.UTF_8.encode(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="type">ByteBuffer</span> <span class="variable">bbb</span> <span class="operator">=</span> StandardCharsets.UTF_8.encode(<span class="string">&quot;world&quot;</span>);</span><br><span class="line"><span class="type">ByteBuffer</span> <span class="variable">bbc</span> <span class="operator">=</span> StandardCharsets.UTF_8.encode(<span class="string">&quot;你好&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> (<span class="type">FileChannel</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RandomAccessFile</span>(<span class="string">&quot;HelloWorld.txt&quot;</span>, <span class="string">&quot;rw&quot;</span>).getChannel()) &#123;</span><br><span class="line">	file.write(<span class="keyword">new</span> <span class="title class_">ByteBuffer</span>[]&#123;bba, bbb, bbc&#125;);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-综合案例"><a href="#1-5-综合案例" class="headerlink" title="1.5 综合案例"></a>1.5 综合案例</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> UnsupportedEncodingException &#123;</span><br><span class="line">	<span class="type">ByteBuffer</span> <span class="variable">buffer</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">10</span>);</span><br><span class="line">	buffer.put(<span class="keyword">new</span> <span class="title class_">byte</span>[]&#123;<span class="number">97</span>, <span class="number">98</span>, <span class="number">99</span>, <span class="number">100</span>&#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	网络上有多条数据发送给服务器，数据之间使用 \n 进行分离</span></span><br><span class="line"><span class="comment">	但由于某种原因这些数据在接收时，被进行了重新组合，例如原始数据有3条为</span></span><br><span class="line"><span class="comment">		Hello,world\n</span></span><br><span class="line"><span class="comment">		I&#x27;m zhangsan\n</span></span><br><span class="line"><span class="comment">		How are you?\n</span></span><br><span class="line"><span class="comment">	变成了下面的两个 byteBuffer（黏包，半包）</span></span><br><span class="line"><span class="comment">		Hello,world\nI&#x27;m zhangsan\nHo</span></span><br><span class="line"><span class="comment">		w are you?\n</span></span><br><span class="line"><span class="comment">	现在要求变写程序，将错乱的数据恢复成原始的按 \n 分隔的数据</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="type">ByteBuffer</span> <span class="variable">source</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">64</span>);</span><br><span class="line">	source.put(<span class="string">&quot;Hello,world\nI&#x27;m zhangsan\nHo&quot;</span>.getBytes());</span><br><span class="line">	split(source);</span><br><span class="line">	source.put(<span class="string">&quot;w are you?\n&quot;</span>.getBytes());</span><br><span class="line">	split(source);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">split</span><span class="params">(ByteBuffer source)</span> &#123;</span><br><span class="line">	source.flip();</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; source.limit(); i++) &#123;</span><br><span class="line">		<span class="comment">// 找到一条完整的消息</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">new</span> <span class="title class_">String</span>(<span class="keyword">new</span> <span class="title class_">byte</span>[]&#123;source.get(i)&#125;).equals(<span class="string">&quot;\n&quot;</span>)) &#123;</span><br><span class="line">			<span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> i + <span class="number">1</span> - source.position();</span><br><span class="line">			<span class="type">ByteBuffer</span> <span class="variable">target</span> <span class="operator">=</span> ByteBuffer.allocate(length);</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; length; j++) &#123;</span><br><span class="line">				target.put(source.get());</span><br><span class="line">			&#125;</span><br><span class="line">			debugAll(target);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	source.compact();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、Channel（通道）"><a href="#二、Channel（通道）" class="headerlink" title="二、Channel（通道）"></a>二、Channel（通道）</h1><p>NIO 通过 Channel（通道）进行读写。</p>
+<p>通道是双向的，可读也可写，而流的读写是单向的。</p>
+<p>无论读写，通道只能和 Buffer 交互。因为 Buffer，通道可以异步地读写。</p>
+<h2 id="2-1-FileChannel"><a href="#2-1-FileChannel" class="headerlink" title="2.1 FileChannel"></a>2.1 FileChannel</h2><blockquote>
+<p>FileChannel 只能工作在阻塞模式下</p>
+</blockquote>
+<h3 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h3><p>不能直接打开 FileChannel，必须通过 FileInputStream、FileOutputStream 或者 RandomAccessFile 来获取 FileChannel，它们都有 getChannel 方法。</p>
+<ul>
+<li>通过 FileInputStream 获取的 channel 只能读</li>
+<li>通过 FileOutputStream 获取的 channel 只能写</li>
+<li>通过 RandomAccessFile 获取的 channel 是否能读写，根据构造时的传入读写模式参数决定</li>
+</ul>
+<h3 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h3><p>会从 channel 读取数据填充 ByteBuffer，返回值表示读到了多少字节，-1 表示到达了文件的末尾</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">readBytes</span> <span class="operator">=</span> channel.read(buffer);</span><br></pre></td></tr></table></figure>
+
+<h3 id="写入"><a href="#写入" class="headerlink" title="写入"></a>写入</h3><p>SocketChannel</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">ByteBuffer</span> <span class="variable">buffer</span> <span class="operator">=</span> ...;</span><br><span class="line">buffer.put(...); <span class="comment">// 存入数据</span></span><br><span class="line">buffer.flip();   <span class="comment">// 切换读模式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 检测 buffer 中还有没有剩余数据</span></span><br><span class="line"><span class="keyword">while</span>(buffer.hasRemaining) &#123;</span><br><span class="line">    channel.write(buffer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 while 中调用 channel.write 是因为 write 方法并不能保证一次将 buffer 中的内容全部写入 channel</p>
+<h3 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h3><p>channel 必须关闭，不过调用了 FileInputStream、FileOutputStream 或者 RandomAccessFile 的 close 方法会间接地调用 channel 的 close 方法。</p>
+<h3 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取当前位置</span></span><br><span class="line"><span class="type">long</span> <span class="variable">pos</span> <span class="operator">=</span> channel.position();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置当前位置</span></span><br><span class="line"><span class="type">long</span> <span class="variable">newPos</span> <span class="operator">=</span> ...;</span><br><span class="line">channel.position(newPos);</span><br></pre></td></tr></table></figure>
+
+<p>设置当前位置时，如果设置为文件的末尾</p>
+<ul>
+<li>这时读取会返回 -1</li>
+<li>这时写入，会追加内容，但要注意如果 position 超过了文件末尾，再写入时在新内容和原末尾之间会有空洞(00)</li>
+</ul>
+<h1 id="三、Selector（选择器）"><a href="#三、Selector（选择器）" class="headerlink" title="三、Selector（选择器）"></a>三、Selector（选择器）</h1><p>NIO 有选择器，而 IO 没有。</p>
+<p>选择器满足了单个线程处理多个通道的效果，因此大大减少了线程的数量。</p>
+<p>因为线程之间的切换对于操作系统来说是昂贵的（每次切换线程都要重新读取线程之前的状态、值、上下文等信息），因此选择器提高了系统的效率。</p>
+<h1 id="三、一些关键类"><a href="#三、一些关键类" class="headerlink" title="三、一些关键类"></a>三、一些关键类</h1><h2 id="ServerBootstrap"><a href="#ServerBootstrap" class="headerlink" title="ServerBootstrap"></a>ServerBootstrap</h2><p>Netty 建立服务端的辅助类。</p>
+<h2 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h2><p>频道、通道的意思。</p>
+<p>是传入（入站）或者传出（出站）数据的载体。</p>
+<p>可以被打开或者被关闭，连接或者断开连接。</p>
+<p>在内部会为每个 Channel 分配一个 EventLoop，用以处理所有事件。</p>
+<h2 id="EventLoop"><a href="#EventLoop" class="headerlink" title="EventLoop"></a>EventLoop</h2><h2 id="EventLoopGroup"><a href="#EventLoopGroup" class="headerlink" title="EventLoopGroup"></a>EventLoopGroup</h2><p>是一组 EventLoop</p>
+<h2 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h2><h2 id="ChannelHandle"><a href="#ChannelHandle" class="headerlink" title="ChannelHandle"></a>ChannelHandle</h2><p>通道处理者，是所有处理入站和出站数据的应用程序逻辑的容器。</p>
+<h3 id="ChannelHandlerAdapter"><a href="#ChannelHandlerAdapter" class="headerlink" title="ChannelHandlerAdapter"></a>ChannelHandlerAdapter</h3><h3 id="ChannelInboundHandlerAdapter"><a href="#ChannelInboundHandlerAdapter" class="headerlink" title="ChannelInboundHandlerAdapter"></a>ChannelInboundHandlerAdapter</h3><p>Netty 接收数据 Handler 处理器。</p>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Netty</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Netty</tag>
       </tags>
   </entry>
 </search>

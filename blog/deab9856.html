@@ -112,6 +112,7 @@
   <h1 id="一、Nginx-是什么"><a href="#一、Nginx-是什么" class="headerlink" title="一、Nginx 是什么"></a>一、Nginx 是什么</h1><p>Nginx 是一个 web 服务器，也可以用来做【负载均衡】及【反向代理】使用，目前使用最多的就是负载均衡。</p>
 <h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>负载均衡就是把请求分摊到集群的多个服务上执行，例如在那个集约化改造项目的时候，我们就使用了 Nginx 的负载均衡功能，然后使用的是 ip_hash 的策略，保证每个访客访问的是同一个服务器，由此解决了 session 的问题。</p>
 <h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>反向代理就是用户只需要把请求发给特定的反向代理服务器，由 Nginx 完成对请求的分发处理，例如一个商场项目，分为商品（shopping）、订单（order）、交易（business）等服务，但是对客户端来说只需要正常的访问，然后在 url 中标识要请求的服务即可。</p>
+<p></br></br></br></br></p>
  
       <!-- reward -->
       

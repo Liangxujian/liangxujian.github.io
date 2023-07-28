@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>Netty学习 |  Liangxj</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/lxj.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-Netty学习"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Netty学习
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/cfd68dd0.html" class="article-date">
+  <time datetime="2023-07-18T10:00:38.000Z" itemprop="datePublished">2023-07-18</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Netty/">Netty</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1.9k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">7 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="一、Buffer（缓冲区）"><a href="#一、Buffer（缓冲区）" class="headerlink" title="一、Buffer（缓冲区）"></a>一、Buffer（缓冲区）</h1><p>IO 面向流（Stream oriented），NIO 面向缓冲区（Buffer oriented）。</p>
+<p>Buffer 是一个对象，它包含一些要写入或者要读出的数据。在面向流的 I&#x2F;O 中可以将数据直接写入或者将数据直接读到 Stream 对象中。虽然 Stream 中也有 Buffer 开头的扩展类，但只是流的包装类，还是从流读到缓冲区，而 NIO 却是直接读到 Buffer 中进行操作。</p>
+<p>在 NIO 厍中，所有数据都是用缓冲区处理的。在读取数据时，它是直接读到缓冲区中的；在写入数据时，写入到缓冲区中。任何时候访问 NIO 中的数据，都是通过缓冲区进行操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Buffer</span> &#123;</span><br><span class="line">    <span class="comment">// 关系: mark &lt;= position &lt;= limit &lt;= capacity</span></span><br><span class="line">    <span class="comment">// 标记字节内容中的某个元素，配合reset()方法可以从这个标记的位置反复读取内容</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">mark</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// 下一个要被读写的byte元素的下标索引</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">position</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 缓冲区中第一个不能读写的元素的数组下标索引，也可以认为是缓冲区中实际元素的数量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> limit;</span><br><span class="line">    <span class="comment">// 缓冲区能够容纳元素的最大数量，这个值在缓冲区创建时被设定，而且不能够改变</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> capacity;</span><br><span class="line">    <span class="type">long</span> address; <span class="comment">// Used only by direct buffers，直接内存的地址</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// ……</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-1-ByteBuffer"><a href="#1-1-ByteBuffer" class="headerlink" title="1.1 ByteBuffer"></a>1.1 ByteBuffer</h2><p>最常用的缓冲区是 ByteBuffer，一个 ByteBuffer 提供了一组功能用于操作 byte 数组。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">ByteBuffer</span> <span class="keyword">extends</span> <span class="title class_">Buffer</span> <span class="keyword">implements</span> <span class="title class_">Comparable</span>&lt;ByteBuffer&gt; &#123;</span><br><span class="line">    <span class="comment">// 仅限堆内内存使用</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">byte</span>[] hb;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> offset;</span><br><span class="line">    <span class="type">boolean</span> isReadOnly;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-ByteBuffer-API"><a href="#1-2-ByteBuffer-API" class="headerlink" title="1.2 ByteBuffer.API"></a>1.2 ByteBuffer.API</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 申请堆外内存（直接内存，少一次拷贝，读写效率高，分配效率低，不受 GC 影响）</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">allocateDirect</span><span class="params">(<span class="type">int</span> capacity)</span></span><br><span class="line"><span class="comment">// 申请堆内内存（读写效率低，分配效率高，受到 GC 的影响）</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">allocate</span><span class="params">(<span class="type">int</span> capacity)</span> </span><br><span class="line"><span class="comment">// 原始字节包装成ByteBuffer</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">wrap</span><span class="params">(<span class="type">byte</span>[] array, <span class="type">int</span> offset, <span class="type">int</span> length)</span></span><br><span class="line"><span class="comment">// 原始字节包装成ByteBuffer</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteBuffer <span class="title function_">wrap</span><span class="params">(<span class="type">byte</span>[] array)</span></span><br><span class="line"><span class="comment">// 创建共享此缓冲区内容的新字节缓冲区</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">duplicate</span><span class="params">()</span></span><br><span class="line"><span class="comment">// 分片，创建一个新的字节缓冲区</span></span><br><span class="line"><span class="comment">// 新ByteBuffer的开始位置是此缓冲区的当前位置position</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">slice</span><span class="params">()</span></span><br><span class="line"><span class="comment">// 获取字节内容</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="type">byte</span> <span class="title function_">get</span><span class="params">()</span></span><br><span class="line"><span class="comment">// 从ByteBuffer偏移offset的位置，获取length长的字节数组，然后返回当前ByteBuffer对象</span></span><br><span class="line"><span class="keyword">public</span> ByteBuffer <span class="title function_">get</span><span class="params">(<span class="type">byte</span>[] dst, <span class="type">int</span> offset, <span class="type">int</span> length)</span></span><br><span class="line"><span class="comment">// 设置byte内存</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">put</span><span class="params">(<span class="type">byte</span> b)</span>;</span><br><span class="line"><span class="comment">// 以offset为起始位置设置length长src的内容，并返回当前ByteBuffer对象</span></span><br><span class="line"><span class="keyword">public</span> ByteBuffer <span class="title function_">put</span><span class="params">(<span class="type">byte</span>[] src, <span class="type">int</span> offset, <span class="type">int</span> length)</span>;</span><br><span class="line"><span class="comment">// 将没有读完的数据移到到缓冲区的初始位置，position设置为最后一没读字节数据的下个索引，limit重置为capacity</span></span><br><span class="line"><span class="comment">// 读-&gt;写模式，相当于flip的反向操作</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> ByteBuffer <span class="title function_">compact</span><span class="params">()</span>;</span><br><span class="line"><span class="comment">// 是否是直接内存</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="type">boolean</span> <span class="title function_">isDirect</span><span class="params">()</span>;</span><br><span class="line"><span class="comment">// 转换缓冲区为写模式</span></span><br><span class="line"><span class="keyword">public</span> ByteBuffer <span class="title function_">clear</span><span class="params">()</span>;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>创建大小为 10 的 ByteBuffer 对象</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ByteBuffer</span> <span class="variable">bf</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1943529272.jpg"></p>
+<ol start="2">
+<li>写入数据</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ByteBuffer</span> <span class="variable">buf</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">10</span>);</span><br><span class="line">buf.put(<span class="string">&quot;csc&quot;</span>.getBytes());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/2064948393.jpg"></p>
+<ol start="3">
+<li>调用 flip 转换缓冲区为读模式</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.flip();</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/L2RlZmF1bHQvaW5.jpg"></p>
+<ol start="4">
+<li>读取缓冲区中到内容，buf.get()</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println((<span class="type">char</span>) buf.get());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/EwTmpOa09HRmhZVG.jpg"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/pT0RJME5qSm1Zemsw.jpg"></p>
+<ol start="5">
+<li>调用 clear() 或 compact() 转换缓冲区为写模式，循环至步骤 1</li>
+</ol>
+<p>除了 ByteBuffer，还有其他的一些缓冲区，事实上，每一种 Java 基本类型（除了 Boolean 类型）都对应有一种缓冲区。</p>
+<h2 id="1-3-Scattering-Reads（分散读取）"><a href="#1-3-Scattering-Reads（分散读取）" class="headerlink" title="1.3 Scattering Reads（分散读取）"></a>1.3 Scattering Reads（分散读取）</h2><p>需要在已知所需文本信息长度的前提下，将文本分割后，分散填充至不同的 buffer 中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读取一个文本文件 HelloWord.txt，然后将数据填充至多个 buffer</span></span><br><span class="line"><span class="keyword">try</span> (<span class="type">RandomAccessFile</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RandomAccessFile</span>(<span class="string">&quot;HelloWorld.txt&quot;</span>, <span class="string">&quot;rw&quot;</span>)) &#123;</span><br><span class="line">	<span class="type">FileChannel</span> <span class="variable">channel</span> <span class="operator">=</span> file.getChannel();</span><br><span class="line">	<span class="type">ByteBuffer</span> <span class="variable">bba</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">3</span>);</span><br><span class="line">	<span class="type">ByteBuffer</span> <span class="variable">bbb</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">3</span>);</span><br><span class="line">	<span class="type">ByteBuffer</span> <span class="variable">bbc</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">5</span>);</span><br><span class="line">	channel.read(<span class="keyword">new</span> <span class="title class_">ByteBuffer</span>[]&#123;bba, bbb, bbc&#125;);</span><br><span class="line">	bba.flip();</span><br><span class="line">	bbb.flip();</span><br><span class="line">	bbc.flip();</span><br><span class="line">	debugAll(bba);</span><br><span class="line">	debugAll(bbb);</span><br><span class="line">	debugAll(bbc);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4-Gatering-Writes（集中写入）"><a href="#1-4-Gatering-Writes（集中写入）" class="headerlink" title="1.4 Gatering Writes（集中写入）"></a>1.4 Gatering Writes（集中写入）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ByteBuffer</span> <span class="variable">bba</span> <span class="operator">=</span> StandardCharsets.UTF_8.encode(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="type">ByteBuffer</span> <span class="variable">bbb</span> <span class="operator">=</span> StandardCharsets.UTF_8.encode(<span class="string">&quot;world&quot;</span>);</span><br><span class="line"><span class="type">ByteBuffer</span> <span class="variable">bbc</span> <span class="operator">=</span> StandardCharsets.UTF_8.encode(<span class="string">&quot;你好&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span> (<span class="type">FileChannel</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RandomAccessFile</span>(<span class="string">&quot;HelloWorld.txt&quot;</span>, <span class="string">&quot;rw&quot;</span>).getChannel()) &#123;</span><br><span class="line">	file.write(<span class="keyword">new</span> <span class="title class_">ByteBuffer</span>[]&#123;bba, bbb, bbc&#125;);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-综合案例"><a href="#1-5-综合案例" class="headerlink" title="1.5 综合案例"></a>1.5 综合案例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> UnsupportedEncodingException &#123;</span><br><span class="line">	<span class="type">ByteBuffer</span> <span class="variable">buffer</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">10</span>);</span><br><span class="line">	buffer.put(<span class="keyword">new</span> <span class="title class_">byte</span>[]&#123;<span class="number">97</span>, <span class="number">98</span>, <span class="number">99</span>, <span class="number">100</span>&#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	网络上有多条数据发送给服务器，数据之间使用 \n 进行分离</span></span><br><span class="line"><span class="comment">	但由于某种原因这些数据在接收时，被进行了重新组合，例如原始数据有3条为</span></span><br><span class="line"><span class="comment">		Hello,world\n</span></span><br><span class="line"><span class="comment">		I&#x27;m zhangsan\n</span></span><br><span class="line"><span class="comment">		How are you?\n</span></span><br><span class="line"><span class="comment">	变成了下面的两个 byteBuffer（黏包，半包）</span></span><br><span class="line"><span class="comment">		Hello,world\nI&#x27;m zhangsan\nHo</span></span><br><span class="line"><span class="comment">		w are you?\n</span></span><br><span class="line"><span class="comment">	现在要求变写程序，将错乱的数据恢复成原始的按 \n 分隔的数据</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="type">ByteBuffer</span> <span class="variable">source</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">64</span>);</span><br><span class="line">	source.put(<span class="string">&quot;Hello,world\nI&#x27;m zhangsan\nHo&quot;</span>.getBytes());</span><br><span class="line">	split(source);</span><br><span class="line">	source.put(<span class="string">&quot;w are you?\n&quot;</span>.getBytes());</span><br><span class="line">	split(source);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">split</span><span class="params">(ByteBuffer source)</span> &#123;</span><br><span class="line">	source.flip();</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; source.limit(); i++) &#123;</span><br><span class="line">		<span class="comment">// 找到一条完整的消息</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">new</span> <span class="title class_">String</span>(<span class="keyword">new</span> <span class="title class_">byte</span>[]&#123;source.get(i)&#125;).equals(<span class="string">&quot;\n&quot;</span>)) &#123;</span><br><span class="line">			<span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> i + <span class="number">1</span> - source.position();</span><br><span class="line">			<span class="type">ByteBuffer</span> <span class="variable">target</span> <span class="operator">=</span> ByteBuffer.allocate(length);</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; length; j++) &#123;</span><br><span class="line">				target.put(source.get());</span><br><span class="line">			&#125;</span><br><span class="line">			debugAll(target);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	source.compact();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、Channel（通道）"><a href="#二、Channel（通道）" class="headerlink" title="二、Channel（通道）"></a>二、Channel（通道）</h1><p>NIO 通过 Channel（通道）进行读写。</p>
+<p>通道是双向的，可读也可写，而流的读写是单向的。</p>
+<p>无论读写，通道只能和 Buffer 交互。因为 Buffer，通道可以异步地读写。</p>
+<h2 id="2-1-FileChannel"><a href="#2-1-FileChannel" class="headerlink" title="2.1 FileChannel"></a>2.1 FileChannel</h2><blockquote>
+<p>FileChannel 只能工作在阻塞模式下</p>
+</blockquote>
+<h3 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h3><p>不能直接打开 FileChannel，必须通过 FileInputStream、FileOutputStream 或者 RandomAccessFile 来获取 FileChannel，它们都有 getChannel 方法。</p>
+<ul>
+<li>通过 FileInputStream 获取的 channel 只能读</li>
+<li>通过 FileOutputStream 获取的 channel 只能写</li>
+<li>通过 RandomAccessFile 获取的 channel 是否能读写，根据构造时的传入读写模式参数决定</li>
+</ul>
+<h3 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h3><p>会从 channel 读取数据填充 ByteBuffer，返回值表示读到了多少字节，-1 表示到达了文件的末尾</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">readBytes</span> <span class="operator">=</span> channel.read(buffer);</span><br></pre></td></tr></table></figure>
+
+<h3 id="写入"><a href="#写入" class="headerlink" title="写入"></a>写入</h3><p>SocketChannel</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ByteBuffer</span> <span class="variable">buffer</span> <span class="operator">=</span> ...;</span><br><span class="line">buffer.put(...); <span class="comment">// 存入数据</span></span><br><span class="line">buffer.flip();   <span class="comment">// 切换读模式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 检测 buffer 中还有没有剩余数据</span></span><br><span class="line"><span class="keyword">while</span>(buffer.hasRemaining) &#123;</span><br><span class="line">    channel.write(buffer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 while 中调用 channel.write 是因为 write 方法并不能保证一次将 buffer 中的内容全部写入 channel</p>
+<h3 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h3><p>channel 必须关闭，不过调用了 FileInputStream、FileOutputStream 或者 RandomAccessFile 的 close 方法会间接地调用 channel 的 close 方法。</p>
+<h3 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取当前位置</span></span><br><span class="line"><span class="type">long</span> <span class="variable">pos</span> <span class="operator">=</span> channel.position();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置当前位置</span></span><br><span class="line"><span class="type">long</span> <span class="variable">newPos</span> <span class="operator">=</span> ...;</span><br><span class="line">channel.position(newPos);</span><br></pre></td></tr></table></figure>
+
+<p>设置当前位置时，如果设置为文件的末尾</p>
+<ul>
+<li>这时读取会返回 -1</li>
+<li>这时写入，会追加内容，但要注意如果 position 超过了文件末尾，再写入时在新内容和原末尾之间会有空洞(00)</li>
+</ul>
+<h1 id="三、Selector（选择器）"><a href="#三、Selector（选择器）" class="headerlink" title="三、Selector（选择器）"></a>三、Selector（选择器）</h1><p>NIO 有选择器，而 IO 没有。</p>
+<p>选择器满足了单个线程处理多个通道的效果，因此大大减少了线程的数量。</p>
+<p>因为线程之间的切换对于操作系统来说是昂贵的（每次切换线程都要重新读取线程之前的状态、值、上下文等信息），因此选择器提高了系统的效率。</p>
+<h1 id="三、一些关键类"><a href="#三、一些关键类" class="headerlink" title="三、一些关键类"></a>三、一些关键类</h1><h2 id="ServerBootstrap"><a href="#ServerBootstrap" class="headerlink" title="ServerBootstrap"></a>ServerBootstrap</h2><p>Netty 建立服务端的辅助类。</p>
+<h2 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h2><p>频道、通道的意思。</p>
+<p>是传入（入站）或者传出（出站）数据的载体。</p>
+<p>可以被打开或者被关闭，连接或者断开连接。</p>
+<p>在内部会为每个 Channel 分配一个 EventLoop，用以处理所有事件。</p>
+<h2 id="EventLoop"><a href="#EventLoop" class="headerlink" title="EventLoop"></a>EventLoop</h2><h2 id="EventLoopGroup"><a href="#EventLoopGroup" class="headerlink" title="EventLoopGroup"></a>EventLoopGroup</h2><p>是一组 EventLoop</p>
+<h2 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h2><h2 id="ChannelHandle"><a href="#ChannelHandle" class="headerlink" title="ChannelHandle"></a>ChannelHandle</h2><p>通道处理者，是所有处理入站和出站数据的应用程序逻辑的容器。</p>
+<h3 id="ChannelHandlerAdapter"><a href="#ChannelHandlerAdapter" class="headerlink" title="ChannelHandlerAdapter"></a>ChannelHandlerAdapter</h3><h3 id="ChannelInboundHandlerAdapter"><a href="#ChannelInboundHandlerAdapter" class="headerlink" title="ChannelInboundHandlerAdapter"></a>ChannelInboundHandlerAdapter</h3><p>Netty 接收数据 Handler 处理器。</p>
+<p></br></br></br></br></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/blog/cfd68dd0.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Netty/" rel="tag">Netty</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/blog/ad720447.html" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Nginx配置</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2022-2023
+        <i class="ri-heart-fill heart_icon"></i> Liangxj
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/lxj-side.svg" alt="Liangxj"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/blog/f0b34752.html">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i></p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
