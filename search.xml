@@ -613,12 +613,12 @@
     <title>椰汁南瓜西米露</title>
     <url>/blog/c034f861.html</url>
     <content><![CDATA[<h1 id="材料"><a href="#材料" class="headerlink" title="材料"></a>材料</h1><h2 id="主料"><a href="#主料" class="headerlink" title="主料"></a>主料</h2><ul>
-<li>南瓜（一小圈）</li>
-<li>西米露</li>
+<li><input disabled="" type="checkbox"> 南瓜（一小圈）</li>
+<li><input disabled="" type="checkbox"> 西米露</li>
 </ul>
 <h2 id="配料"><a href="#配料" class="headerlink" title="配料"></a>配料</h2><h2 id="调味料"><a href="#调味料" class="headerlink" title="调味料"></a>调味料</h2><ul>
-<li>冰糖</li>
-<li>椰汁</li>
+<li><input disabled="" type="checkbox"> 冰糖</li>
+<li><input disabled="" type="checkbox"> 椰汁</li>
 </ul>
 <h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
 <li>烧开水下西米，搅拌均匀</li>
@@ -2472,6 +2472,86 @@
       <tags>
         <tag>Java</tag>
         <tag>Netty</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>虾仁菌菇汤.md</title>
+    <url>/blog/7353ca67.html</url>
+    <content><![CDATA[<h1 id="材料"><a href="#材料" class="headerlink" title="材料"></a>材料</h1><h2 id="主料"><a href="#主料" class="headerlink" title="主料"></a>主料</h2><ul>
+<li><input disabled="" type="checkbox"> 娃娃菜（1 颗）</li>
+<li><input disabled="" type="checkbox"> 新鲜虾仁（150g）</li>
+<li><input disabled="" type="checkbox"> 番茄（1-2 个）</li>
+<li><input disabled="" type="checkbox"> 金针菇</li>
+<li><input disabled="" type="checkbox"> 香菇（2-3 个）</li>
+</ul>
+<h2 id="配料"><a href="#配料" class="headerlink" title="配料"></a>配料</h2><ul>
+<li><input disabled="" type="checkbox"> 葱</li>
+<li><input disabled="" type="checkbox"> 蒜</li>
+</ul>
+<h2 id="调味料"><a href="#调味料" class="headerlink" title="调味料"></a>调味料</h2><ul>
+<li><input disabled="" type="checkbox"> 油</li>
+<li><input disabled="" type="checkbox"> 盐</li>
+<li><input disabled="" type="checkbox"> 胡椒粉</li>
+</ul>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
+<li>娃娃菜切掉根部，对半切开</li>
+<li>番茄去皮六等分切，再切半</li>
+<li>葱切葱花，蒜切蒜片</li>
+<li>热油下一半葱花、蒜片、虾仁，炒至虾仁变色，装好备用</li>
+<li>下油炒番茄，炒至出汁（可考虑加番茄酱）</li>
+<li>放入金针菇、娃娃菜、香菇、清水，盖盖煮5分钟</li>
+<li>放入虾仁，1勺盐+ 1勺胡椒粉调味</li>
+<li>葱花点缀 End</li>
+</ol>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+        <category>汤水</category>
+      </categories>
+      <tags>
+        <tag>汤水</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>豆腐萝卜菌菇汤</title>
+    <url>/blog/d2066371.html</url>
+    <content><![CDATA[<h1 id="材料"><a href="#材料" class="headerlink" title="材料"></a>材料</h1><h2 id="主料"><a href="#主料" class="headerlink" title="主料"></a>主料</h2><ul>
+<li><input disabled="" type="checkbox"> 白萝卜</li>
+<li><input disabled="" type="checkbox"> 老豆腐</li>
+<li><input disabled="" type="checkbox"> 金针菇</li>
+<li><input disabled="" type="checkbox"> 海鲜菇</li>
+<li><input disabled="" type="checkbox"> 鸡蛋</li>
+</ul>
+<ul>
+<li>虾皮 or 虾米</li>
+</ul>
+<h2 id="配料"><a href="#配料" class="headerlink" title="配料"></a>配料</h2><ul>
+<li><input disabled="" type="checkbox"> 葱</li>
+</ul>
+<h2 id="调味料"><a href="#调味料" class="headerlink" title="调味料"></a>调味料</h2><ul>
+<li><input disabled="" type="checkbox"> 盐</li>
+</ul>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
+<li>烧开水</li>
+<li>金针菇、海鲜菇清洗</li>
+<li>白萝卜去皮切粗条</li>
+<li>老豆腐对角切三角形，太厚的话继续切薄</li>
+<li>2 个鸡蛋打鸡蛋液淋到切好的豆腐上</li>
+<li>下油煎豆腐至两面金黄，然后加入开水（，加虾皮 or 虾米）</li>
+<li>加入金针菇 + 蟹味菇 + 白萝卜条，上盖中大火 10 分钟</li>
+<li>葱切葱花</li>
+<li>放盐调味，葱花点缀 End</li>
+</ol>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/%E6%B5%B7%E9%B2%9C%E8%8F%87.jpg" alt="海鲜菇"></p>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+        <category>汤水</category>
+      </categories>
+      <tags>
+        <tag>汤水</tag>
       </tags>
   </entry>
 </search>
