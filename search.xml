@@ -2554,4 +2554,320 @@
         <tag>汤水</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MQTT协议</title>
+    <url>/blog/f7cf4724.html</url>
+    <content><![CDATA[<blockquote>
+<p>参考自博客：<a href="https://zhuanlan.zhihu.com/p/421109780">MQTT协议，终于有人讲清楚了 - 知乎 (zhihu.com)</a></p>
+</blockquote>
+<h1 id="一、什么是-MQTT"><a href="#一、什么是-MQTT" class="headerlink" title="一、什么是 MQTT"></a>一、什么是 MQTT</h1><p>MQTT（Message Queuing Telemetry Transport，消息队列遥测传输协议），是一种基于发布&#x2F;订阅（publish&#x2F;subscribe）模式的“轻量级”通讯协议，该协议构建于 TCP&#x2F;IP 协议上，由 IBM 在 1999 年发布。</p>
+<p>MQTT 最大优点在于，用极少的代码和有限的带宽，为连接远程设备提供实时可靠的消息服务。</p>
+<p>作为一种低开销、低带宽占用的即时通讯协议，使其在物联网、小型设备、移动应用等方面有较广泛的应用。</p>
+<h1 id="二、MQTT-相关名词"><a href="#二、MQTT-相关名词" class="headerlink" title="二、MQTT 相关名词"></a>二、MQTT 相关名词</h1><h2 id="2-1-订阅和发布"><a href="#2-1-订阅和发布" class="headerlink" title="2.1 订阅和发布"></a>2.1 订阅和发布</h2><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/e07f45c8a11e4d29a68d303532ebf0d7.png" alt="MQTT消息传递示例"></p>
+<p>MQTT 使用的是发布&#x2F;订阅消息模式，它提供了一对多的消息分发机制，从而实现与应用程序的解耦。</p>
+<p>这是一种消息传递模式，消息不是直接从发送器发送到接收器（即点对点），而是由 MQTT server（或称为 MQTT Broker）分发的。</p>
+<ul>
+<li>MQTT 服务器负责消息的分发，因此必须是发布者（**<code>Publisher</code>**），而绝不是订阅者！</li>
+<li>客户端可以发布消息（发送方）、订阅消息（接收方）或两者兼而有之</li>
+</ul>
+<h2 id="2-2-QoS"><a href="#2-2-QoS" class="headerlink" title="2.2 QoS"></a>2.2 QoS</h2><p>QoS（Quality of Service levels）服务质量是 MQTT 的一个重要特性。当我们使用 TCP&#x2F;IP 时，连接已经在一定程度上受到保护。但是在无线网络中，中断和干扰很频繁，MQTT 在这里帮助避免信息丢失及其服务质量水平。这些级别在发布时使用。如果客户端发布到 MQTT 服务器，则客户端将是发送者，MQTT 服务器将是接收者。当 MQTT 服务器向客户端发布消息时，服务器是发送者，客户端是接收者。</p>
+<h3 id="QoS-0"><a href="#QoS-0" class="headerlink" title="QoS 0"></a>QoS 0</h3><p>“<strong>至多一次</strong>”，消息发布依赖于底层TCP&#x2F;IP网络。这一级别会发生消息丢失或重复，即：&lt;&#x3D;1。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/image-20230804110705781.png" alt="QoS 0"></p>
+<h3 id="QoS-1"><a href="#QoS-1" class="headerlink" title="QoS 1"></a>QoS 1</h3><p>“<strong>至少一次</strong>”，承诺消息将至少传送一次给订阅者，但消息重复可能会发生。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/image-20230804110216578.png" alt="QoS 1"></p>
+<h3 id="QoS-2"><a href="#QoS-2" class="headerlink" title="QoS 2"></a>QoS 2</h3><p>“<strong>只有一次</strong>”，消息仅传送到目的地一次。为此，带有唯一消息 ID 的消息会存储两次，首先来自发送者，然后是接收者。QoS 2 在网络中具有最高的开销，因为在发送方和接收方之间需要两个流。这一级别可用于如下情况，在计费系统中，消息重复或丢失会导致不正确的结果。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/image-20230804110311518.png" alt="QoS 2"></p>
+<h2 id="2-3-MQTT-数据包"><a href="#2-3-MQTT-数据包" class="headerlink" title="2.3 MQTT 数据包"></a>2.3 MQTT 数据包</h2><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/6edadebd6ef74a05a76166bb4ad66215.png" alt="MQTT 数据包"></p>
+<h3 id="2-3-1-固定头（Fixed-header）"><a href="#2-3-1-固定头（Fixed-header）" class="headerlink" title="2.3.1 固定头（Fixed header）"></a>2.3.1 固定头（Fixed header）</h3><p>存在于所有 MQTT 数据包中，表示数据包类型及数据包的分组类标识。</p>
+<h4 id="消息类型【byte-1（bits-7-4）】"><a href="#消息类型【byte-1（bits-7-4）】" class="headerlink" title="消息类型【byte 1（bits 7~4）】"></a>消息类型【byte 1（bits 7~4）】</h4><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>值</th>
+<th>报文流动方向</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Reserved</td>
+<td>0</td>
+<td>不可用</td>
+<td>保留位</td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td>1</td>
+<td>客户端到服务器</td>
+<td>客户端请求连接服务器</td>
+</tr>
+<tr>
+<td>CONNACK</td>
+<td>2</td>
+<td>服务器到客户端</td>
+<td>连接报文确认</td>
+</tr>
+<tr>
+<td>PUBLISH</td>
+<td>3</td>
+<td>双向</td>
+<td>发布消息</td>
+</tr>
+<tr>
+<td>PUBACK</td>
+<td>4</td>
+<td>双向</td>
+<td>QoS 1 消息发布收到确认</td>
+</tr>
+<tr>
+<td>PUBREC</td>
+<td>5</td>
+<td>双向</td>
+<td>发布收到（保证第一部分）</td>
+</tr>
+<tr>
+<td>PUBREL</td>
+<td>6</td>
+<td>双向</td>
+<td>发布释放（保证第二部分）</td>
+</tr>
+<tr>
+<td>PUBCOMP</td>
+<td>7</td>
+<td>双向</td>
+<td>QoS 2 消息发布完成（保证第三部分）</td>
+</tr>
+<tr>
+<td>SUBSCRIBE</td>
+<td>8</td>
+<td>客户端到服务器</td>
+<td>客户端请求订阅</td>
+</tr>
+<tr>
+<td>SUBACK</td>
+<td>9</td>
+<td>服务器到客户端</td>
+<td>订阅请求报文确认</td>
+</tr>
+<tr>
+<td>UNSUBSCRIBE</td>
+<td>10</td>
+<td>客户端到服务器</td>
+<td>客户端请求取消订阅</td>
+</tr>
+<tr>
+<td>UNSUBACK</td>
+<td>11</td>
+<td>服务器到客户端</td>
+<td>取消订阅报文确认</td>
+</tr>
+<tr>
+<td>PINGREQ</td>
+<td>12</td>
+<td>客户端到服务器</td>
+<td>PING 请求（心跳请求）</td>
+</tr>
+<tr>
+<td>PINGRESP</td>
+<td>13</td>
+<td>服务器到客户端</td>
+<td>PING 应答（心跳请求）</td>
+</tr>
+<tr>
+<td>DISCONNECT</td>
+<td>14</td>
+<td>客户端到服务器</td>
+<td>客户端断开连接</td>
+</tr>
+<tr>
+<td>Reserved</td>
+<td>15</td>
+<td>不可用</td>
+<td>保留位</td>
+</tr>
+</tbody></table>
+<h4 id="标识位【byte-1（bits-3-0）】"><a href="#标识位【byte-1（bits-3-0）】" class="headerlink" title="标识位【byte 1（bits 3~0）】"></a>标识位【byte 1（bits 3~0）】</h4><ul>
+<li>DUP：控制报文的重复分发标志</li>
+<li>QoS：PUBLISH 报文的服务质量等级（00、01、10、11）</li>
+<li>RETAIN：PUBLISH 报文的保留标志</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>控制报文</th>
+<th>固定报头标志</th>
+<th>Bit 3</th>
+<th>bit 2</th>
+<th>bit 1</th>
+<th>bit 0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Reserved</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>CONNACK</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>PUBLISH</td>
+<td>Used in MQTT 3.1.1</td>
+<td>DUP</td>
+<td>QoS</td>
+<td>QoS</td>
+<td>RETAIN</td>
+</tr>
+<tr>
+<td>PUBACK</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>PUBREC</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>PUBREL</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>PUBCOMP</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>SUBSCRIBE</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>SUBACK</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>UNSUBSCRIBE</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>UNSUBACK</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>PINGREQ</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>PINGRESP</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>DISCONNECT</td>
+<td>Reserved</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Reserved</td>
+<td>Reserved</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="剩余长度"><a href="#剩余长度" class="headerlink" title="剩余长度"></a>剩余长度</h4><p>剩余长度是一个可变字节整数，表示当前控制报文中剩余的字节数，包括可变报头和有效载荷中的数据。</p>
+<h3 id="2-3-2-可变头（Variable-header）"><a href="#2-3-2-可变头（Variable-header）" class="headerlink" title="2.3.2 可变头（Variable header）"></a>2.3.2 可变头（Variable header）</h3><p>可变报头位于固定报头和有效载荷之间，可变报头的内容根据报文类型的不同而不同。通常都包括一个 2 字节的数据包标识字段，这些类型的包有：PUBLISH (QoS &gt; 0)、PUBACK、PUBREC、PUBREL、PUBCOMP、SUBSCRIBE、SUBACK、UNSUBSCRIBE、UNSUBACK</p>
+<h3 id="2-3-3-消息体（Payload）"><a href="#2-3-3-消息体（Payload）" class="headerlink" title="2.3.3 消息体（Payload）"></a>2.3.3 消息体（Payload）</h3><p>Payload 有效载荷位于 MQTT 数据包的第三部分，CONNECT、SUBSCRIBE、SUBACK、UNSUBSCRIBE 这四种类型包含有效载荷。</p>
+<ul>
+<li>CONNECT 有效载荷内容主要是：客户端的 ClientID、订阅的主题、Message 以及用户名和密码</li>
+<li>SUBSCRIBE 有效载荷内容是：主题过滤器指明需要订阅的 Topic 以及 QoS</li>
+<li>SUBACK 有效载荷内容是：服务器对于 SUBSCRIBE 所申请的主题及 QoS 进行确认和回复</li>
+<li>UNSUBSCRIBE 有效载荷内容是：客户端想要取消订阅的主题过滤器</li>
+</ul>
+<h1 id="三、MQTT-工作流程"><a href="#三、MQTT-工作流程" class="headerlink" title="三、MQTT 工作流程"></a>三、MQTT 工作流程</h1><h1 id="四、MQTT-VS-Socket"><a href="#四、MQTT-VS-Socket" class="headerlink" title="四、MQTT VS Socket"></a>四、MQTT VS Socket</h1><p>WebSocket 是一种网络传输协议，位于 OSI 模型的**<code>应用层</code><strong>。可在单个 TCP 连接上进行全双工通信，能更好的节省服务器资源和带宽并达到实时通信，客户端和服务器只需要完成</strong><code>一次握手</code><strong>，两者之间就可以创建持久性的连接，并进行</strong><code>双向数据传输</code>**。</p>
+<p>MQTT 协议是一种消息队列传输协议，位于 OSI 模型的**<code>应用层</code>**。采用订阅、发布机制，订阅者只接收自己已经订阅的数据，非订阅数据则不接收，既保证了必要的数据的交换，又避免了无效数据造成的储存与处理。</p>
+<h2 id="4-1-通信模型不同"><a href="#4-1-通信模型不同" class="headerlink" title="4.1 通信模型不同"></a>4.1 通信模型不同</h2><p>MQTT 和 WebSocket 的底层都是使用 TCP 协议确保可靠传输数据，都支撑双向通信。但 WebSocket 是一种简单的报文协议，仅仅定义了<code>会话的发起方式</code>和<code>报文格式及类型</code>，只是在 TCP 协议之上实现了简单的报文通信。而 MQTT 则是一种比较复杂的消息协议，MQTT 不仅规定了具体的协议编码，还规定了客户端和服务器的通信模型。从这个意义上讲，MQTT over WebSocket，即 MQTT 可以工作在 WebSocket 之上。</p>
+<h2 id="4-2-报文结构不同"><a href="#4-2-报文结构不同" class="headerlink" title="4.2 报文结构不同"></a>4.2 报文结构不同</h2><p>MQTT 和 WebSocket 都使用二进制编码（有别于 HTTP 这一类基于文本编码的协议），但 WebSocket 的报文要远比 MQTT 的简单。</p>
+<h2 id="4-3-使用场景不同"><a href="#4-3-使用场景不同" class="headerlink" title="4.3 使用场景不同"></a>4.3 使用场景不同</h2><p>MQTT 是为了物联网场景设计的，基于 TCP 的 Pub&#x2F;Sub（订阅&#x2F;发布）协议，有许多为物联网优化的特性，比如适应不同网络的 QoS、层级主题、遗言等等。</p>
+<p>WebSocket 是为了 HTML5 应用方便与服务器双向通讯而设计的协议，HTTP 握手然后转 TCP 协议，用于取代之前的 Server Push、Comet、长轮询等老旧实现。</p>
+<p>两者的交集在于，如何通过 HTML5 应用来作为 MQTT 的客户端，以便接受设备消息或者向设备发送信息。那么此时，MQTT over WebSocket 自然成了最合理的途径了。</p>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>协议</category>
+        <category>物联网</category>
+      </categories>
+      <tags>
+        <tag>物联网</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Scrcpy手机投屏</title>
+    <url>/blog/7b850af8.html</url>
+    <content><![CDATA[<p><a href="https://www.yuque.com/liangxujian/rfusnk/gv83t6">Scrcpy手机投屏 (yuque.com)</a></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+        <tag>玩机</tag>
+      </tags>
+  </entry>
 </search>
