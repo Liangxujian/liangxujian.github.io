@@ -241,7 +241,7 @@
     <title>Java之BigDecimal</title>
     <url>/blog/6ff26fc7.html</url>
     <content><![CDATA[<blockquote>
-<p>摘录自博客：<a href="https://blog.csdn.net/qq_37080455/article/details/98964856">java精确除法运算（BigDecimal）_bigdecimal 除法_Evan_su的博客-CSDN博客</a></p>
+<p>参考网站：<a href="https://blog.csdn.net/qq_37080455/article/details/98964856">java精确除法运算（BigDecimal）_bigdecimal 除法_Evan_su的博客-CSDN博客</a></p>
 </blockquote>
 <h1 id="一、BigDecimal-介绍"><a href="#一、BigDecimal-介绍" class="headerlink" title="一、BigDecimal 介绍"></a>一、BigDecimal 介绍</h1><p>Java 中提供了大数字（超过 16 位有效位）的操作类，即 java.math.BinInteger 类和 java.math.BigDecimal 类，用于高精度计算。</p>
 <p>其中 BigInteger 类是针对大整数的处理类，而 BigDecimal 类则是针对大小数的处理类。</p>
@@ -1666,6 +1666,7 @@
     <url>/blog/ff8c64c0.html</url>
     <content><![CDATA[<blockquote>
 <p>参考自博客：</p>
+<p>相关网址：</p>
 <p><a href="https://www.cnblogs.com/yinzhengjie/p/14219259.html">NodeJS简介</a></p>
 <p><a href="https://nodejs.org/zh-cn/docs/">NodeJS doc</a></p>
 </blockquote>
@@ -1731,18 +1732,22 @@
     <title>Elasticsearch</title>
     <url>/blog/d32d37e5.html</url>
     <content><![CDATA[<blockquote>
-<p>摘录自博客：<a href="https://www.cnblogs.com/wupeixuan/tag/ElasticSearch/">ElasticSearch - 标签 - 武培轩 - 博客园 (cnblogs.com)</a></p>
+<p>参考网站：</p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.5/index.html">Elasticsearch Guide [6.5] | Elastic</a></p>
+<p><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html">Elasticsearch: 权威指南 | Elastic</a></p>
+<p><a href="https://blog.csdn.net/wang7075202/article/details/111308905">es 中的 segment、translog、refresh、flush、fsync、commit poit 等概念介绍_es commit point_王大丫丫的博客-CSDN博客</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/205211099">【Elasticsearch 技术分享】—— 十张图看懂ES原理 ！明白为什么说：ES 是准实时的！ - 知乎 (zhihu.com)</a></p>
 </blockquote>
-<h1 id="Elasticsearch-术语"><a href="#Elasticsearch-术语" class="headerlink" title="Elasticsearch 术语"></a>Elasticsearch 术语</h1><h2 id="索引（Index）"><a href="#索引（Index）" class="headerlink" title="索引（Index）"></a>索引（Index）</h2><p>索引是相似结构的文档的集合，索引中的数据分散在分片上，类似于关系型数据库中的表（Table）</p>
-<h2 id="类型（Type）"><a href="#类型（Type）" class="headerlink" title="类型（Type）"></a>类型（Type）</h2><p>在 ES6.0 版本中已经废除</p>
-<h2 id="文档（Document）"><a href="#文档（Document）" class="headerlink" title="文档（Document）"></a>文档（Document）</h2><p>文档是所有可搜索数据的最小单位，类似于关系型数据库中的记录（Row）</p>
-<h2 id="集群（Cluster）"><a href="#集群（Cluster）" class="headerlink" title="集群（Cluster）"></a>集群（Cluster）</h2><p>一个集群可以有一个或多个节点</p>
+<h1 id="一、Elasticsearch-概念介绍"><a href="#一、Elasticsearch-概念介绍" class="headerlink" title="一、Elasticsearch 概念介绍"></a>一、Elasticsearch 概念介绍</h1><h2 id="1-1-索引（Index）"><a href="#1-1-索引（Index）" class="headerlink" title="1.1 索引（Index）"></a>1.1 索引（Index）</h2><p>索引是相似结构的文档的集合，索引中的数据分散在分片上，类似于关系型数据库中的表（Table）。</p>
+<h2 id="1-2-类型（Type）"><a href="#1-2-类型（Type）" class="headerlink" title="1.2 类型（Type）"></a>1.2 类型（Type）</h2><p>在 ES6.0 版本中已经废除</p>
+<h2 id="1-3-文档（Document）"><a href="#1-3-文档（Document）" class="headerlink" title="1.3 文档（Document）"></a>1.3 文档（Document）</h2><p>文档是所有可搜索数据的最小单位，类似于关系型数据库中的记录（Row）</p>
+<h2 id="1-4-集群（Cluster）"><a href="#1-4-集群（Cluster）" class="headerlink" title="1.4 集群（Cluster）"></a>1.4 集群（Cluster）</h2><p>一个集群可以有一个或多个节点</p>
 <h3 id="集群的状态"><a href="#集群的状态" class="headerlink" title="集群的状态"></a>集群的状态</h3><ul>
 <li>Green：主分片与副本都正常分配</li>
 <li>Yellow：主分片全部正常分配，有副本分配未能正常分配</li>
 <li>Red：有主分片未能分配</li>
 </ul>
-<h2 id="节点（Node）"><a href="#节点（Node）" class="headerlink" title="节点（Node）"></a>节点（Node）</h2><p>节点其实就是一个 ES 实例，本质上是一个 Java 进程</p>
+<h2 id="1-5-节点（Node）"><a href="#1-5-节点（Node）" class="headerlink" title="1.5 节点（Node）"></a>1.5 节点（Node）</h2><p>节点其实就是一个 ES 实例，本质上是一个 Java 进程</p>
 <h3 id="节点类型"><a href="#节点类型" class="headerlink" title="节点类型"></a>节点类型</h3><ul>
 <li>主节点（Master Node）</li>
 <li>候选主节点（Master-eligible Node）</li>
@@ -1753,16 +1758,67 @@
 <li>部落节点（Tribe Node）</li>
 <li>预处理节点（Ingest Node）</li>
 </ul>
-<h2 id="映射（Mapping）"><a href="#映射（Mapping）" class="headerlink" title="映射（Mapping）"></a>映射（Mapping）</h2><p>类似于关系型数据库中的表定义（Schema）</p>
-<h2 id="字段（Field）"><a href="#字段（Field）" class="headerlink" title="字段（Field）"></a>字段（Field）</h2><p>类似于关系型数据库中的字段（Column）</p>
-<h2 id="分片（Shard）"><a href="#分片（Shard）" class="headerlink" title="分片（Shard）"></a>分片（Shard）</h2><p>ES 可以将一个索引中的数据切分为多个分片</p>
+<h2 id="1-6-映射（Mapping）"><a href="#1-6-映射（Mapping）" class="headerlink" title="1.6 映射（Mapping）"></a>1.6 映射（Mapping）</h2><p>类似于关系型数据库中的表定义（Schema）</p>
+<h2 id="1-7-字段（Field）"><a href="#1-7-字段（Field）" class="headerlink" title="1.7 字段（Field）"></a>1.7 字段（Field）</h2><p>类似于关系型数据库中的字段（Column）</p>
+<h2 id="1-8-分片（Shard）"><a href="#1-8-分片（Shard）" class="headerlink" title="1.8 分片（Shard）"></a>1.8 分片（Shard）</h2><p>ES 将一个索引中的数据切分为多个分片，分片（Shard）是 Elasticsearch 的基本存储单元。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/ES%E5%88%86%E7%89%87.png"></p>
+<ul>
+<li>Elasticsearch 索引（Elasticsearch Index）由 n 个分片（Shard）组成</li>
+<li>一个分片（Shard）其实就是一个 Lucene 索引（Lucene Index）</li>
+<li>一个 Lucene 索引（Lucene Index）由 n 个段（Segment）组成</li>
+</ul>
+<p>所以当我们查询一个 Elasticsearch 索引时，查询会在所有分片上执行，继而到段，最后合并所有查询结果返回。</p>
 <h3 id="分片类型"><a href="#分片类型" class="headerlink" title="分片类型"></a>分片类型</h3><ul>
 <li>主分片（Primary Shard）</li>
 <li>副本分配（Replica Shard）</li>
 </ul>
-<h1 id="Elasticsearch-Json-结构"><a href="#Elasticsearch-Json-结构" class="headerlink" title="Elasticsearch Json 结构"></a>Elasticsearch Json 结构</h1><figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;KJTnBYkB5GK1mQJI5u1p&quot;</span><span class="punctuation">,</span>            <span class="comment">// 文档唯一ID</span></span><br><span class="line">    <span class="attr">&quot;_index&quot;</span><span class="punctuation">:</span> <span class="string">&quot;properties_camera_gn_2023_06&quot;</span><span class="punctuation">,</span> <span class="comment">// 文档所属索引名</span></span><br><span class="line">    <span class="attr">&quot;_type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;_doc&quot;</span><span class="punctuation">,</span>                          <span class="comment">// 文档所属类型名</span></span><br><span class="line">    <span class="attr">&quot;_version&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span>                            <span class="comment">// 文档的版本信息</span></span><br><span class="line">    <span class="attr">&quot;_score&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span>                              <span class="comment">// 评分，为相关打分，是这个文档在这次查询中的算分（暂时理解为与查询条件的相关性）</span></span><br><span class="line">    <span class="attr">&quot;_source&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>                              <span class="comment">// 文档元素json数据，当搜索文档的时候，默认返回的就是_source这个字段</span></span><br><span class="line">        <span class="attr">&quot;createTime&quot;</span><span class="punctuation">:</span> <span class="number">1688021231207</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;deviceId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;7a367c995e8044f8bd4fe3a042be789c&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;intValue&quot;</span><span class="punctuation">:</span> <span class="number">333</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;messageId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;871806074498596864&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;messageType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;system&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;property&quot;</span><span class="punctuation">:</span> <span class="string">&quot;fdsa&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;propertyType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;int&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;timestamp&quot;</span><span class="punctuation">:</span> <span class="number">1688021231161</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;built-in&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;fields&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;createTime&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;2023-06-29T06:47:11.207Z&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;deviceId&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;7a367c995e8044f8bd4fe3a042be789c&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;intValue&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="number">333</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;messageId&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;871806074498596864&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;messageType&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;system&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;property&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;fdsa&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;property.keyword&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;fdsa&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;propertyType&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;int&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;propertyType.keyword&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;int&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;timestamp&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;2023-06-29T06:47:11.161Z&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;built-in&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="1-9-分段（Segment）"><a href="#1-9-分段（Segment）" class="headerlink" title="1.9 分段（Segment）"></a>1.9 分段（Segment）</h2><p>Elasticsearch 可以对全文进行检索主要归功于【倒排索引（Inverted Index）】。倒排索引可以由关键词直接定位到对应的文档，其被写入磁盘后是不可改变的。倒排索引的不变性有几个好处：</p>
+<ul>
+<li>索引不能更新，所以不需要锁</li>
+<li>由于索引不变，只要系统内存足够大，大部分读请求可以直接命中内存而不用请求磁盘，极大提高性能</li>
+<li>如果使用了其他缓存工具，在缓存的有效周期内，索引始终有效</li>
+<li>写入单个大的倒排索引允许数据被压缩，以减少磁盘 I&#x2F;O 和需要被缓存到内存的索引的使用量</li>
+</ul>
+<p>同时由于倒排索引的不可变性，这意味着当需要新增文档的时候，需要对整个索引进行重建。而当数据更新频繁的时候，这问题更是会变成灾难。因此 Elasticsearc 使用了一种【近实时搜索（Real-time Search）】的策略，来处理这个问题。</p>
+<p>而在 Lucene 中，单个倒排索引文件被称为 Segment，多个 Segment 汇总在一起称为 Lucene 的 Index，对应的就是 ES 的 Shard：</p>
+<p><strong>1 × Shard &#x3D; 1 × Lucene Index &#x3D; n × Segment &#x3D; n × n × Document</strong></p>
+<h3 id="分段合并（Segment-Merge）"><a href="#分段合并（Segment-Merge）" class="headerlink" title="分段合并（Segment Merge）"></a>分段合并（Segment Merge）</h3><p>由于自动刷新流程（refresh）每秒会创建一个新的 Segment，这样会导致短时间内的段数量暴增。而 Segment 数目太多会带来较大的麻烦。 每一个 Segment 都会消耗文件句柄、内存和 CPU 运行周期。更重要的是，每个搜索请求都必须轮流检查每个 Segment；所以 Segment 越多，搜索也就越慢。</p>
+<p>在 ES 的后台运行一个任务，来检测当前磁盘中的 Segment ，对符合条件的 Segment 进行合并操作。小的段被合并到大的段，然后这些大的段再被合并到更大的段。段合并的时候会将那些旧的已删除文档从文件系统中清除。被删除的文档（或被更新文档的旧版本）不会被拷贝到新的大段中。</p>
+<p>ES Merge 操作的对象，是位于 FileSystem Cache 尚未 flush 到磁盘的新段和已经 flush 到磁盘中的老段。</p>
+<ol>
+<li>每秒的刷新（refresh）操作会创建新的段并将段打开以供搜索使用</li>
+<li>合并进程选择一小部分大小相似的段，并且在后台将它们合并到更大的段中（这并不会中断索引和搜索）</li>
+</ol>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/elas_1110.png" alt="Two commited segments and one uncommited segment in the process of being merged into a bigger segment"></p>
+<ol start="3">
+<li>新段被 flush 到磁盘，<strong>写入一个包含新段且排除了旧的和较小的段的新的提交点（commit point）</strong></li>
+<li>新段被打开搜索，老段删除（物理删除），合并结束</li>
+</ol>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/elas_1111.png" alt="一旦合并结束，老的段被删除"></p>
+<p>要注意的是，一个大的 Segment 的 Merge 操作是很消耗 CPU、IO 资源的，如果使用不当会影响到本身的 search 查询性能。ES 默认会控制 Merge 进程的资源占用以保证 Merge 期间 search 具有足够资源。</p>
+<h3 id="分段合并默认策略"><a href="#分段合并默认策略" class="headerlink" title="分段合并默认策略"></a>分段合并默认策略</h3><ul>
+<li>index.merge.policy.floor_segment：默认 2MB，小于这个大小的 segment，优先被归并；</li>
+<li>index.merge.policy.max_merge_at_once：默认一次最多归并 10 个 segment；</li>
+<li>index.merge.policy.max_merge_at_once_explicit：默认 forcemerge 时一次最多归并 30 个 segment；</li>
+<li>index.merge.policy.max_merged_segment：默认 5GB，大于这个大小的 segment，不用参与归并。force merge 除外</li>
+</ul>
+<h3 id="分段合并策略优化"><a href="#分段合并策略优化" class="headerlink" title="分段合并策略优化"></a>分段合并策略优化</h3><ol>
+<li>对于非实时业务可以加大 refresh 的时间间隔，减少 segment 的生成数量；</li>
+<li>加大 flush 间隔，尽量让每次新生成的 segment 本身大小就比较大；</li>
+<li>提前做好 force merge 减少业务高峰期的 merge 的操作</li>
+</ol>
+<blockquote>
+<p><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/indexing-performance.html#segments-and-merging">索引优化技巧</a></p>
+</blockquote>
+<h2 id="1-10-刷盘（commit）"><a href="#1-10-刷盘（commit）" class="headerlink" title="1.10 刷盘（commit）"></a>1.10 刷盘（commit）</h2><h3 id="commit-VS-flush"><a href="#commit-VS-flush" class="headerlink" title="commit VS flush"></a>commit VS flush</h3><p>在 Elasticsearch 中，flush 和 commit 是两个不同的操作。</p>
+<ul>
+<li>flush 操作是将内存中的数据刷新到磁盘上的过程。它确保了在节点崩溃或关闭时，数据不会丢失。flush 操作是一个轻量级的操作，它将内存中的数据写入磁盘，但不会等待数据被持久化到磁盘上。</li>
+<li>commit 操作是将刷新的数据持久化到磁盘上的过程。它确保了数据在节点崩溃或关闭时的持久性。commit 操作是一个相对较重的操作，它会等待数据被完全持久化到磁盘上。</li>
+</ul>
+<p>简而言之，flush 操作是将内存中的数据<strong>写入磁盘</strong>，这个过程是可以异步的，即数据写入磁盘后不需要等待确认。而 commit 操作是将数据<strong>持久化到磁盘</strong>上，这个过程是同步的，需要等待数据被完全写入磁盘并确认后才返回。</p>
+<h1 id="二、Elasticsearch-Json-结构示例"><a href="#二、Elasticsearch-Json-结构示例" class="headerlink" title="二、Elasticsearch Json 结构示例"></a>二、Elasticsearch Json 结构示例</h1><figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;KJTnBYkB5GK1mQJI5u1p&quot;</span><span class="punctuation">,</span>            <span class="comment">// 文档唯一ID</span></span><br><span class="line">    <span class="attr">&quot;_index&quot;</span><span class="punctuation">:</span> <span class="string">&quot;properties_camera_gn_2023_06&quot;</span><span class="punctuation">,</span> <span class="comment">// 文档所属索引名</span></span><br><span class="line">    <span class="attr">&quot;_type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;_doc&quot;</span><span class="punctuation">,</span>                          <span class="comment">// 文档所属类型名</span></span><br><span class="line">    <span class="attr">&quot;_version&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span>                            <span class="comment">// 文档的版本信息</span></span><br><span class="line">    <span class="attr">&quot;_score&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span>                              <span class="comment">// 评分，为相关打分，是这个文档在这次查询中的算分（暂时理解为与查询条件的相关性）</span></span><br><span class="line">    <span class="attr">&quot;_source&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span>                              <span class="comment">// 文档元素json数据，当搜索文档的时候，默认返回的就是_source这个字段</span></span><br><span class="line">        <span class="attr">&quot;createTime&quot;</span><span class="punctuation">:</span> <span class="number">1688021231207</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;deviceId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;7a367c995e8044f8bd4fe3a042be789c&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;intValue&quot;</span><span class="punctuation">:</span> <span class="number">333</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;messageId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;871806074498596864&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;messageType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;system&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;property&quot;</span><span class="punctuation">:</span> <span class="string">&quot;fdsa&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;propertyType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;int&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;timestamp&quot;</span><span class="punctuation">:</span> <span class="number">1688021231161</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;built-in&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;fields&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;createTime&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;2023-06-29T06:47:11.207Z&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;deviceId&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;7a367c995e8044f8bd4fe3a042be789c&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;intValue&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="number">333</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;messageId&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;871806074498596864&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;messageType&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;system&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;property&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;fdsa&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;property.keyword&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;fdsa&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;propertyType&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;int&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;propertyType.keyword&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;int&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;timestamp&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;2023-06-29T06:47:11.161Z&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;built-in&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="Elasticsearch-CRUD"><a href="#Elasticsearch-CRUD" class="headerlink" title="Elasticsearch CRUD"></a>Elasticsearch CRUD</h1><h2 id="增"><a href="#增" class="headerlink" title="增"></a>增</h2><h3 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h3><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">PUT my_index/_doc/<span class="number">1</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;user&quot;</span><span class="punctuation">:</span><span class="string">&quot;mike&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;comment&quot;</span><span class="punctuation">:</span><span class="string">&quot;You know, for search&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h1 id="三、Elasticsearch-CRUD"><a href="#三、Elasticsearch-CRUD" class="headerlink" title="三、Elasticsearch CRUD"></a>三、Elasticsearch CRUD</h1><h2 id="3-1-增"><a href="#3-1-增" class="headerlink" title="3.1 增"></a>3.1 增</h2><h3 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h3><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">PUT my_index/_doc/<span class="number">1</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;user&quot;</span><span class="punctuation">:</span><span class="string">&quot;mike&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;comment&quot;</span><span class="punctuation">:</span><span class="string">&quot;You know, for search&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="Create"><a href="#Create" class="headerlink" title="Create"></a>Create</h3><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">PUT my_index/_create/<span class="number">1</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;user&quot;</span><span class="punctuation">:</span><span class="string">&quot;mike&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;comment&quot;</span><span class="punctuation">:</span><span class="string">&quot;You know, for search&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">POST my_index/_doc（不指定 ID，则会自动生成）</span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;user&quot;</span><span class="punctuation">:</span><span class="string">&quot;mike&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;comment&quot;</span><span class="punctuation">:</span><span class="string">&quot;You know, for search&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
@@ -1772,17 +1828,26 @@
 <li>Create 通过 version，判断出文档已存在，则直接插入失败，抛出一个已经存在的异常。</li>
 </ul>
 <h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p>在批量请求的时候最好使用 create 方式进行导入。</p>
-<p>假如你批量导入一个大小为 500MB 的文件，中途突然网络中断，可能其中有 5 万条数据已经导入，那么第二次尝试导入的时候，如果选用 index 方式，那么前 5 万条数据又会重复导入，增加了很多额外的开销，如果是 create 的话，elasticsearch 针对 bulk 操作机制是忽略已经存在的（当然在 bulk 完成后会返回哪些数据是重复的），这样就不会重复被导入了。</p>
-<h2 id="删（Delete）"><a href="#删（Delete）" class="headerlink" title="删（Delete）"></a>删（Delete）</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">DELETE my_index/_doc/<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>假如你批量导入一个大小为 500MB 的文件，中途突然网络中断，可能其中有 5 万条数据已经导入，那么第二次尝试导入的时候，如果选用 index 方式，那么前 5 万条数据又会重复导入，增加了很多额外的开销，如果是 create 的话，ES 针对 bulk 操作机制是忽略已经存在的（当然在 bulk 完成后会返回哪些数据是重复的），这样就不会重复被导入了。</p>
+<h2 id="3-2-删（Delete）"><a href="#3-2-删（Delete）" class="headerlink" title="3.2 删（Delete）"></a>3.2 删（Delete）</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">DELETE my_index/_doc/<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="改（Update）"><a href="#改（Update）" class="headerlink" title="改（Update）"></a>改（Update）</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">POST my_index/_update/<span class="number">1</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;doc&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span><span class="attr">&quot;user&quot;</span><span class="punctuation">:</span><span class="string">&quot;mike&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;comment&quot;</span><span class="punctuation">:</span><span class="string">&quot;You know, Elesticsearch&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>由于倒排索引（Inverted Index）的不可变性，即其分段（Segment）是不可变的，所以在进行删除操作的时候，文档 Document 并不会从 Segment 中移除。而是在每次 commit 或者 flush 的时候，在 .del 文件中列出被删除的 Document，然后在查询的时候，在查询结果返回之前会过滤掉这些被删除的 Document。（逻辑删除）</p>
+<h2 id="3-3-改（Update）"><a href="#3-3-改（Update）" class="headerlink" title="3.3 改（Update）"></a>3.3 改（Update）</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">POST my_index/_update/<span class="number">1</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;doc&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span><span class="attr">&quot;user&quot;</span><span class="punctuation">:</span><span class="string">&quot;mike&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;comment&quot;</span><span class="punctuation">:</span><span class="string">&quot;You know, Elesticsearch&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
-<p>由于 Lucene 中的 update 其实就是覆盖替换，并不支持针对特定 Field 进行修改，Elasticsearch 中的 update 为了实现针对特定字段修改，在 Lucene 的基础上做了一些改动。</p>
-<p>每次 update 都会调用 InternalEngine 中的 get 方法，来获取整个文档信息，从而实现针对特定字段进行修改，这也就导致了每次更新要获取一遍原始文档，性能上会有很大影响。</p>
+<p>由于 Lucene 中的 update 其实就是覆盖替换，并不支持针对特定 Field 进行修改，因此 ES 中的 update 为了实现针对特定字段修改，在 Lucene 的基础上做了一些改动：</p>
+<ol>
+<li><p>每次 update 都会调用 InternalEngine 中的 get 方法，来获取整个文档信息；</p>
+</li>
+<li><p>对旧的 Document 标记被删除，写入到 .del 文件中（逻辑标记、逻辑删除）；</p>
+</li>
+<li><p>把带有新 Document 的 Segment 写入（增量保存）</p>
+</li>
+</ol>
+<p>从而实现针对特定字段进行修改。但这也就导致了每次更新要获取一遍原始文档，性能上会有很大影响。</p>
 <p>所以根据使用场景，有时候使用 index 会比 update 好很多。</p>
-<h2 id="查（Read）"><a href="#查（Read）" class="headerlink" title="查（Read）"></a>查（Read）</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET my_index/_doc/<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-4-查（Read）"><a href="#3-4-查（Read）" class="headerlink" title="3.4 查（Read）"></a>3.4 查（Read）</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET my_index/_doc/<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="Elasticsearch-Bulk-API"><a href="#Elasticsearch-Bulk-API" class="headerlink" title="Elasticsearch Bulk API"></a>Elasticsearch Bulk API</h1><p>在一个 REST 请求中，重新建立网络开销十分损耗性能，因此 ES 提供 Bulk API，支持在一次 API 调用中，对不同的索引进行操作，从而减少网络传输开销，提升写入速率。</p>
+<h1 id="四、Elasticsearch-API"><a href="#四、Elasticsearch-API" class="headerlink" title="四、Elasticsearch API"></a>四、Elasticsearch API</h1><h2 id="Elasticsearch-Bulk-API"><a href="#Elasticsearch-Bulk-API" class="headerlink" title="Elasticsearch Bulk API"></a>Elasticsearch Bulk API</h2><p>在一个 REST 请求中，重新建立网络开销十分损耗性能，因此 ES 提供 Bulk API，支持在一次 API 调用中，对不同的索引进行操作，从而减少网络传输开销，提升写入速率。</p>
 <p>它支持 Index、Create、Update、Delete 四种类型操作，可以在 URI 中指定索引，也可以在请求的方法体中进行。</p>
 <p>同时多条操作中如果其中有一条失败，也不会影响其他的操作，并且返回的结果包括每一条操作执行的结果。</p>
 <p>示例：</p>
@@ -1792,12 +1857,20 @@
 
 <p>took 表示消耗了 93 毫秒，errors 为 true 表示在这些操作中错误发生，发现是 update 操作发生了错误，id 为 2 的文档不存在，所以报错了。</p>
 <p>在使用 Bulk API 的时候，当 errors 为 true 时，需要把错误的操作修改掉，防止存到 ES 的数据有缺失。</p>
-<h1 id="Elasticsearch-mget-API"><a href="#Elasticsearch-mget-API" class="headerlink" title="Elasticsearch _mget API"></a>Elasticsearch _mget API</h1><p>批量查询需要指明要查询文档的 id，可以在一个 _mget 操作里查询不同索引的数据，可以减少网络连接所产生的开销，提高性能。</p>
+<h2 id="Elasticsearch-mget-API"><a href="#Elasticsearch-mget-API" class="headerlink" title="Elasticsearch _mget API"></a>Elasticsearch _mget API</h2><p>批量查询需要指明要查询文档的 id，可以在一个 _mget 操作里查询不同索引的数据，可以减少网络连接所产生的开销，提高性能。</p>
 <p>下面我们来实际操作下，输入以下代码执行，就可以得到文档 id 为 1,3 的数据。</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">GET /_mget</span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;docs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;_index&quot;</span><span class="punctuation">:</span> <span class="string">&quot;users&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1&quot;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;_index&quot;</span><span class="punctuation">:</span> <span class="string">&quot;users&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;docs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;_index&quot;</span><span class="punctuation">:</span> <span class="string">&quot;users:&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;_doc&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_version&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_seq_no&quot;</span><span class="punctuation">:</span> <span class="number">27</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_primary_term&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;found&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_source&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;wupx&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="string">&quot;18&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;job&quot;</span><span class="punctuation">:</span> <span class="string">&quot;coder&quot;</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hello world&quot;</span></span><br><span class="line">		<span class="punctuation">&#125;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;_index&quot;</span><span class="punctuation">:</span> <span class="string">&quot;users&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;_doc&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;3&quot;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_version&quot;</span><span class="punctuation">:</span> <span class="number">7</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_seq_no&quot;</span><span class="punctuation">:</span> <span class="number">24</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_primary_term&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;found&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;_source&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;wumx&quot;</span></span><br><span class="line">		<span class="punctuation">&#125;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="Elasticsearch-fresh-API"><a href="#Elasticsearch-fresh-API" class="headerlink" title="Elasticsearch fresh API"></a>Elasticsearch fresh API</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刷新所有索引</span></span><br><span class="line">POST /_refresh</span><br><span class="line"></span><br><span class="line"><span class="comment">// 指定刷新索引</span></span><br><span class="line">POST /index_name/_refresh</span><br></pre></td></tr></table></figure>
+
+<h2 id="Elasticsearch-flush-API"><a href="#Elasticsearch-flush-API" class="headerlink" title="Elasticsearch flush API"></a>Elasticsearch flush API</h2><h1 id="五、总结与分析"><a href="#五、总结与分析" class="headerlink" title="五、总结与分析"></a>五、总结与分析</h1><ol>
+<li>ES 建立在高性能的 Lucene 基础之上，依据 Inverted Index 作为核心数据结构，实现了<strong>对海量数据的高效查询</strong>；</li>
+<li>ES 通过引入分片概念，成功地将 Lucene 部署到分布式系统中，实现了<strong>分布式环境下的高可用</strong>；</li>
+<li>ES 通过定时 refresh lucene in-momory-buffer 中的数据，实现了<strong>【近实时】的写入和查询能力</strong>；</li>
+<li>ES 通过引入 translog，多副本机制（即：一个分片的主副分片不能分片在同一个节点上），以及定期执行 flush、Segment Merge 等操作，进一步保证了数据可靠性和较高的存储性能。</li>
+</ol>
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
@@ -2045,7 +2118,7 @@
     <title>Nginx安装与使用</title>
     <url>/blog/c3825a32.html</url>
     <content><![CDATA[<blockquote>
-<p>参考自博客：<a href="https://blog.csdn.net/w410589502/article/details/70787468">linux nginx安装以及配置</a></p>
+<p>参考网站：<a href="https://blog.csdn.net/w410589502/article/details/70787468">linux nginx安装以及配置</a></p>
 </blockquote>
 <h1 id="一、Nginx-Linux-版本的基本使用"><a href="#一、Nginx-Linux-版本的基本使用" class="headerlink" title="一、Nginx Linux 版本的基本使用"></a>一、Nginx Linux 版本的基本使用</h1><p>下载地址：<a href="http://nginx.org/">Nginx官方网址</a></p>
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1565086188620.png" alt="1565086188620"></p>
@@ -2193,7 +2266,7 @@
     <title>Nginx配置</title>
     <url>/blog/ad720447.html</url>
     <content><![CDATA[<blockquote>
-<p>摘录自博客：</p>
+<p>参考网站：</p>
 <p><a href="https://www.cnblogs.com/jingmoxukong/p/5945200.html">Nginx 简易教程</a></p>
 <p><a href="https://www.jianshu.com/p/bed000e1830b">WEB请求处理二：Nginx请求反向代理</a></p>
 </blockquote>
@@ -2558,7 +2631,7 @@
     <title>MQTT协议</title>
     <url>/blog/f7cf4724.html</url>
     <content><![CDATA[<blockquote>
-<p>参考自博客：<a href="https://zhuanlan.zhihu.com/p/421109780">MQTT协议，终于有人讲清楚了 - 知乎 (zhihu.com)</a></p>
+<p>参考网站：<a href="https://zhuanlan.zhihu.com/p/421109780">MQTT协议，终于有人讲清楚了 - 知乎 (zhihu.com)</a></p>
 </blockquote>
 <h1 id="一、什么是-MQTT"><a href="#一、什么是-MQTT" class="headerlink" title="一、什么是 MQTT"></a>一、什么是 MQTT</h1><p>MQTT（Message Queuing Telemetry Transport，消息队列遥测传输协议），是一种基于发布&#x2F;订阅（publish&#x2F;subscribe）模式的“轻量级”通讯协议，该协议构建于 TCP&#x2F;IP 协议上，由 IBM 在 1999 年发布。</p>
 <p>MQTT 最大优点在于，用极少的代码和有限的带宽，为连接远程设备提供实时可靠的消息服务。</p>
@@ -2875,17 +2948,18 @@
     <title>使用Springboot获取本地图片字节流，传入前端显示</title>
     <url>/blog/a52cdf37.html</url>
     <content><![CDATA[<blockquote>
-<p> 参考网页：</p>
+<p> 参考网站：</p>
 <p><a href="https://www.jianshu.com/p/477b11a0edfb">使用Springboot获取本地图片字节流，传入前端显示 - 简书 (jianshu.com)</a></p>
 <p><a href="https://baeldung-cn.com/spring-controller-return-image-file">Returning an Image or a File with Spring | Baeldung中文网 (baeldung-cn.com)</a></p>
 </blockquote>
-<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>前端请求，传入一个用户头像ID，后端 SpringBoot 根据该 ID 查询第三方服务接口，然后把结果返回给前端。</p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>前端请求，传入一个用户头像 ID，后端 SpringBoot 根据该 ID 查询第三方服务接口，然后把结果返回给前端。</p>
 <h1 id="导包"><a href="#导包" class="headerlink" title="导包"></a>导包</h1><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/commons-io/commons-io --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-io<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-io<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.11.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><h2 id="Controller"><a href="#Controller" class="headerlink" title="Controller"></a>Controller</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.io.IOUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpHeaders;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.HttpStatus;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.MediaType;</span><br><span class="line"><span class="keyword">import</span> org.springframework.http.ResponseEntity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/testController&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TestService testService;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@GetMapping(value = &quot;/getUserAvatar&quot;, produces = MediaType.IMAGE_JPEG_VALUE)</span></span><br><span class="line">    <span class="keyword">public</span> ResponseEntity&lt;<span class="type">byte</span>[]&gt; getUserAvatarById(<span class="meta">@RequestParam(&quot;userAvatarId&quot;)</span> <span class="meta">@ApiParam(&quot;用户ID&quot;)</span> String userAvatarId) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">in</span> <span class="operator">=</span> testService.getUserAvatar(userAvatarId);</span><br><span class="line">        <span class="keyword">final</span> <span class="type">HttpHeaders</span> <span class="variable">headers</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpHeaders</span>();</span><br><span class="line">        headers.setContentType(MediaType.IMAGE_JPEG);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ResponseEntity</span>&lt;&gt;(IOUtils.toByteArray(in), headers, HttpStatus.OK);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> okhttp3.MediaType;</span><br><span class="line"><span class="keyword">import</span> okhttp3.ResponseBody;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> retrofit2.Response;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">TestService</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(TestServiceImpl.class);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TestApiClient apiClient;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> InputStream <span class="title function_">getUserAvatar</span><span class="params">(String userAvatarId)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        Response&lt;ResponseBody&gt; response = apiClient.getUserAvatar(userAvatarId);</span><br><span class="line">        <span class="type">ResponseBody</span> <span class="variable">body</span> <span class="operator">=</span> response.body();</span><br><span class="line">        <span class="keyword">if</span> (body == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> InputStream.nullInputStream();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">MediaType</span> <span class="variable">mediaType</span> <span class="operator">=</span> body.contentType();</span><br><span class="line">        <span class="keyword">if</span> (mediaType != <span class="literal">null</span> &amp;&amp; mediaType.type().contains(<span class="string">&quot;image&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> body.byteStream();</span><br><span class="line">        &#125;</span><br><span class="line">        logger.warn(<span class="string">&quot;getUserAvatar failure by userAvatarId = &#123;&#125;. &#123;&#125;&quot;</span>, userAvatarId, body.string());</span><br><span class="line">        <span class="keyword">return</span> InputStream.nullInputStream();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p></br></br></br></br></p>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -2893,6 +2967,114 @@
       </categories>
       <tags>
         <tag>Java</tag>
+        <tag>工作记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>世界が終るまでは･･･-WANDS</title>
+    <url>/blog/a44a3538.html</url>
+    <content><![CDATA[<h1 id="世界が終るまでは･･･（直到世界尽头）-WANDS"><a href="#世界が終るまでは･･･（直到世界尽头）-WANDS" class="headerlink" title="世界が終るまでは･･･（直到世界尽头）-WANDS"></a>世界が終るまでは･･･（直到世界尽头）-WANDS</h1><p>大都会に</p>
+<p>僕はもう一人で</p>
+<p>投げ捨てられた</p>
+<p>空きカンのようだ</p>
+<p>互いのすべてを</p>
+<p>知りつくすまでが</p>
+<p>愛ならば いっそ</p>
+<p>永久に眠ろうか</p>
+<p>世界が終わるまでは</p>
+<p>離れる事もない</p>
+<p>そう願っていた</p>
+<p>幾千の夜と</p>
+<p>戻らない時だけが</p>
+<p>何故輝いては</p>
+<p>やつれ切った</p>
+<p>心までも 壊す</p>
+<p>はかなき想い</p>
+<p>この tragedy night</p>
+<p>そして人は</p>
+<p>形を求めて</p>
+<p>かけがえのない</p>
+<p>何かを失う</p>
+<p>欲望だらけの</p>
+<p>街じゃ 夜空の</p>
+<p>星屑も 僕らを 灯せない</p>
+<p>世界が終わる前に</p>
+<p>聞かせておくれよ</p>
+<p>満開の花が</p>
+<p>似合いの catastrophe</p>
+<p>誰もが望みながら</p>
+<p>永遠を信じない</p>
+<p>なのに きっと</p>
+<p>明日を夢見てる</p>
+<p>はかなき日々と</p>
+<p>この tragedy night</p>
+<p>世界が終わるまでは</p>
+<p>離れる事もない</p>
+<p>そう願っていた</p>
+<p>幾千の夜と</p>
+<p>戻らない時だけが</p>
+<p>何故輝いては</p>
+<p>やつれ切った</p>
+<p>心までも 壊す</p>
+<p>はかなき想い</p>
+<p>この tragedy night</p>
+<p>この tragedy night</p>
+<p>【终（お）<ruby>终<rp>（</rp><rt>お</rt><rp>）</rp></ruby>わった】</p>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Elasticsearch更新后延迟问题处理</title>
+    <url>/blog/6d94e144.html</url>
+    <content><![CDATA[<blockquote>
+<p>参考网站：</p>
+<p>[<a href="https://www.cnblogs.com/bigdata1024/p/15254164.html">Elasticsearch] ES更新问题踩坑记录 - chaplinthink - 博客园 (cnblogs.com)</a></p>
+<p><a href="https://blog.csdn.net/qq_42764468/article/details/121252151">解决elasticsearch更新数据后不能立即刷新的问题_es更新后立马刷新_我一直在流浪的博客-CSDN博客</a></p>
+</blockquote>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>前端请求，对 ES 中的数据进行 update。然后进行查询刚刚操作完毕的数据，或者数据列表。</p>
+<p>不过查询到的却是 update 前的数据。</p>
+<h1 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h1><p>Elesticsearch 更新数据后会有延迟。</p>
+<p>ES 实现的是一种【近实时搜索（Real-time Search）】的策略：</p>
+<ol>
+<li>ES 产生<strong>一个</strong>新分段（Segment），把数据缓存到 Index Buffer；</li>
+<li>refresh：1s 后（默认配置），ES 清空写缓存，新段 write 到文件系统缓存（FileSystem Cache）；</li>
+<li>flush：通过手工调用 flush 接口（POST &#x2F;my-index-000001&#x2F;_flush），或者操作系统通过一定策略（默认每隔 30 分钟或者 translog 达到一定大小的时候：由 index.translog.flush_threshold_size 控制，默认 512MB），将 Index Buffer 中的数据全部刷新到磁盘里的一个新的 Segment 中，清空 Index Buffer。然后调用 Lucene 的 commit 方法将所有内存中的 Segment 持久化（fsync）到磁盘，一个 commit point 写入磁盘中，同时清空 translog 日志文件。</li>
+</ol>
+<p><em>提交点（commit point）：记录当前所有可用的 Segment ，一个索引一般只有一个 commit point，而每个 commit point 都会维护一个 .del 文件（ ES 删除数据本质是不属于物理删除），当 ES 做删改操作时首先会在 .del 文件中声明某个 Document 已经被删除，文件内记录了在某个 Segment 内某个 Document 已经被删除，当查询请求过来时在 Segment 中被删除的文件是能够查出来的，但是当返回结果时会根据 commit point 维护的那个 .del 文件把已经删除的文档过滤掉。</em></p>
+<p>这种策略可以大幅提升写入的效率。因为从 write 接口返回 success 开始，无论数据有没有被刷到磁盘，该数据已经对读取可见。</p>
+<h1 id="处理方案"><a href="#处理方案" class="headerlink" title="处理方案"></a>处理方案</h1><p>方案一：修改 ES refresh 的间隔时间</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -XPUT  http://ip:9200/meta_es_data/_settings?pretty -d <span class="string">&#x27;&#123;&quot;refresh_interval&quot; : &quot;500ms&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>方案二：在每次更新操作后，休眠 1s</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">baseSearchService.update(docBean);</span><br><span class="line"> </span><br><span class="line">Thread.sleep(<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>方案三：在 ES 请求接口有请求后强制 refresh（当写测试的时候， 手动刷新很有用，但是不要在生产环境下每次索引一个文档都去手动刷新。 “相反，你的应用需要意识到 Elasticsearch 的近实时的性质，并接受它的不足” ~~~）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">request.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);</span><br></pre></td></tr></table></figure>
+
+<h1 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h1><h2 id="拓展一"><a href="#拓展一" class="headerlink" title="拓展一"></a>拓展一</h2><p>ES 的 refresh 虽然可以配置刷新的时间，但是没必要，频繁的刷新会造成压力过大。</p>
+<p>因为 ES 每次 refresh 都产生一个新段（Segment），频繁的 refresh 会导致段数量的暴增。段数量过多会导致过多的消耗文件句柄、内存和 CPU 时间；而且段的数量越多，查询的速度也会越慢。</p>
+<p>虽然 ES 可以进行【段合并】，但是段的合并会消耗掉大量系统资源，尤其是磁盘 I&#x2F;O。</p>
+<h2 id="拓展二"><a href="#拓展二" class="headerlink" title="拓展二"></a>拓展二</h2><p>ES 数据在更新的时候并不是在原来的数据上做修改的，而是找到该数据的索引 ID，把原来的数据删掉，再重新插入一条，但索引 ID 是相同的。</p>
+<h2 id="拓展三"><a href="#拓展三" class="headerlink" title="拓展三"></a>拓展三</h2><p>当删除、更新两个操作间隔很短时间执行，上一个数据还没有 refresh 到 FileSystem Cache 区域，就无法查询。</p>
+<p><code>final TableDocBean docBean = baseSearchService.getById(id);</code>（获取不到数据，会导致数据更新失败）</p>
+<h2 id="拓展四"><a href="#拓展四" class="headerlink" title="拓展四"></a>拓展四</h2><p>由于系统是先缓存了一段数据才写，且新段不会立即刷入磁盘中，这两个过程如果出现某些意外情况（例如主机断电等），则会存在丢失数据的风险。通用的处理方法是【记录事务日志】，每次对 ES 进行操作时均记录事务日志，当 ES 启动的时候，重放 translog 中所有在最后一次提交后发生的变更操作。比如 HBase 等都有自己的事务日志。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/682547-20210911111058551-693695339.png"></p>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Elasticsearch</category>
+      </categories>
+      <tags>
+        <tag>中间件</tag>
+        <tag>Elasticsearch</tag>
         <tag>工作记录</tag>
       </tags>
   </entry>

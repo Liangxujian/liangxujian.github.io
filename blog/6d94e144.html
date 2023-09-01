@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>归档: 2023 |  Liangxj</title>
+      <title>Elasticsearch更新后延迟问题处理 |  Liangxj</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/lxj.ico" />
@@ -53,246 +53,195 @@
       
     <main class="content on">
       <section class="outer">
-  
-  
-  <article class="articles">
+  <article
+  id="post-Elasticsearch更新后延迟问题处理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">2023</h1>
-    
-    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  Elasticsearch更新后延迟问题处理
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/blog/6d94e144.html" class="article-date">
+  <time datetime="2023-08-21T02:49:47.000Z" itemprop="datePublished">2023-08-21</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a> / <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/Elasticsearch/">Elasticsearch</a>
+  </div>
   
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2023" class="archive-year">2023</a>
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">3 分钟</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
-    <div class="archives">
       
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/6d94e144.html" class="archive-article-date">
-  <time datetime="2023-08-21T02:49:47.000Z" itemprop="datePublished">08/21</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/6d94e144.html"
-    >Elasticsearch更新后延迟问题处理</a> 
-</h2>
- 
+    <div class="tocbot"></div>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/a44a3538.html" class="archive-article-date">
-  <time datetime="2023-08-14T03:15:09.000Z" itemprop="datePublished">08/14</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/a44a3538.html"
-    >世界が終るまでは･･･-WANDS</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/a52cdf37.html" class="archive-article-date">
-  <time datetime="2023-08-11T02:53:51.000Z" itemprop="datePublished">08/11</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/a52cdf37.html"
-    >使用Springboot获取本地图片字节流，传入前端显示</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/7b850af8.html" class="archive-article-date">
-  <time datetime="2023-08-07T07:23:56.000Z" itemprop="datePublished">08/07</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/7b850af8.html"
-    >Scrcpy手机投屏</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
   
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/f7cf4724.html" class="archive-article-date">
-  <time datetime="2023-08-03T03:33:00.000Z" itemprop="datePublished">08/03</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
        
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/f7cf4724.html"
-    >MQTT协议</a> 
-</h2>
- 
+  <blockquote>
+<p>参考网站：</p>
+<p>[<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bigdata1024/p/15254164.html">Elasticsearch] ES更新问题踩坑记录 - chaplinthink - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42764468/article/details/121252151">解决elasticsearch更新数据后不能立即刷新的问题_es更新后立马刷新_我一直在流浪的博客-CSDN博客</a></p>
+</blockquote>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>前端请求，对 ES 中的数据进行 update。然后进行查询刚刚操作完毕的数据，或者数据列表。</p>
+<p>不过查询到的却是 update 前的数据。</p>
+<h1 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h1><p>Elesticsearch 更新数据后会有延迟。</p>
+<p>ES 实现的是一种【近实时搜索（Real-time Search）】的策略：</p>
+<ol>
+<li>ES 产生<strong>一个</strong>新分段（Segment），把数据缓存到 Index Buffer；</li>
+<li>refresh：1s 后（默认配置），ES 清空写缓存，新段 write 到文件系统缓存（FileSystem Cache）；</li>
+<li>flush：通过手工调用 flush 接口（POST &#x2F;my-index-000001&#x2F;_flush），或者操作系统通过一定策略（默认每隔 30 分钟或者 translog 达到一定大小的时候：由 index.translog.flush_threshold_size 控制，默认 512MB），将 Index Buffer 中的数据全部刷新到磁盘里的一个新的 Segment 中，清空 Index Buffer。然后调用 Lucene 的 commit 方法将所有内存中的 Segment 持久化（fsync）到磁盘，一个 commit point 写入磁盘中，同时清空 translog 日志文件。</li>
+</ol>
+<p><em>提交点（commit point）：记录当前所有可用的 Segment ，一个索引一般只有一个 commit point，而每个 commit point 都会维护一个 .del 文件（ ES 删除数据本质是不属于物理删除），当 ES 做删改操作时首先会在 .del 文件中声明某个 Document 已经被删除，文件内记录了在某个 Segment 内某个 Document 已经被删除，当查询请求过来时在 Segment 中被删除的文件是能够查出来的，但是当返回结果时会根据 commit point 维护的那个 .del 文件把已经删除的文档过滤掉。</em></p>
+<p>这种策略可以大幅提升写入的效率。因为从 write 接口返回 success 开始，无论数据有没有被刷到磁盘，该数据已经对读取可见。</p>
+<h1 id="处理方案"><a href="#处理方案" class="headerlink" title="处理方案"></a>处理方案</h1><p>方案一：修改 ES refresh 的间隔时间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XPUT  http://ip:9200/meta_es_data/_settings?pretty -d <span class="string">&#x27;&#123;&quot;refresh_interval&quot; : &quot;500ms&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/d2066371.html" class="archive-article-date">
-  <time datetime="2023-07-28T10:27:50.000Z" itemprop="datePublished">07/28</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/d2066371.html"
-    >豆腐萝卜菌菇汤</a> 
-</h2>
- 
+<p>方案二：在每次更新操作后，休眠 1s</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">baseSearchService.update(docBean);</span><br><span class="line"> </span><br><span class="line">Thread.sleep(<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/7353ca67.html" class="archive-article-date">
-  <time datetime="2023-07-28T10:24:17.000Z" itemprop="datePublished">07/28</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/7353ca67.html"
-    >虾仁菌菇汤.md</a> 
-</h2>
- 
+<p>方案三：在 ES 请求接口有请求后强制 refresh（当写测试的时候， 手动刷新很有用，但是不要在生产环境下每次索引一个文档都去手动刷新。 “相反，你的应用需要意识到 Elasticsearch 的近实时的性质，并接受它的不足” ~~~）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);</span><br></pre></td></tr></table></figure>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/cfd68dd0.html" class="archive-article-date">
-  <time datetime="2023-07-18T10:00:38.000Z" itemprop="datePublished">07/18</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/cfd68dd0.html"
-    >Netty学习</a> 
-</h2>
+<h1 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h1><h2 id="拓展一"><a href="#拓展一" class="headerlink" title="拓展一"></a>拓展一</h2><p>ES 的 refresh 虽然可以配置刷新的时间，但是没必要，频繁的刷新会造成压力过大。</p>
+<p>因为 ES 每次 refresh 都产生一个新段（Segment），频繁的 refresh 会导致段数量的暴增。段数量过多会导致过多的消耗文件句柄、内存和 CPU 时间；而且段的数量越多，查询的速度也会越慢。</p>
+<p>虽然 ES 可以进行【段合并】，但是段的合并会消耗掉大量系统资源，尤其是磁盘 I&#x2F;O。</p>
+<h2 id="拓展二"><a href="#拓展二" class="headerlink" title="拓展二"></a>拓展二</h2><p>ES 数据在更新的时候并不是在原来的数据上做修改的，而是找到该数据的索引 ID，把原来的数据删掉，再重新插入一条，但索引 ID 是相同的。</p>
+<h2 id="拓展三"><a href="#拓展三" class="headerlink" title="拓展三"></a>拓展三</h2><p>当删除、更新两个操作间隔很短时间执行，上一个数据还没有 refresh 到 FileSystem Cache 区域，就无法查询。</p>
+<p><code>final TableDocBean docBean = baseSearchService.getById(id);</code>（获取不到数据，会导致数据更新失败）</p>
+<h2 id="拓展四"><a href="#拓展四" class="headerlink" title="拓展四"></a>拓展四</h2><p>由于系统是先缓存了一段数据才写，且新段不会立即刷入磁盘中，这两个过程如果出现某些意外情况（例如主机断电等），则会存在丢失数据的风险。通用的处理方法是【记录事务日志】，每次对 ES 进行操作时均记录事务日志，当 ES 启动的时候，重放 translog 中所有在最后一次提交后发生的变更操作。比如 HBase 等都有自己的事务日志。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/682547-20210911111058551-693695339.png"></p>
+<p></br></br></br></br></p>
  
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/ad720447.html" class="archive-article-date">
-  <time datetime="2023-07-17T03:57:02.000Z" itemprop="datePublished">07/17</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/ad720447.html"
-    >Nginx配置</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/blog/c3825a32.html" class="archive-article-date">
-  <time datetime="2023-07-17T03:43:49.000Z" itemprop="datePublished">07/17</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/blog/c3825a32.html"
-    >Nginx安装与使用</a> 
-</h2>
- 
-
-    </header>
-    
-    
-  </div>
-</article>
-      
+      <!-- reward -->
       
     </div>
-  </div>
-  
-  
-
-  
-  <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2023/page/2/">2</a><a class="page-number" href="/archives/2023/page/3/">3</a><a class="page-number" href="/archives/2023/page/4/">4</a><a class="extend next" rel="next" href="/archives/2023/page/2/">下一页</a>
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/blog/6d94e144.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/" rel="tag">工作记录</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/blog/a44a3538.html" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">世界が終るまでは･･･-WANDS</div>
+      </a>
+    
   </nav>
+
   
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -427,6 +376,22 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link
