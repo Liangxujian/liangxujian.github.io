@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -112,17 +112,20 @@
   <blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/netty/netty">Github 项目地址</a></p>
 </blockquote>
-<h1 id="一、Netty-是什么"><a href="#一、Netty-是什么" class="headerlink" title="一、Netty 是什么"></a>一、Netty 是什么</h1><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/aa911f591044.png"></p>
+<h1>一、Netty 是什么</h1>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/aa911f591044.png" alt=""></p>
 <p>Netty 是由 JBOSS 提供的一个 <strong>Java 开源框架</strong>，现为 Github 上的独立项目。Netty 提供异步的、事件驱动的网络应用程序框架和工具，用以快速开发高性能、高可靠性的网络服务器和客户端程序。</p>
 <p>也就是说，Netty 是一个<strong>基于 NIO 的客户、服务器端的编程框架</strong>，使用 Netty 可以确保你快速和简单的开发出一个网络应用，例如实现了某种协议的客户、服务端应用。Netty 相当于简化和流线化了网络应用的编程开发过程，例如：基于 TCP 和 UDP 的 Socket 服务开发。</p>
 <p>“快速”和“简单”并不用产生维护性或性能上的问题。Netty 是一个吸收了多种协议（包括 FTP、SMTP、HTTP 等各种二进制文本协议）的实现经验，并经过相当精心设计的项目。最终，Netty 成功的找到了一种方式，在保证易于开发的同时还保证了其应用的性能，稳定性和伸缩性。</p>
-<h1 id="二、BIO-和-NIO-和-AIO"><a href="#二、BIO-和-NIO-和-AIO" class="headerlink" title="二、BIO 和 NIO 和 AIO"></a>二、BIO 和 NIO 和 AIO</h1><blockquote>
+<h1>二、BIO 和 NIO 和 AIO</h1>
+<blockquote>
 <p>摘录自博客：</p>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903985158045703">如何理解BIO、NIO、AIO的区别？ - 掘金 (juejin.cn)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/386745556">这是我看过对bio，nio，aio解释的最透彻的文章！！！ - 知乎 (zhihu.com)</a></p>
 </blockquote>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/BIO%E3%80%81NIO%E3%80%81AIO.jpg"></p>
-<h2 id="2-1-Java-中的-IO-原理"><a href="#2-1-Java-中的-IO-原理" class="headerlink" title="2.1 Java 中的 IO 原理"></a>2.1 Java 中的 IO 原理</h2><p>首先 Java 中的 IO 都是依赖操作系统内核进行的，我们程序中的 IO 读写其实调用的是操作系统内核中的 read&amp;write 两大系统调用。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/BIO%E3%80%81NIO%E3%80%81AIO.jpg" alt=""></p>
+<h2 id="2-1-java-中的-io-原理">2.1 Java 中的 IO 原理</h2>
+<p>首先 Java 中的 IO 都是依赖操作系统内核进行的，我们程序中的 IO 读写其实调用的是操作系统内核中的 read&amp;write 两大系统调用。</p>
 <p>那内核是如何进行 IO 交互的呢？</p>
 <ol>
 <li>网卡收到经过网线传来的网络数据，并将网络数据写到内存中。</li>
@@ -132,10 +135,10 @@
 </ol>
 <p>对应抽象到 Java 的 socket 代码简单示例如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SocketServer</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// 监听指定的端口</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">port</span> <span class="operator">=</span> <span class="number">8080</span>;</span><br><span class="line">        <span class="type">ServerSocket</span> <span class="variable">server</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>(port);</span><br><span class="line">        <span class="comment">// server将一直等待连接的到来</span></span><br><span class="line">        <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> server.accept();</span><br><span class="line">        <span class="comment">// 建立好连接后，从socket中获取输入流，并建立缓冲区进行读取</span></span><br><span class="line">        <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> socket.getInputStream();</span><br><span class="line">        <span class="type">byte</span>[] bytes = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="type">int</span> len;</span><br><span class="line">        <span class="keyword">while</span> ((len = inputStream.read(bytes)) != -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">//获取数据进行处理</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">message</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(bytes, <span class="number">0</span>, len, <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// socket、server，流关闭操作，省略不表</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>可以看到这个过程和底层内核的网络 IO 很类似，主要体现在 accept() 等待从网络中的请求到来然后 bytes[] 数组作为缓冲区等待数据填满后进行处理。而 BIO、NIO、AIO 之间的区别就在于这些操作是同步还是异步，阻塞还是非阻塞。</p>
 <p>所以我们引出同步异步，阻塞与非阻塞的概念。</p>
-<h2 id="2-2-同步与异步"><a href="#2-2-同步与异步" class="headerlink" title="2.2 同步与异步"></a>2.2 同步与异步</h2><p>同步和异步指的是一个执行流程中每个方法是否必须依赖前一个方法完成后才可以继续执行。假设我们的执行流程中：依次是方法一和方法二。</p>
+<h2 id="2-2-同步与异步">2.2 同步与异步</h2>
+<p>同步和异步指的是一个执行流程中每个方法是否必须依赖前一个方法完成后才可以继续执行。假设我们的执行流程中：依次是方法一和方法二。</p>
 <p>同步指的是调用一旦开始，调用者必须等到方法调用返回后，才能继续后续的行为。即方法二一定要等到方法一执行完成后才可以执行。</p>
 <p>异步指的是调用立刻返回，调用者不必等待方法内的代码执行结束，就可以继续后续的行为。（具体方法内的代码交由另外的线程执行完成后，可能会进行回调）。即执行方法一的时候，直接交给其他线程执行，不由主线程执行，也就不会阻塞主线程，所以方法二不必等到方法一完成即可开始执行。</p>
 <p>同步与异步关注的是方法的执行方是主线程还是其他线程，主线程的话需要等待方法执行完成，其他线程的话无需等待立刻返回方法调用，主线程可以直接执行接下来的代码。</p>
@@ -143,14 +146,16 @@
 <blockquote>
 <p>为什么需要异步呢？笔者认为异步的本质就是为了解决主线程的阻塞，所以网上很多讨论把同步异步、阻塞非阻塞进行了四种组合，其中一种就有异步阻塞这一情形，如果异步也是阻塞的？那为什么要特地进行异步操作呢？</p>
 </blockquote>
-<h2 id="2-3-阻塞与非阻塞"><a href="#2-3-阻塞与非阻塞" class="headerlink" title="2.3 阻塞与非阻塞"></a>2.3 阻塞与非阻塞</h2><p>阻塞与非阻塞指的是单个线程内遇到同步等待时，是否在原地不做任何操作。</p>
+<h2 id="2-3-阻塞与非阻塞">2.3 阻塞与非阻塞</h2>
+<p>阻塞与非阻塞指的是单个线程内遇到同步等待时，是否在原地不做任何操作。</p>
 <p>阻塞指的是遇到同步等待后，一直在原地等待同步方法处理完成。</p>
 <p>非阻塞指的是遇到同步等待，不在原地等待，先去做其他的操作，隔段时间再来观察同步方法是否完成。</p>
 <p>阻塞与非阻塞关注的是线程是否在原地等待。</p>
 <blockquote>
 <p>笔者认为阻塞和非阻塞仅能与同步进行组合。而异步天然就是非阻塞的，而这个非阻塞是对主线程而言。（可能有人认为异步方法里面放入阻塞操作的话就是异步阻塞，但是思考一下，正是因为是阻塞操作所以才会将它放入异步方法中，不要阻塞主线程）</p>
 </blockquote>
-<h2 id="2-4-例子讲解"><a href="#2-4-例子讲解" class="headerlink" title="2.4 例子讲解"></a>2.4 例子讲解</h2><blockquote>
+<h2 id="2-4-例子讲解">2.4 例子讲解</h2>
+<blockquote>
 <p>海底捞很好吃，但是经常要排队。我们就以生活中的这个例子进行讲解。</p>
 </blockquote>
 <ul>
@@ -161,26 +166,31 @@
 <blockquote>
 <p>哪种方式更有效率呢？是不是一目了然呢？</p>
 </blockquote>
-<h2 id="2-5-BIO"><a href="#2-5-BIO" class="headerlink" title="2.5 BIO"></a>2.5 BIO</h2><p>BIO 全称是 Blocking IO，是 JDK1.4 之前的传统 IO 模型，本身是同步阻塞模式。线程发起 IO 请求后，一直阻塞 IO，直到缓冲区数据就绪后，再进入下一步操作。针对网络通信都是一请求一应答的方式，虽然简化了上层的应用开发，但在性能和可靠性方面存在着巨大瓶颈，试想一下如果每个请求都需要新建一个线程来专门处理，那么在高并发的场景下，机器资源很快就会被耗尽。</p>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/BIO%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE.jpg"></p>
-<h2 id="2-6-NIO"><a href="#2-6-NIO" class="headerlink" title="2.6 NIO"></a>2.6 NIO</h2><p>NIO 也叫 Non-Blocking IO 是同步非阻塞的 IO 模型。线程发起 IO 请求后，立即返回（非阻塞 IO）。同步指的是必须等待 IO 缓冲区内的数据就绪，而非阻塞指的是，用户线程不原地等待 IO 缓冲区，可以先做一些其他操作，但是要定时轮询检查 IO 缓冲区数据是否就绪。</p>
+<h2 id="2-5-bio">2.5 BIO</h2>
+<p>BIO 全称是 Blocking IO，是 JDK1.4 之前的传统 IO 模型，本身是同步阻塞模式。线程发起 IO 请求后，一直阻塞 IO，直到缓冲区数据就绪后，再进入下一步操作。针对网络通信都是一请求一应答的方式，虽然简化了上层的应用开发，但在性能和可靠性方面存在着巨大瓶颈，试想一下如果每个请求都需要新建一个线程来专门处理，那么在高并发的场景下，机器资源很快就会被耗尽。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/BIO%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE.jpg" alt=""></p>
+<h2 id="2-6-nio">2.6 NIO</h2>
+<p>NIO 也叫 Non-Blocking IO 是同步非阻塞的 IO 模型。线程发起 IO 请求后，立即返回（非阻塞 IO）。同步指的是必须等待 IO 缓冲区内的数据就绪，而非阻塞指的是，用户线程不原地等待 IO 缓冲区，可以先做一些其他操作，但是要定时轮询检查 IO 缓冲区数据是否就绪。</p>
 <p>Java 中的 NIO 是 new IO 的意思。其实是 NIO 加上 IO 多路复用技术。普通的 NIO 是线程轮询查看一个 IO 缓冲区是否就绪，而 Java 中的 new IO 指的是线程轮询地去查看一堆 IO 缓冲区中哪些就绪，这是一种 IO 多路复用的思想。IO 多路复用模型中，将检查 IO 数据是否就绪的任务，交给系统级别的 select 或 epoll 模型，由系统进行监控，减轻用户线程负担。</p>
 <p>NIO 主要有 buffer、channel、selector 三种技术的整合，通过零拷贝的 buffer 取得数据，每一个客户端通过 channel 在 selector（多路复用器）上进行注册。服务端不断轮询 channel 来获取客户端的信息。channel 上有 connect、accept（阻塞）、read（可读）、write（可写）四种状态标识。根据标识来进行后续操作。所以一个服务端可接收无限多的 channel。不需要新开一个线程。大大提升了性能。</p>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/NIO%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE.jpg"></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/NIO%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE.jpg" alt=""></p>
 <blockquote>
 <p>NIO 的三大核心 API：Buffer、Channel、Selector</p>
 </blockquote>
-<h3 id="原生-NIO-的一些缺点"><a href="#原生-NIO-的一些缺点" class="headerlink" title="原生 NIO 的一些缺点"></a>原生 NIO 的一些缺点</h3><p>JDK 原生的 NIO 并不好用，除了编程复杂、编程模型难之外，它还有以下让人诟病的问题：</p>
+<h3 id="原生-nio-的一些缺点">原生 NIO 的一些缺点</h3>
+<p>JDK 原生的 NIO 并不好用，除了编程复杂、编程模型难之外，它还有以下让人诟病的问题：</p>
 <ul>
 <li>JDK 的 NIO 底层由 epoll 实现，该实现饱受诟病的空轮询 BUG 会导致 CPU 飙升 100%</li>
 <li>项目庞大后，自行实现的 NIO 很容易出现各类 BUG，维护成本较高</li>
 </ul>
 <p><strong>Netty 的出现很大程度上改善了 JDK 原生 NIO 所存在的一些让人难以忍受的问题。</strong></p>
-<h2 id="2-7-AIO"><a href="#2-7-AIO" class="headerlink" title="2.7 AIO"></a>2.7 AIO</h2><p>AIO 是真正意义上的异步非阻塞 IO 模型。上述 NIO 实现中，需要用户线程定时轮询，去检查 IO 缓冲区数据是否就绪，占用应用程序线程资源，其实轮询相当于还是阻塞的，并非真正解放当前线程，因为它还是需要去查询哪些 IO 就绪。而真正的理想的异步非阻塞 IO 应该让内核系统完成，用户线程只需要告诉内核，当缓冲区就绪后，通知我或者执行我交给你的回调函数。</p>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/v2-5ccdc3d77174498be63efffc0e4f7783_r.jpg"></p>
+<h2 id="2-7-aio">2.7 AIO</h2>
+<p>AIO 是真正意义上的异步非阻塞 IO 模型。上述 NIO 实现中，需要用户线程定时轮询，去检查 IO 缓冲区数据是否就绪，占用应用程序线程资源，其实轮询相当于还是阻塞的，并非真正解放当前线程，因为它还是需要去查询哪些 IO 就绪。而真正的理想的异步非阻塞 IO 应该让内核系统完成，用户线程只需要告诉内核，当缓冲区就绪后，通知我或者执行我交给你的回调函数。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/v2-5ccdc3d77174498be63efffc0e4f7783_r.jpg" alt=""></p>
 <p>AIO 可以做到真正的异步的操作，但实现起来比较复杂，支持纯异步 IO 的操作系统非常少，目前也就 windows 是 IOCP 技术实现了，而在 Linux 上，底层还是是使用的 epoll 实现的。</p>
-<p>与 NIO 不同，当进行读写操作时，只需直接调用 API 的 read 或 write 方法即可。这两种方法均为异步的，对于读操作而言，当有流可读取时，操作系统会将可读的流传入 read 方法的缓冲区，并通知应用程序；对于写操作而言，当操作系统将 write 方法传递的流写入完毕时，操作系统主动通知应用程序。即可以理解为， read&#x2F;write 方法都是异步的，完成后会主动调用回调函数。 在 JDK1.7 中，这部分内容成为 AIO。</p>
-<h2 id="2-8-适用场景分析"><a href="#2-8-适用场景分析" class="headerlink" title="2.8 适用场景分析"></a>2.8 适用场景分析</h2><p>BIO 方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4 以前的唯一选择，但程序直观简单易理解。</p>
+<p>与 NIO 不同，当进行读写操作时，只需直接调用 API 的 read 或 write 方法即可。这两种方法均为异步的，对于读操作而言，当有流可读取时，操作系统会将可读的流传入 read 方法的缓冲区，并通知应用程序；对于写操作而言，当操作系统将 write 方法传递的流写入完毕时，操作系统主动通知应用程序。即可以理解为， read/write 方法都是异步的，完成后会主动调用回调函数。 在 JDK1.7 中，这部分内容成为 AIO。</p>
+<h2 id="2-8-适用场景分析">2.8 适用场景分析</h2>
+<p>BIO 方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4 以前的唯一选择，但程序直观简单易理解。</p>
 <p>NIO 方式适用于连接数目多且连接比较短（轻操作）的架构，比如聊天服务器，并发局限于应用中，编程比较复杂，JDK1.4 开始支持。</p>
 <p>AIO 方式使用于连接数目多且连接比较长（重操作）的架构，比如相册服务器，充分调用 OS 参与并发操作，编程比较复杂，JDK7 开始支持。</p>
 <p></br></br></br></br></p>
@@ -560,6 +570,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 

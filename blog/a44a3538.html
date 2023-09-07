@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -85,7 +85,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">165</span>
+            <span class="post-count">163</span>
         </span>
     </span>
 
@@ -109,7 +109,8 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="世界が終るまでは･･･（直到世界尽头）-WANDS"><a href="#世界が終るまでは･･･（直到世界尽头）-WANDS" class="headerlink" title="世界が終るまでは･･･（直到世界尽头）-WANDS"></a>世界が終るまでは･･･（直到世界尽头）-WANDS</h1><p>大都会に</p>
+  <h1>世界が終るまでは･･･（直到世界尽头）-WANDS</h1>
+<p>大都会に</p>
 <p>僕はもう一人で</p>
 <p>投げ捨てられた</p>
 <p>空きカンのようだ</p>
@@ -155,7 +156,7 @@
 <p>はかなき想い</p>
 <p>この tragedy night</p>
 <p>この tragedy night</p>
-<p>【终（お）<ruby>终<rp>（</rp><rt>お</rt><rp>）</rp></ruby>わった】</p>
+<p>【<ruby>终<rp>（</rp><rt>お</rt><rp>）</rp></ruby>わった】</p>
 <p></br></br></br></br></p>
  
       <!-- reward -->
@@ -533,6 +534,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 

@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -109,43 +109,50 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="Setter"><a href="#Setter" class="headerlink" title="@Setter"></a>@Setter</h1><p>自动添加类中所有属性相关的 set() 方法</p>
-<h1 id="Getter"><a href="#Getter" class="headerlink" title="@Getter"></a>@Getter</h1><p>自动添加类中所有属性相关的 get() 方法</p>
-<h1 id="Builder"><a href="#Builder" class="headerlink" title="@Builder"></a>@Builder</h1><p>使得该类可以通过 builder（建造者模式）构建对象</p>
+  <h1>@Setter</h1>
+<p>自动添加类中所有属性相关的 set() 方法</p>
+<h1>@Getter</h1>
+<p>自动添加类中所有属性相关的 get() 方法</p>
+<h1>@Builder</h1>
+<p>使得该类可以通过 builder（建造者模式）构建对象</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student.builder().sno(<span class="string">&quot;001&quot;</span>).sname(<span class="string">&quot;admin&quot;</span>).sage(<span class="number">18</span>).sphone(<span class="string">&quot;110&quot;</span>).build();</span><br></pre></td></tr></table></figure>
-
-<h1 id="RequiredArgsConstructor"><a href="#RequiredArgsConstructor" class="headerlink" title="@RequiredArgsConstructor"></a>@RequiredArgsConstructor</h1><p>生成一个该类的构造方法，禁止无参构造</p>
-<h1 id="ToString"><a href="#ToString" class="headerlink" title="@ToString"></a>@ToString</h1><p>重写该类的 toString() 方法</p>
-<h1 id="EqualsAndHashCode"><a href="#EqualsAndHashCode" class="headerlink" title="@EqualsAndHashCode"></a>@EqualsAndHashCode</h1><p>重写该类的 equals() 和 hashCode() 方法</p>
-<h2 id="callSuper-x3D-true"><a href="#callSuper-x3D-true" class="headerlink" title="callSuper &#x3D; true"></a>callSuper &#x3D; true</h2><p>根据（子类自身的字段值 + 从父类继承的字段值）生成 hashcode</p>
+<h1>@RequiredArgsConstructor</h1>
+<p>生成一个该类的构造方法，禁止无参构造</p>
+<h1>@ToString</h1>
+<p>重写该类的 toString() 方法</p>
+<h1>@EqualsAndHashCode</h1>
+<p>重写该类的 equals() 和 hashCode() 方法</p>
+<h2 id="callsuper-true">callSuper = true</h2>
+<p>根据（子类自身的字段值 + 从父类继承的字段值）生成 hashcode</p>
 <p>当两个子类对象比较时，如果生成的 hashcode 相同，equals() 返回 true。</p>
-<h2 id="callSuper-x3D-false"><a href="#callSuper-x3D-false" class="headerlink" title="callSuper &#x3D; false"></a>callSuper &#x3D; false</h2><p>根据（子类自身的字段值）生成 hashcode</p>
+<h2 id="callsuper-false">callSuper = false</h2>
+<p>根据（子类自身的字段值）生成 hashcode</p>
 <p>当两个子类对象比较时，如果只有子类对象的本身的字段值相同，equals() 就返回 true（父类字段值可以不同）</p>
-<h1 id="Data"><a href="#Data" class="headerlink" title="@Data"></a>@Data</h1><p>&#x3D; @Setter + @Getter + @RequiredArgsConstructor + @ToString + @EqualsAndHashCode</p>
-<p>@Data 默认比较两个对象的 hashCode，需要依据业务要求显式重写 equals() 方法，或者类上加上注解：@EqualsAndHashCode(onlyExplicitlyIncluded &#x3D; true)，然后为每一个需要比较的属性加上注解：@EqualsAndHashCode.Include</p>
+<h1>@Data</h1>
+<p>= @Setter + @Getter + @RequiredArgsConstructor + @ToString + @EqualsAndHashCode</p>
+<p>@Data 默认比较两个对象的 hashCode，需要依据业务要求显式重写 equals() 方法，或者类上加上注解：@EqualsAndHashCode(onlyExplicitlyIncluded = true)，然后为每一个需要比较的属性加上注解：@EqualsAndHashCode.Include</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.EqualsAndHashCode;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode(onlyExplicitlyIncluded = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Cs</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line">    <span class="meta">@EqualsAndHashCode</span>.Include</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Cs</span><span class="params">(<span class="type">int</span> id, String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="NoArgsConstructor"><a href="#NoArgsConstructor" class="headerlink" title="@NoArgsConstructor"></a>@NoArgsConstructor</h1><p>生成无参的构造方法。</p>
-<h2 id="staticName"><a href="#staticName" class="headerlink" title="staticName"></a>staticName</h2><p>staticName 代表的是是否生成静态构造方法，也就是说当 staticName 属性有值时则会生成一个静态构造方法，这时无参构造方法会被私有，然后创建一个指定名称的静态构造方法，并且是公有的，如下所示：</p>
+<h1>@NoArgsConstructor</h1>
+<p>生成无参的构造方法。</p>
+<h2 id="staticname">staticName</h2>
+<p>staticName 代表的是是否生成静态构造方法，也就是说当 staticName 属性有值时则会生成一个静态构造方法，这时无参构造方法会被私有，然后创建一个指定名称的静态构造方法，并且是公有的，如下所示：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译前代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor(staticName = &quot;UserStatic&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译后代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">UserInfo</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UserStatic</span><span class="params">()</span> &#123;</span><br><span class="line">    	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserStatic</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="onConstructor"><a href="#onConstructor" class="headerlink" title="onConstructor"></a>onConstructor</h2><p>经常写 Spring 或者 SpringBoot 代码的人应该知道，Spring 对于依赖注入提供了三种写法，分别是属性注入、Setter 方法注入以及构造器注入，但是在日常工作中我们更多采用的是依赖于 @Autowired 注解方式进行依赖注入，不过过多的依赖注入会使我们的代码过于冗长，甚至 Spring4.0 起就已经开始不推荐这种写法了，而是推荐使用 Setter 方法注入以及构造器注入，lombok 的生成构造器的方法就可以很方便的实现这种写法。</p>
+<h2 id="onconstructor">onConstructor</h2>
+<p>经常写 Spring 或者 SpringBoot 代码的人应该知道，Spring 对于依赖注入提供了三种写法，分别是属性注入、Setter 方法注入以及构造器注入，但是在日常工作中我们更多采用的是依赖于 @Autowired 注解方式进行依赖注入，不过过多的依赖注入会使我们的代码过于冗长，甚至 Spring4.0 起就已经开始不推荐这种写法了，而是推荐使用 Setter 方法注入以及构造器注入，lombok 的生成构造器的方法就可以很方便的实现这种写法。</p>
 <p>举一个通过构造器注入的例子：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SysLoginController</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TokenUtils tokenUtils;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SysLoginService sysLoginService;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在这里 <span class="doctag">@Autowired</span> 是可以省略的，在这里使用只是为了介绍 onConstructor 参数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">SysLoginController</span> <span class="params">(TokenUtils tokenUtils, SysLoginService sysLoginService)</span> &#123;</span><br><span class="line">    	</span><br><span class="line">        <span class="built_in">this</span>.tokenUtils = tokenUtils;</span><br><span class="line">        <span class="built_in">this</span>.sysLoginService = sysLoginService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>这样注入 Bean 在数量较多时我们仍需编写大量代码，这个时候就可以使用 @RequiredArgsConstructor 注解来解决这个问题，至于为什么不使用 @AllArgsConstructor 注解是因为这个注解是针对所有参数的，而在这个情境下，我们只需构造 Bean 所对应的属性而不是非 Bean，所以我们只需在 Bean 对应的属性前加上 final 关键字进行修饰就可以只生成需要的有参构造函数，如下所示：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译前</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor(onConstructor = @__(@Autowired))</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SysLoginController</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TokenUtils tokenUtils;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SysLoginService sysLoginService;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译后</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SysLoginController</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TokenUtils tokenUtils;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SysLoginService sysLoginService;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">SysLoginController</span> <span class="params">(TokenUtils tokenUtils, SysLoginService sysLoginService)</span> &#123;</span><br><span class="line">    	</span><br><span class="line">        <span class="built_in">this</span>.tokenUtils = tokenUtils;</span><br><span class="line">        <span class="built_in">this</span>.sysLoginService = sysLoginService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="access"><a href="#access" class="headerlink" title="access"></a>access</h2><p>有的时候我们会使用单例模式，这个时候需要我们创造一个私有的无参构造方法，那么就可以使用 access 这样一个属性来设置构造起的权限，如下所示：</p>
+<h2 id="access">access</h2>
+<p>有的时候我们会使用单例模式，这个时候需要我们创造一个私有的无参构造方法，那么就可以使用 access 这样一个属性来设置构造起的权限，如下所示：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译前代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor(access = AccessLevel.PRIVATE)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译后代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">UserInfo</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>access 可选等级：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">AccessLevel</span> &#123;</span><br><span class="line">    PUBLIC,</span><br><span class="line">    MODULE,</span><br><span class="line">    PROTECTED,</span><br><span class="line">    PACKAGE,</span><br><span class="line">    PRIVATE,</span><br><span class="line">    NONE;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">AccessLevel</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="force"><a href="#force" class="headerlink" title="force"></a>force</h2><p>当类中有被 final 关键字修饰的字段未被初始化时，编译器会报错，这时也可以设置 force 属性为 true 来为字段根据类型生成一个默认值 0&#x2F;false&#x2F;null，这样编译器就不会再报错了，如下所示：</p>
+<h2 id="force">force</h2>
+<p>当类中有被 final 关键字修饰的字段未被初始化时，编译器会报错，这时也可以设置 force 属性为 true 来为字段根据类型生成一个默认值 0/false/null，这样编译器就不会再报错了，如下所示：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译前代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor(force = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String gender;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译后代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">gender</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">UserInfo</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="AllArgsConstructor"><a href="#AllArgsConstructor" class="headerlink" title="@AllArgsConstructor"></a>@AllArgsConstructor</h1><p>生成全参的构造方法。</p>
+<h1>@AllArgsConstructor</h1>
+<p>生成全参的构造方法。</p>
 <p></br></br></br></br></p>
  
       <!-- reward -->
@@ -523,6 +530,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 

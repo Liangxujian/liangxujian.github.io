@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -85,7 +85,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">506</span>
+            <span class="post-count">508</span>
         </span>
     </span>
 
@@ -111,18 +111,22 @@
        
   <p>nvm 安装后建议修改镜像地址，否则 nodejs 下载会很慢</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm node_mirror https://npm.taobao.org/mirrors/node/</span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm npm_mirror https://npm.taobao.org/mirrors/npm/</span><br></pre></td></tr></table></figure>
-
-<h1 id="nvm-list"><a href="#nvm-list" class="headerlink" title="nvm list"></a>nvm list</h1><p>查看已安装的 nodejs版本</p>
-<h1 id="nvm-install"><a href="#nvm-install" class="headerlink" title="nvm install"></a>nvm install</h1><h1 id="nvm-uninstall"><a href="#nvm-uninstall" class="headerlink" title="nvm uninstall"></a>nvm uninstall</h1><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm list</span><br><span class="line"></span><br><span class="line">  * <span class="number">16.18</span>.<span class="number">0</span> (Currently <span class="keyword">using</span> 64-bit executable)</span><br><span class="line">    <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm install <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line">Downloading node.js version <span class="number">12.22</span>.<span class="number">12</span> (<span class="number">64</span><span class="literal">-bit</span>)...</span><br><span class="line">Complete</span><br><span class="line">Creating D:\nvm\temp</span><br><span class="line"></span><br><span class="line">Downloading npm version <span class="number">6.14</span>.<span class="number">16</span>... Complete</span><br><span class="line">Installing npm v6.<span class="number">14.16</span>...</span><br><span class="line"></span><br><span class="line">Installation complete. <span class="keyword">If</span> you want to use this version, <span class="built_in">type</span></span><br><span class="line"></span><br><span class="line">nvm use <span class="number">12.22</span>.<span class="number">12</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="nvm-use-报错"><a href="#nvm-use-报错" class="headerlink" title="nvm use 报错"></a>nvm use 报错</h1><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm list</span><br><span class="line"></span><br><span class="line">  * <span class="number">16.18</span>.<span class="number">0</span> (Currently <span class="keyword">using</span> 64-bit executable)</span><br><span class="line">    <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm use <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="keyword">exit</span> status <span class="number">145</span>: Ŀ¼���ǿյġ�</span><br><span class="line"></span><br><span class="line"><span class="keyword">exit</span> status <span class="number">1</span>: ���ļ��Ѵ���ʱ���޷��������ļ���</span><br></pre></td></tr></table></figure>
-
-<h2 id="exit-status-1-乱码"><a href="#exit-status-1-乱码" class="headerlink" title="exit status 1: 乱码"></a>exit status 1: 乱码</h2><p>报错原因：当前的CMD窗口没有执行该命令的权限，需要使用管理员权限打开的窗口执行nvm use命令</p>
+<h1>nvm list</h1>
+<p>查看已安装的 nodejs版本</p>
+<h1>nvm install</h1>
+<h1>nvm uninstall</h1>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm list</span><br><span class="line"></span><br><span class="line">  * <span class="number">16.18</span>.<span class="number">0</span> (Currently <span class="keyword">using</span> 64-bit executable)</span><br><span class="line">    <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm install <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line">Downloading node.js version <span class="number">12.22</span>.<span class="number">12</span> (<span class="number">64</span><span class="literal">-bit</span>)...</span><br><span class="line">Complete</span><br><span class="line">Creating D:\nvm\temp</span><br><span class="line"></span><br><span class="line">Downloading npm version <span class="number">6.14</span>.<span class="number">16</span>... Complete</span><br><span class="line">Installing npm v6.<span class="number">14.16</span>...</span><br><span class="line"></span><br><span class="line">Installation complete. <span class="keyword">If</span> you want to use this version, <span class="built_in">type</span></span><br><span class="line"></span><br><span class="line">nvm use <span class="number">12.22</span>.<span class="number">12</span></span><br></pre></td></tr></table></figure>
+<h1>nvm use 报错</h1>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm list</span><br><span class="line"></span><br><span class="line">  * <span class="number">16.18</span>.<span class="number">0</span> (Currently <span class="keyword">using</span> 64-bit executable)</span><br><span class="line">    <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm use <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="keyword">exit</span> status <span class="number">145</span>: Ŀ¼���ǿյġ�</span><br><span class="line"></span><br><span class="line"><span class="keyword">exit</span> status <span class="number">1</span>: ���ļ��Ѵ���ʱ���޷��������ļ���</span><br></pre></td></tr></table></figure>
+<h2 id="exit-status-1-乱码">exit status 1: 乱码</h2>
+<p>报错原因：当前的CMD窗口没有执行该命令的权限，需要使用管理员权限打开的窗口执行nvm use命令</p>
 <p>报错原因：之前多次安装 node，出错了就删除包，再次安装，在 C:\Program Files 下是有一个 nodejs 的，但是由于已经删除了 node 的包，所以这个 nodejs 是个无效文件</p>
 <p>报错解决：重新安装该版本 nodejs</p>
-<h2 id="exit-status-5-乱码"><a href="#exit-status-5-乱码" class="headerlink" title="exit status 5: 乱码"></a>exit status 5: 乱码</h2><p>报错原因：nvm 不是安装在 C 盘，且当前命令提示符窗口是 user 权限</p>
+<h2 id="exit-status-5-乱码">exit status 5: 乱码</h2>
+<p>报错原因：nvm 不是安装在 C 盘，且当前命令提示符窗口是 user 权限</p>
 <p>报错解决：cmd 窗口使用管理员权限打开即可</p>
-<h2 id="exit-status-145-乱码"><a href="#exit-status-145-乱码" class="headerlink" title="exit status 145: 乱码"></a>exit status 145: 乱码</h2><p>报错原因：安装 nvm 或 nodejs 的文件本身或路径有误</p>
+<h2 id="exit-status-145-乱码">exit status 145: 乱码</h2>
+<p>报错原因：安装 nvm 或 nodejs 的文件本身或路径有误</p>
 <p>报错解决：如果是覆盖旧的 nvm 安装，建议删除 nvm 文件夹，然后重新安装 nvm</p>
 <ol>
 <li>检查安装 nvm 路径与设置放置 nodejs 的路径或文件，是否出现空格或中文，比如默认安装路径 C:\Program Files 中出现了空格。如果有，更改路径或文件夹名称后再使用 nvm use</li>
@@ -505,6 +509,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 

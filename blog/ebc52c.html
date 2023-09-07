@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -114,42 +114,44 @@
 <li>Serializable（串行化）：最严格的级别，事务串行执行，资源消耗最大。</li>
 </ol>
 <table border="1" style="table-layout:fixed;">
-    <tr>
-        <th style="text-align:center">隔离级别</th>
-        <th style="text-align:center">脏读<br>Dirty reads</th>
-        <th style="text-align:center">脏读<br>Dirty reads</th>
-        <th style="text-align:center">幻读<br>phantom</th>
-    </tr>
-    <tr>
-        <td>Read Uncommitted<br>读未提交（不加锁）</td>
-        <td bgcolor="#73d13d" style="text-align:center">√</td>
-        <td bgcolor="#73d13d" style="text-align:center">√</td>
-        <td bgcolor="#73d13d" style="text-align:center">√</td>
-    </tr>
-    <tr>
-        <td>READ COMMITTED<br>读已提交（RC）</td>
-        <td bgcolor="#ff4d4f" style="text-align:center">×</td>
-        <td bgcolor="#73d13d" style="text-align:center">√</td>
-        <td bgcolor="#73d13d" style="text-align:center">√</td>
-    </tr>
-    <tr>
-        <td>REPEATABLE READ<br>可重复读（RR）（默认）</td>
-        <td bgcolor="#ff4d4f" style="text-align:center">×</td>
-        <td bgcolor="#ff4d4f" style="text-align:center">×</td>
-        <td bgcolor="#73d13d" style="text-align:center">√</td>
-    </tr>
-    <tr>
-        <td>Serializable<br>串行化（全程加锁）</td>
-        <td bgcolor="#ff4d4f" style="text-align:center">×</td>
-        <td bgcolor="#ff4d4f" style="text-align:center">×</td>
-        <td bgcolor="#ff4d4f" style="text-align:center">×</td>
-    </tr>
+	<tr>
+		<th style="text-align:center">隔离级别</th>
+		<th style="text-align:center">脏读<br>Dirty reads</th>
+		<th style="text-align:center">脏读<br>Dirty reads</th>
+		<th style="text-align:center">幻读<br>phantom</th>
+	</tr>
+	<tr>
+		<td>Read Uncommitted<br>读未提交（不加锁）</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+	</tr>
+	<tr>
+		<td>READ COMMITTED<br>读已提交（RC）</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+	</tr>
+	<tr>
+		<td>REPEATABLE READ<br>可重复读（RR）（默认）</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+	</tr>
+	<tr>
+		<td>Serializable<br>串行化（全程加锁）</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+	</tr>
 </table>
-
 <ul>
-<li>脏读：读到了其他事务未提交的脏数据。<br>例如：事务 B 执行过程中修改了数据 X，在未提交前，事务 A 也读取了 X，但事务 B 却回滚了，这样事务 A 就形成了脏读。</li>
-<li>不可重复读：在一个事务内，最开始读到的数据和事务结束前任意时刻读到的同一批数据出现不一致的情况。<br>例如：事务 A 先读取了一条数据，然后再执行逻辑的时候，事务 B 将这条数据改变了，然后事务 A 再次读取该数据，发现数据不匹配，这就是所谓的不可重复读。</li>
-<li>幻读：事务的某次 select 操作得到的结果所表示的数据状态无法支撑其后续的业务操作。<br>例如：事务 A select 某条记录是否存在，不存在，准备插入此记录，但执行 insert 操作的时候发现此记录已存在，此时就产生了幻读。</li>
+<li>脏读：读到了其他事务未提交的脏数据。<br>
+例如：事务 B 执行过程中修改了数据 X，在未提交前，事务 A 也读取了 X，但事务 B 却回滚了，这样事务 A 就形成了脏读。</li>
+<li>不可重复读：在一个事务内，最开始读到的数据和事务结束前任意时刻读到的同一批数据出现不一致的情况。<br>
+例如：事务 A 先读取了一条数据，然后再执行逻辑的时候，事务 B 将这条数据改变了，然后事务 A 再次读取该数据，发现数据不匹配，这就是所谓的不可重复读。</li>
+<li>幻读：事务的某次 select 操作得到的结果所表示的数据状态无法支撑其后续的业务操作。<br>
+例如：事务 A select 某条记录是否存在，不存在，准备插入此记录，但执行 insert 操作的时候发现此记录已存在，此时就产生了幻读。</li>
 </ul>
 <p></br></br></br></br></p>
  
@@ -528,6 +530,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 

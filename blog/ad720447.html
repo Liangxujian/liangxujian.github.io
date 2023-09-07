@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -114,92 +114,105 @@
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jingmoxukong/p/5945200.html">Nginx 简易教程</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/bed000e1830b">WEB请求处理二：Nginx请求反向代理</a></p>
 </blockquote>
-<h1 id="一、预热"><a href="#一、预热" class="headerlink" title="一、预热"></a>一、预热</h1><h2 id="1-1-反向代理是什么？"><a href="#1-1-反向代理是什么？" class="headerlink" title="1.1 反向代理是什么？"></a>1.1 反向代理是什么？</h2><p>反向代理（Reverse Proxy）是指以代理服务器来接受 internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 internet 上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。</p>
-<h2 id="1-2-正向代理是什么？"><a href="#1-2-正向代理是什么？" class="headerlink" title="1.2 正向代理是什么？"></a>1.2 正向代理是什么？</h2><p>正向代理（Forward Proxy）又称转发代理，是一个位于客户端和原始服务器（origin server）之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标（原始服务器），然后代理向原始服务器转交请求并将获得的内容返回给客户端。客户端必须要进行一些特别的设置才能使用正向代理。</p>
+<h1>一、预热</h1>
+<h2 id="1-1-反向代理是什么？">1.1 反向代理是什么？</h2>
+<p>反向代理（Reverse Proxy）是指以代理服务器来接受 internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 internet 上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。</p>
+<h2 id="1-2-正向代理是什么？">1.2 正向代理是什么？</h2>
+<p>正向代理（Forward Proxy）又称转发代理，是一个位于客户端和原始服务器（origin server）之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标（原始服务器），然后代理向原始服务器转交请求并将获得的内容返回给客户端。客户端必须要进行一些特别的设置才能使用正向代理。</p>
 <p><strong>客户端必须设置正向代理服务器，当然前提是要知道正向代理服务器的IP地址，还有代理程序的端口。</strong></p>
-<h2 id="1-3-正向代理和反向代理区别"><a href="#1-3-正向代理和反向代理区别" class="headerlink" title="1.3 正向代理和反向代理区别"></a>1.3 正向代理和反向代理区别</h2><ul>
+<h2 id="1-3-正向代理和反向代理区别">1.3 正向代理和反向代理区别</h2>
+<ul>
 <li>正向代理：客户端 &lt;一&gt; 代理 一&gt;服务端</li>
 <li>反向代理：客户端 一&gt; 代理 &lt;一&gt;服务端</li>
 </ul>
-<h1 id="二、http-反向代理配置"><a href="#二、http-反向代理配置" class="headerlink" title="二、http 反向代理配置"></a>二、http 反向代理配置</h1><h2 id="2-1-解析域名反向代理到-webapp"><a href="#2-1-解析域名反向代理到-webapp" class="headerlink" title="2.1 解析域名反向代理到 webapp"></a>2.1 解析域名反向代理到 webapp</h2><h3 id="2-1-1-配置-nginx-conf"><a href="#2-1-1-配置-nginx-conf" class="headerlink" title="2.1.1 配置 nginx.conf"></a>2.1.1 配置 nginx.conf</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx //进入nginx安装目录</span><br><span class="line">cd conf //进入conf目录</span><br><span class="line">mkdir vhost //创建vhost文件夹</span><br><span class="line">vim nginx.conf //修改nginx的配置文件cd /usr/local/nginx //进入nginx安装目录</span><br><span class="line">cd conf //进入conf目录</span><br><span class="line">mkdir vhost //创建vhost文件夹</span><br><span class="line">vim nginx.conf //修改nginx的配置文件</span><br></pre></td></tr></table></figure>
-
-<p>在配置文件中添加该语句：include vhost&#x2F;*.conf；（不能漏分号）</p>
+<h1>二、http 反向代理配置</h1>
+<h2 id="2-1-解析域名反向代理到-webapp">2.1 解析域名反向代理到 webapp</h2>
+<h3 id="2-1-1-配置-nginx-conf">2.1.1 配置 nginx.conf</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx //进入nginx安装目录</span><br><span class="line">cd conf //进入conf目录</span><br><span class="line">mkdir vhost //创建vhost文件夹</span><br><span class="line">vim nginx.conf //修改nginx的配置文件cd /usr/local/nginx //进入nginx安装目录</span><br><span class="line">cd conf //进入conf目录</span><br><span class="line">mkdir vhost //创建vhost文件夹</span><br><span class="line">vim nginx.conf //修改nginx的配置文件</span><br></pre></td></tr></table></figure>
+<p>在配置文件中添加该语句：include vhost/*.conf；（不能漏分号）</p>
 <blockquote>
 <p>这语句的意思是把 vhost 文件夹下的所有 .conf 文件加载过来（注意是 .conf 后缀名的文件），这么做的原因是方便以后维护，把每个域名做成一个 .conf 文件，通过主配置 include 进来，这样以后想维护某个域名，就只需直接对那个对应的 .conf 进行操作，而不会影响到其它的域名，且文件不会过于臃肿。这跟 Spring 的配置文件类似，Spring 配置文件通过把负责各个模块功能的文件 include 进去，从而避免配置文件过于复杂臃肿。</p>
 </blockquote>
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564556248956.png" alt="1564556248956"></p>
-<h3 id="2-1-2-添加一些域名来测试"><a href="#2-1-2-添加一些域名来测试" class="headerlink" title="2.1.2 添加一些域名来测试"></a>2.1.2 添加一些域名来测试</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts //编辑hosts文件</span><br></pre></td></tr></table></figure>
-
+<h3 id="2-1-2-添加一些域名来测试">2.1.2 添加一些域名来测试</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts //编辑hosts文件</span><br></pre></td></tr></table></figure>
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564557183237.png" alt="1564557183237"></p>
 <p>IP 地址为本机 IP，后面的域名按需修改</p>
-<h3 id="2-1-3-创建-conf-文件"><a href="#2-1-3-创建-conf-文件" class="headerlink" title="2.1.3 创建 .conf 文件"></a>2.1.3 创建 .conf 文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd vhost //进入vhost文件夹，刚才在上文已经创建了的，里面没有内容，现在要添加内容</span><br><span class="line">vim www.taobao.com.conf //创建该文件并添加内容</span><br></pre></td></tr></table></figure>
-
+<h3 id="2-1-3-创建-conf-文件">2.1.3 创建 .conf 文件</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd vhost //进入vhost文件夹，刚才在上文已经创建了的，里面没有内容，现在要添加内容</span><br><span class="line">vim www.taobao.com.conf //创建该文件并添加内容</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    autoindex on;</span><br><span class="line">    server_name www.taobao.com;</span><br><span class="line">    access_log /usr/local/nginx/logs/access.log combined;</span><br><span class="line">    index index.html index.htm index.jsp index.php;</span><br><span class="line">    <span class="comment">#error_page 404 /404.html;</span></span><br><span class="line">    <span class="keyword">if</span> ( <span class="variable">$query_string</span> ~* <span class="string">&quot;.*[\;&#x27;\&lt;\&gt;].*&quot;</span> )&#123;</span><br><span class="line">    	<span class="built_in">return</span> 404;</span><br><span class="line">    &#125;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://127.0.0.1:9999;</span><br><span class="line">        add_header Access-Control-Allow-Origin *;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564557524022.png" alt="1564557524022"></p>
 <p><em>其功能是当本机访问</em> <code>www.taobao.com</code> <em>域名时，将跳转到本地的 9999 端口的程序上，即 tomcat 欢迎页面</em></p>
-<h3 id="2-1-4-刷新-Nginx-服务器配置"><a href="#2-1-4-刷新-Nginx-服务器配置" class="headerlink" title="2.1.4 刷新 Nginx 服务器配置"></a>2.1.4 刷新 Nginx 服务器配置</h3><p>esc + :wq 保存并退出</p>
+<h3 id="2-1-4-刷新-nginx-服务器配置">2.1.4 刷新 Nginx 服务器配置</h3>
+<p>esc + :wq 保存并退出</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../../sbin/nginx -s reload../../sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
-
 <p>如果配置刷新失败，可以重启 Nginx</p>
-<h3 id="2-1-5-测试效果"><a href="#2-1-5-测试效果" class="headerlink" title="2.1.5 测试效果"></a>2.1.5 测试效果</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl www.taobao.com</span><br></pre></td></tr></table></figure>
-
+<h3 id="2-1-5-测试效果">2.1.5 测试效果</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl www.taobao.com</span><br></pre></td></tr></table></figure>
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564558238760.png" alt="1564558238760"></p>
 <p>反向代理成功！</p>
-<h2 id="2-2-解析域名反向代理到本地文件"><a href="#2-2-解析域名反向代理到本地文件" class="headerlink" title="2.2 解析域名反向代理到本地文件"></a>2.2 解析域名反向代理到本地文件</h2><h3 id="2-2-1-hosts-添加域名"><a href="#2-2-1-hosts-添加域名" class="headerlink" title="2.2.1 hosts 添加域名"></a>2.2.1 hosts 添加域名</h3><h3 id="2-2-2-创建-conf-文件"><a href="#2-2-2-创建-conf-文件" class="headerlink" title="2.2.2 创建 .conf 文件"></a>2.2.2 创建 .conf 文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim image.baidu.com.conf //创建该文件并编辑</span><br></pre></td></tr></table></figure>
-
+<h2 id="2-2-解析域名反向代理到本地文件">2.2 解析域名反向代理到本地文件</h2>
+<h3 id="2-2-1-hosts-添加域名">2.2.1 hosts 添加域名</h3>
+<h3 id="2-2-2-创建-conf-文件">2.2.2 创建 .conf 文件</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim image.baidu.com.conf //创建该文件并编辑</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    autoindex off;</span><br><span class="line">    server_name image.baidu.com;</span><br><span class="line">    access_log /usr/local/nginx/logs/access.log combined;</span><br><span class="line">    index index.html index.htm index.jsp index.php;</span><br><span class="line">    <span class="comment">#error_page 404 /404.html;</span></span><br><span class="line">    <span class="keyword">if</span> ( <span class="variable">$query_string</span> ~* <span class="string">&quot;.*[\;&#x27;\&lt;\&gt;].*&quot;</span> )&#123;</span><br><span class="line">    	<span class="built_in">return</span> 404;</span><br><span class="line">    &#125;</span><br><span class="line">    location ~ /(mmall_fe|mmall_admin_fe)/dist/view/* &#123;</span><br><span class="line">    deny all;</span><br><span class="line">    &#125;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root /ftpfile/;</span><br><span class="line">        add_header Access-Control-Allow-Origin *;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564560275807.png" alt="1564560275807"></p>
 <p>功能是当用户输入 <code>image.baidu.com</code> 的时候，转发到本地的 <code>/ftpfile/</code> 文件。</p>
-<h3 id="2-2-3-刷新-Nginx-服务器配置"><a href="#2-2-3-刷新-Nginx-服务器配置" class="headerlink" title="2.2.3 刷新 Nginx 服务器配置"></a>2.2.3 刷新 Nginx 服务器配置</h3><h3 id="2-2-4-测试效果（略）"><a href="#2-2-4-测试效果（略）" class="headerlink" title="2.2.4 测试效果（略）"></a>2.2.4 测试效果（略）</h3><h1 id="三、负载均衡配置"><a href="#三、负载均衡配置" class="headerlink" title="三、负载均衡配置"></a>三、负载均衡配置</h1><p>负载均衡是干嘛的？举个例子：我们的小网站，刚开始就一台 nginx 服务器，后来，随着业务量增大，用户增多，一台服务器已经不够用了，我们就又多加了几台服务器。那么这几台服务器如何调度？如何均匀的提供访问？这就是负载均衡。</p>
+<h3 id="2-2-3-刷新-nginx-服务器配置">2.2.3 刷新 Nginx 服务器配置</h3>
+<h3 id="2-2-4-测试效果-略">2.2.4 测试效果（略）</h3>
+<h1>三、负载均衡配置</h1>
+<p>负载均衡是干嘛的？举个例子：我们的小网站，刚开始就一台 nginx 服务器，后来，随着业务量增大，用户增多，一台服务器已经不够用了，我们就又多加了几台服务器。那么这几台服务器如何调度？如何均匀的提供访问？这就是负载均衡。</p>
 <p><strong>负载均衡的目的是为了解决单个节点压力过大，造成 Web 服务响应过慢，甚至严重的情况下导致服务瘫痪，无法正常提供服务。其好处是可以集群多台机器一起工作，并且对外的 IP 和域名是一样的，外界看起来就好像一台机器一样。</strong></p>
-<h2 id="3-1-基于-weight-权重的负载"><a href="#3-1-基于-weight-权重的负载" class="headerlink" title="3.1 基于 weight 权重的负载"></a>3.1 基于 weight 权重的负载</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line"></span><br><span class="line">    upstream webservers&#123;</span><br><span class="line">        server 192.168.33.11 weight=10;</span><br><span class="line">        server 192.168.33.12 weight=10;</span><br><span class="line">        server 192.168.33.13 weight=10;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://tomcats;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line">&#125;http &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line"></span><br><span class="line">    upstream webservers&#123;</span><br><span class="line">        server 192.168.33.11 weight=10;</span><br><span class="line">        server 192.168.33.12 weight=10;</span><br><span class="line">        server 192.168.33.13 weight=10;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://tomcats;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h2 id="3-1-基于-weight-权重的负载">3.1 基于 weight 权重的负载</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line"></span><br><span class="line">    upstream webservers&#123;</span><br><span class="line">        server 192.168.33.11 weight=10;</span><br><span class="line">        server 192.168.33.12 weight=10;</span><br><span class="line">        server 192.168.33.13 weight=10;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://tomcats;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line">&#125;http &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line"></span><br><span class="line">    upstream webservers&#123;</span><br><span class="line">        server 192.168.33.11 weight=10;</span><br><span class="line">        server 192.168.33.12 weight=10;</span><br><span class="line">        server 192.168.33.13 weight=10;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line"></span><br><span class="line">        location / &#123;</span><br><span class="line">            proxy_pass http://tomcats;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... 省略其它配置</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>参数：<code>max_fails</code>和<code>fail_timeout</code></p>
 <ul>
 <li>max_fails：允许请求失败的次数，默认为 1。当超过最大次数时，返回 proxy_next_upstream 模块定义的错误。</li>
 <li>fail_timeout：在经历了 max_fails 次失败后，暂停服务的时间。max_fails 可以和 fail_timeout 一起使用，进行健康状态检查。</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">upstream webservers&#123;</span><br><span class="line">    server 192.168.33.11 weight=10 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.12 weight=10 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.13 weight=10 max_fails=2 fail_timeout=30s;</span><br><span class="line">&#125;upstream webservers&#123;</span><br><span class="line">    server 192.168.33.11 weight=10 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.12 weight=10 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.13 weight=10 max_fails=2 fail_timeout=30s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>参数：<code>down</code>和<code>backup</code></p>
 <ul>
 <li>down：表示这台机器暂时不参与负载均衡。相当于注释掉了。</li>
 <li>backup：表示这台机器是备用机器，是其他的机器不能用的时候，这台机器才会被使用，俗称备胎。</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream webservers&#123;</span><br><span class="line">    server 192.168.33.11 down;</span><br><span class="line">    server 192.168.33.12 weight=10 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.13 backup;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/150410643.png" alt="150410643"></p>
-<h2 id="3-2-基于-ip-hash-的负载"><a href="#3-2-基于-ip-hash-的负载" class="headerlink" title="3.2 基于 ip_hash 的负载"></a>3.2 基于 ip_hash 的负载</h2><p>这种分配方式，<strong>每个请求按访问 IP 的 hash 结果分配</strong>，这样来自同一个 IP 的访客固定访问一个后端服务器，有效解决了动态网页存在的 session 共享问题。</p>
+<h2 id="3-2-基于-ip-hash-的负载">3.2 基于 ip_hash 的负载</h2>
+<p>这种分配方式，<strong>每个请求按访问 IP 的 hash 结果分配</strong>，这样来自同一个 IP 的访客固定访问一个后端服务器，有效解决了动态网页存在的 session 共享问题。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">upstream webservers&#123;</span><br><span class="line">    ip_hash;</span><br><span class="line">    server 192.168.33.11 weight=1 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.12 weight=1 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.13 down;</span><br><span class="line">&#125;upstream webservers&#123;</span><br><span class="line">    ip_hash;</span><br><span class="line">    server 192.168.33.11 weight=1 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.12 weight=1 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.13 down;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><strong>ip_hash 模式下，最好不要设置 weight 参数</strong>，因为你设置了，就相当于手动设置了，将会导致很多的流量分配不均匀。</p>
 <p><strong>ip_hash 模式下，backup 参数不可用</strong>，加了会报错，为啥呢？因为，本身我们的访问就是固定的了，其实，备用已经不管什么作用了。</p>
-<h1 id="四、网站有多个-webapp-配置"><a href="#四、网站有多个-webapp-配置" class="headerlink" title="四、网站有多个 webapp 配置"></a>四、网站有多个 webapp 配置</h1><h1 id="五、https-反向代理配置"><a href="#五、https-反向代理配置" class="headerlink" title="五、https 反向代理配置"></a>五、https 反向代理配置</h1><h1 id="六、静态站点配置"><a href="#六、静态站点配置" class="headerlink" title="六、静态站点配置"></a>六、静态站点配置</h1><h1 id="七、搭建文件服务器"><a href="#七、搭建文件服务器" class="headerlink" title="七、搭建文件服务器"></a>七、搭建文件服务器</h1><h1 id="八、跨域解决方案"><a href="#八、跨域解决方案" class="headerlink" title="八、跨域解决方案"></a>八、跨域解决方案</h1><h2 id="8-1-Nginx-反向代理解决跨域"><a href="#8-1-Nginx-反向代理解决跨域" class="headerlink" title="8.1 Nginx 反向代理解决跨域"></a>8.1 Nginx 反向代理解决跨域</h2><h3 id="8-1-1-Nginx-处理跨域原理"><a href="#8-1-1-Nginx-处理跨域原理" class="headerlink" title="8.1.1 Nginx 处理跨域原理"></a>8.1.1 Nginx 处理跨域原理</h3><p>a 网站向 b 网站请求 1.js 文件时，向 b 网站发送一个获取的请求，nginx 根据配置文件接收这个请求，代替 a 网站向 b 网站来请求这个资源，nginx 拿到这个资源后再返回给 a 网站，以此来解决了跨域问题。</p>
-<h3 id="8-1-2-具体操作"><a href="#8-1-2-具体操作" class="headerlink" title="8.1.2 具体操作"></a>8.1.2 具体操作</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx //进入nginx安装\目录</span><br><span class="line">cd conf //进入conf目录</span><br><span class="line">vim nginx.conf //修改nginx的配置文件</span><br></pre></td></tr></table></figure>
-
+<h1>四、网站有多个 webapp 配置</h1>
+<h1>五、https 反向代理配置</h1>
+<h1>六、静态站点配置</h1>
+<h1>七、搭建文件服务器</h1>
+<h1>八、跨域解决方案</h1>
+<h2 id="8-1-nginx-反向代理解决跨域">8.1 Nginx 反向代理解决跨域</h2>
+<h3 id="8-1-1-nginx-处理跨域原理">8.1.1 Nginx 处理跨域原理</h3>
+<p>a 网站向 b 网站请求 1.js 文件时，向 b 网站发送一个获取的请求，nginx 根据配置文件接收这个请求，代替 a 网站向 b 网站来请求这个资源，nginx 拿到这个资源后再返回给 a 网站，以此来解决了跨域问题。</p>
+<h3 id="8-1-2-具体操作">8.1.2 具体操作</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx //进入nginx安装\目录</span><br><span class="line">cd conf //进入conf目录</span><br><span class="line">vim nginx.conf //修改nginx的配置文件</span><br></pre></td></tr></table></figure>
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1564649559457.png" alt="1564649559457"></p>
 <p>其中 server 代表启动的一个服务，location 是一个定位规则。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 所有以/开头的地址，表示是所有请求</span></span><br><span class="line">location / &#123;</span><br><span class="line">	<span class="comment"># 去请求../html文件夹里的文件,其中..的路径在nginx里面有定义，安装的时候会有默认路径</span></span><br><span class="line">    root   html;</span><br><span class="line">    <span class="comment"># 首页响应地址 </span></span><br><span class="line">    index  index.html index.htm;</span><br><span class="line">&#125;<span class="comment"># 所有以/开头的地址，表示是所有请求</span></span><br><span class="line">location / &#123;</span><br><span class="line">	<span class="comment"># 去请求../html文件夹里的文件,其中..的路径在nginx里面有定义，安装的时候会有默认路径</span></span><br><span class="line">    root   html;</span><br><span class="line">    <span class="comment"># 首页响应地址 </span></span><br><span class="line">    index  index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>由此可知，location 是 nginx 用来路由的入口，所以接下来要在 location 里面完成反向代理的配置。</p>
 <p>现在假设是 <code>www.a.com/html/msg.html</code> 想请求 <code>www.b.com/api/?method=1&amp;para=2</code>；</p>
 <p>ajax：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">&#x27;http://www.b.com/api/msg?method=1&amp;para=2&#x27;</span>;</span><br><span class="line">$.ajax (&#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&quot;GET&quot;</span>,</span><br><span class="line">    <span class="attr">url</span>: url,</span><br><span class="line">    <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">res</span>)&#123;..&#125;,</span><br><span class="line">    ....</span><br><span class="line">&#125;)<span class="keyword">var</span> url = <span class="string">&#x27;http://www.b.com/api/msg?method=1&amp;para=2&#x27;</span>;</span><br><span class="line">$.ajax (&#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&quot;GET&quot;</span>,</span><br><span class="line">    <span class="attr">url</span>: url,</span><br><span class="line">    <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">res</span>)&#123;..&#125;,</span><br><span class="line">    ....</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
 <p>这时会出现跨域的问题，所以修改一下请求的 url，让请求发在 nginx 的一个 url 下。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">&#x27;http://www.b.com/api/msg?method=1&amp;para=2&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> proxyurl = <span class="string">&#x27;msg?method=1&amp;para=2&#x27;</span>;</span><br><span class="line"><span class="comment">// 假如实际地址是：www.c.com/proxy/html/api/msg?method=1&amp;para=2;其中www.c.com是nginx主机地址</span></span><br><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&quot;GET&quot;</span>,</span><br><span class="line">    <span class="attr">url</span>: proxyurl,</span><br><span class="line">    <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">res</span>)&#123;..&#125;,</span><br><span class="line">    ....</span><br><span class="line">&#125;)<span class="keyword">var</span> url = <span class="string">&#x27;http://www.b.com/api/msg?method=1&amp;para=2&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> proxyurl = <span class="string">&#x27;msg?method=1&amp;para=2&#x27;</span>;</span><br><span class="line"><span class="comment">// 假如实际地址是：www.c.com/proxy/html/api/msg?method=1&amp;para=2;其中www.c.com是nginx主机地址</span></span><br><span class="line">$.<span class="title function_">ajax</span>(&#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="string">&quot;GET&quot;</span>,</span><br><span class="line">    <span class="attr">url</span>: proxyurl,</span><br><span class="line">    <span class="attr">success</span>: <span class="keyword">function</span>(<span class="params">res</span>)&#123;..&#125;,</span><br><span class="line">    ....</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
 <p>再在刚才的路径中匹配到这个请求，我们在 location 下面再添加一个 location。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x27;^~/proxy/html/&#x27;是一个匹配规则，用于拦截请求，匹配任何以 /proxy/html/开头的地址，匹配符合以后，停止往下搜索正则</span></span><br><span class="line">location ^~/proxy/html/&#123;</span><br><span class="line">	<span class="comment"># 代表重写拦截进来的请求，并且只能对域名后边的除去传递的参数外的字符串起作用。例如www.c.com/proxy/html/api/msg?method=1&amp;para=2中只对/proxy/html/api/msg重写</span></span><br><span class="line">	<span class="comment"># rewrite后面的参数是一个简单的正则：^/proxy/html/(.*)$，$1代表正则中的第一个()，$2代表第二个()的值,以此类推</span></span><br><span class="line">	<span class="comment"># break代表匹配一个之后停止匹配</span></span><br><span class="line">    rewrite ^/proxy/html/(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</span><br><span class="line">    <span class="comment"># proxy_pass表示把请求代理到其他主机</span></span><br><span class="line">    proxy_pass http://www.b.com/;</span><br><span class="line">&#125;<span class="comment"># &#x27;^~/proxy/html/&#x27;是一个匹配规则，用于拦截请求，匹配任何以 /proxy/html/开头的地址，匹配符合以后，停止往下搜索正则</span></span><br><span class="line">location ^~/proxy/html/&#123;</span><br><span class="line">	<span class="comment"># 代表重写拦截进来的请求，并且只能对域名后边的除去传递的参数外的字符串起作用。例如www.c.com/proxy/html/api/msg?method=1&amp;para=2中只对/proxy/html/api/msg重写</span></span><br><span class="line">	<span class="comment"># rewrite后面的参数是一个简单的正则：^/proxy/html/(.*)$，$1代表正则中的第一个()，$2代表第二个()的值,以此类推</span></span><br><span class="line">	<span class="comment"># break代表匹配一个之后停止匹配</span></span><br><span class="line">    rewrite ^/proxy/html/(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</span><br><span class="line">    <span class="comment"># proxy_pass表示把请求代理到其他主机</span></span><br><span class="line">    proxy_pass http://www.b.com/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="8-2-Nginx-配置-CORS-实现指定子域名跨域"><a href="#8-2-Nginx-配置-CORS-实现指定子域名跨域" class="headerlink" title="8.2 Nginx 配置 CORS 实现指定子域名跨域"></a>8.2 Nginx 配置 CORS 实现指定子域名跨域</h2><h3 id="8-2-1-什么是-CORS"><a href="#8-2-1-什么是-CORS" class="headerlink" title="8.2.1 什么是 CORS"></a>8.2.1 什么是 CORS</h3><p>CORS 是一个 W3C 标准，全称是跨域资源共享（Cross-Origin Resource Sharing）。它允许浏览器向跨源服务器，发出 XMLHttpRequest 请求，从而克服了 AJAX 请求只能同源使用的限制。</p>
+<h2 id="8-2-nginx-配置-cors-实现指定子域名跨域">8.2 Nginx 配置 CORS 实现指定子域名跨域</h2>
+<h3 id="8-2-1-什么是-cors">8.2.1 什么是 CORS</h3>
+<p>CORS 是一个 W3C 标准，全称是跨域资源共享（Cross-Origin Resource Sharing）。它允许浏览器向跨源服务器，发出 XMLHttpRequest 请求，从而克服了 AJAX 请求只能同源使用的限制。</p>
 <p>当前几乎所有的浏览器（Internet Explorer 8+，Firefox 3.5+，Safari 4+ 和 Chrome 3+）都可通过名为跨域资源共享（Cross-Origin Resource Sharing）的协议支持 AJAX 跨域调用。</p>
 <p>Chrome，Firefox，Opera，Safari 都使用的是 XMLHttpRequest2 对象，IE 使用 XDomainRequest。</p>
 <p>简单来说就是跨域的目标服务器要返回一系列的 Headers，通过这些 Headers 来控制是否同意跨域。跨域资源共享（CORS）也是未来的跨域问题的标准解决方案。</p>
 <p>CORS 提供如下 Headers，Request 包和 Response 包中都有一部分。</p>
-<h4 id="HTTP-Response-Header"><a href="#HTTP-Response-Header" class="headerlink" title="HTTP Response Header"></a>HTTP Response Header</h4><ul>
+<h4 id="http-response-header">HTTP Response Header</h4>
+<ul>
 <li>Access-Control-Allow-Origin</li>
 <li>Access-Control-Allow-Credentials</li>
 <li>Access-Control-Allow-Methods</li>
@@ -207,7 +220,8 @@
 <li>Access-Control-Expose-Headers</li>
 <li>Access-Control-Max-Age</li>
 </ul>
-<h4 id="HTTP-Request-Header"><a href="#HTTP-Request-Header" class="headerlink" title="HTTP Request Header"></a>HTTP Request Header</h4><ul>
+<h4 id="http-request-header">HTTP Request Header</h4>
+<ul>
 <li>Access-Control-Request-Method</li>
 <li>Access-Control-Request-Headers</li>
 </ul>
@@ -589,6 +603,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 

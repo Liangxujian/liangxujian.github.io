@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -109,7 +109,8 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="一、Lombok-是什么"><a href="#一、Lombok-是什么" class="headerlink" title="一、Lombok 是什么"></a>一、Lombok 是什么</h1><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1672124784402-4a31184d-a98c-4c97-a15c-d0a900b54c4f.png"></p>
+  <h1>一、Lombok 是什么</h1>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1672124784402-4a31184d-a98c-4c97-a15c-d0a900b54c4f.png" alt=""></p>
 <p>Lombok 项目是一个 <strong>Java 库</strong>，它可以自动插入到编辑器和构建工具中，增强 Java 的性能。不需要再写 getter、setter 或 equals方法，只要有一个注解，你的类就有一个功能齐全的构建器、自动记录变量等等。</p>
 <p></br></br></br></br></p>
  
@@ -488,6 +489,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 

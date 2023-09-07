@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -109,66 +109,63 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="一、查询库中所有表和表中所有字段"><a href="#一、查询库中所有表和表中所有字段" class="headerlink" title="一、查询库中所有表和表中所有字段"></a>一、查询库中所有表和表中所有字段</h1><h2 id="查询中所有的表和表注释"><a href="#查询中所有的表和表注释" class="headerlink" title="查询中所有的表和表注释"></a>查询中所有的表和表注释</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TABLE_NAME, TABLE_COMMENT</span><br><span class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.TABLES</span><br><span class="line"><span class="keyword">WHERE</span> table_schema <span class="operator">=</span> <span class="string">&#x27;库名&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="查询表中所有字段和注释"><a href="#查询表中所有字段和注释" class="headerlink" title="查询表中所有字段和注释"></a>查询表中所有字段和注释</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name, column_comment</span><br><span class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.COLUMNS</span><br><span class="line"><span class="keyword">WHERE</span> table_name <span class="operator">=</span> <span class="string">&#x27;表名&#x27;</span> <span class="keyword">AND</span> table_schema <span class="operator">=</span> <span class="string">&#x27;库名&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<h1 id="二、对数据的增删改"><a href="#二、对数据的增删改" class="headerlink" title="二、对数据的增删改"></a>二、对数据的增删改</h1><h2 id="增加"><a href="#增加" class="headerlink" title="增加"></a>增加</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tabel_name(column_a, column_b, ...) <span class="keyword">VALUES</span>(value_a, value_b, ...);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> newemp(empno, ename, job, mgr, hiredate, sal, comm, deptno) <span class="keyword">VALUES</span>(<span class="number">7933</span>, <span class="string">&#x27;zs&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="string">&#x27;7902&#x27;</span>, <span class="string">&#x27;1982-01-24&#x27;</span>, <span class="number">2000</span>, <span class="keyword">NULL</span>, <span class="number">30</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="批量插入"><a href="#批量插入" class="headerlink" title="批量插入"></a>批量插入</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> newemp(empno, ename, job, mgr, hiredate, sal, comm, deptno) </span><br><span class="line"><span class="keyword">VALUES</span>(<span class="number">7933</span>, <span class="string">&#x27;zs&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="string">&#x27;7902&#x27;</span>, <span class="string">&#x27;1982-01-24&#x27;</span>, <span class="number">2000</span>, <span class="keyword">NULL</span>, <span class="number">30</span>),</span><br><span class="line">      (<span class="number">7934</span>, <span class="string">&#x27;ls&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="string">&#x27;7903&#x27;</span>, <span class="string">&#x27;1983-10-24&#x27;</span>, <span class="number">2000</span>, <span class="keyword">NULL</span>, <span class="number">30</span>),</span><br><span class="line">      (<span class="number">7935</span>, <span class="string">&#x27;ww&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="string">&#x27;7904&#x27;</span>, <span class="string">&#x27;1984-01-24&#x27;</span>, <span class="number">2000</span>, <span class="keyword">NULL</span>, <span class="number">30</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="避免重复值插入"><a href="#避免重复值插入" class="headerlink" title="避免重复值插入"></a>避免重复值插入</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- ON DUPLICATE KEY：针对 id 和 唯一索引。插入失败则会更新原数据</span></span><br><span class="line"><span class="comment">-- 依赖索引，跳过且update重复数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">table</span> (a,b,c) <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>) <span class="keyword">ON</span> DUPLICATE KEY <span class="keyword">UPDATE</span> c<span class="operator">=</span>c<span class="operator">+</span><span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- insert ignore：判断的是主键或者索引是否重复，重复着不处理（不会报错）</span></span><br><span class="line"><span class="comment">-- 依赖索引，跳过</span></span><br><span class="line"><span class="keyword">INSERT</span> IGNORE <span class="keyword">INTO</span> log_domain (id) <span class="keyword">VALUES</span>(<span class="number">45</span>);</span><br><span class="line"><span class="keyword">INSERT</span> IGNORE <span class="keyword">INTO</span> `student` (`id`, `sno`, `sname`, `birthday`) <span class="keyword">VALUES</span>(<span class="string">&#x27;4&#x27;</span>,<span class="string">&#x27;2018005&#x27;</span>,<span class="string">&#x27;Amy&#x27;</span>,<span class="string">&#x27;2011-11-11&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- replace into：等同于先删除再插入，所以每一次影响记录为两条。也是针对索引</span></span><br><span class="line"><span class="comment">-- 依赖索引，删除重复数据然后insert新数据</span></span><br><span class="line">REPLACE <span class="keyword">INTO</span> log_domain (NAME) <span class="keyword">VALUES</span>(&quot;aaa&quot;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> ...;</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> newemp <span class="keyword">WHERE</span> empno<span class="operator">=</span><span class="number">7899</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> table_name <span class="keyword">SET</span> column_a<span class="operator">=</span>value_a, column_b<span class="operator">=</span>value_b, ... <span class="keyword">WHERE</span> ...;</span><br><span class="line"><span class="keyword">UPDATE</span> newemp <span class="keyword">SET</span> SAL<span class="operator">=</span>SAL<span class="operator">+</span><span class="number">5000</span> <span class="keyword">WHERE</span> ENAME<span class="operator">=</span><span class="string">&#x27;梁%&#x27;</span> <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">month</span>(BIR);</span><br></pre></td></tr></table></figure>
-
-<h1 id="三、对数据表的增删改"><a href="#三、对数据表的增删改" class="headerlink" title="三、对数据表的增删改"></a>三、对数据表的增删改</h1><h2 id="增加-1"><a href="#增加-1" class="headerlink" title="增加"></a>增加</h2><ul>
+  <h1>一、查询库中所有表和表中所有字段</h1>
+<h2 id="查询中所有的表和表注释">查询中所有的表和表注释</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TABLE_NAME, TABLE_COMMENT</span><br><span class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.TABLES</span><br><span class="line"><span class="keyword">WHERE</span> table_schema <span class="operator">=</span> <span class="string">&#x27;库名&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="查询表中所有字段和注释">查询表中所有字段和注释</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name, column_comment</span><br><span class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.COLUMNS</span><br><span class="line"><span class="keyword">WHERE</span> table_name <span class="operator">=</span> <span class="string">&#x27;表名&#x27;</span> <span class="keyword">AND</span> table_schema <span class="operator">=</span> <span class="string">&#x27;库名&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<h1>二、对数据的增删改</h1>
+<h2 id="增加">增加</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tabel_name(column_a, column_b, ...) <span class="keyword">VALUES</span>(value_a, value_b, ...);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> newemp(empno, ename, job, mgr, hiredate, sal, comm, deptno) <span class="keyword">VALUES</span>(<span class="number">7933</span>, <span class="string">&#x27;zs&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="string">&#x27;7902&#x27;</span>, <span class="string">&#x27;1982-01-24&#x27;</span>, <span class="number">2000</span>, <span class="keyword">NULL</span>, <span class="number">30</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="批量插入">批量插入</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> newemp(empno, ename, job, mgr, hiredate, sal, comm, deptno) </span><br><span class="line"><span class="keyword">VALUES</span>(<span class="number">7933</span>, <span class="string">&#x27;zs&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="string">&#x27;7902&#x27;</span>, <span class="string">&#x27;1982-01-24&#x27;</span>, <span class="number">2000</span>, <span class="keyword">NULL</span>, <span class="number">30</span>),</span><br><span class="line">      (<span class="number">7934</span>, <span class="string">&#x27;ls&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="string">&#x27;7903&#x27;</span>, <span class="string">&#x27;1983-10-24&#x27;</span>, <span class="number">2000</span>, <span class="keyword">NULL</span>, <span class="number">30</span>),</span><br><span class="line">      (<span class="number">7935</span>, <span class="string">&#x27;ww&#x27;</span>, <span class="string">&#x27;CLERK&#x27;</span>, <span class="string">&#x27;7904&#x27;</span>, <span class="string">&#x27;1984-01-24&#x27;</span>, <span class="number">2000</span>, <span class="keyword">NULL</span>, <span class="number">30</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="避免重复值插入">避免重复值插入</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- ON DUPLICATE KEY：针对 id 和 唯一索引。插入失败则会更新原数据</span></span><br><span class="line"><span class="comment">-- 依赖索引，跳过且update重复数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">table</span> (a,b,c) <span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>) <span class="keyword">ON</span> DUPLICATE KEY <span class="keyword">UPDATE</span> c<span class="operator">=</span>c<span class="operator">+</span><span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- insert ignore：判断的是主键或者索引是否重复，重复着不处理（不会报错）</span></span><br><span class="line"><span class="comment">-- 依赖索引，跳过</span></span><br><span class="line"><span class="keyword">INSERT</span> IGNORE <span class="keyword">INTO</span> log_domain (id) <span class="keyword">VALUES</span>(<span class="number">45</span>);</span><br><span class="line"><span class="keyword">INSERT</span> IGNORE <span class="keyword">INTO</span> `student` (`id`, `sno`, `sname`, `birthday`) <span class="keyword">VALUES</span>(<span class="string">&#x27;4&#x27;</span>,<span class="string">&#x27;2018005&#x27;</span>,<span class="string">&#x27;Amy&#x27;</span>,<span class="string">&#x27;2011-11-11&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- replace into：等同于先删除再插入，所以每一次影响记录为两条。也是针对索引</span></span><br><span class="line"><span class="comment">-- 依赖索引，删除重复数据然后insert新数据</span></span><br><span class="line">REPLACE <span class="keyword">INTO</span> log_domain (NAME) <span class="keyword">VALUES</span>(&quot;aaa&quot;);</span><br></pre></td></tr></table></figure>
+<h2 id="删除">删除</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> table_name <span class="keyword">WHERE</span> ...;</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> newemp <span class="keyword">WHERE</span> empno<span class="operator">=</span><span class="number">7899</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="修改">修改</h2>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> table_name <span class="keyword">SET</span> column_a<span class="operator">=</span>value_a, column_b<span class="operator">=</span>value_b, ... <span class="keyword">WHERE</span> ...;</span><br><span class="line"><span class="keyword">UPDATE</span> newemp <span class="keyword">SET</span> SAL<span class="operator">=</span>SAL<span class="operator">+</span><span class="number">5000</span> <span class="keyword">WHERE</span> ENAME<span class="operator">=</span><span class="string">&#x27;梁%&#x27;</span> <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="keyword">month</span>(BIR);</span><br></pre></td></tr></table></figure>
+<h1>三、对数据表的增删改</h1>
+<h2 id="增加">增加</h2>
+<ul>
 <li>增加数据表字段</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 <span class="keyword">ADD</span> 新字段名称 数据类型;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> fasp_t_pm_dept_agency <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> IS_DELETED <span class="type">INTEGER</span> <span class="keyword">DEFAULT</span> <span class="number">0</span> COMMENT <span class="string">&#x27;0-未删除；1-删除&#x27;</span>;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> emp <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> (</span><br><span class="line">    username <span class="type">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;用户名&#x27;</span>, </span><br><span class="line">    address <span class="type">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span> COMMENT <span class="string">&#x27;地址&#x27;</span>);</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>增加主键约束</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 <span class="keyword">ADD</span> <span class="keyword">CONSTRAINT</span> 主键名称 <span class="keyword">PRIMARY</span> KEY(设主键的列名);</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> emp <span class="keyword">ADD</span> <span class="keyword">CONSTRAINT</span> pk_eno <span class="keyword">PRIMARY</span> KEY(eno);</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>增加外键约束</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 建表前</span></span><br><span class="line"><span class="keyword">FOREIGN</span> KEY(从表字段名) <span class="keyword">REFERENCES</span> 主表名(主表字段名);</span><br><span class="line"><span class="comment">-- 建表后</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 从表名 <span class="keyword">CONSTRAINT</span> 外键名 <span class="keyword">FOREIGN</span> KEY(从表字段) <span class="keyword">REFERENCES</span> 主表名(主表字段名);</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> dept <span class="keyword">CONSTRAINT</span> fk_employee_dept <span class="keyword">FOREIGN</span> KEY(dept_no) <span class="keyword">REFERENCES</span> employee(dept_no);</span><br></pre></td></tr></table></figure>
-
-<h2 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h2><ul>
+<h2 id="删除">删除</h2>
+<ul>
 <li>删除数据表字段</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 <span class="keyword">DROP</span> 字段名;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> emp <span class="keyword">DROP</span> tel;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>删除主键约束</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 <span class="keyword">DROP</span> <span class="keyword">FOREIGN</span> KEY 外键约束名称;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> emp <span class="keyword">DROP</span> <span class="keyword">FOREIGN</span> KEY fk_emp_dept;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>删除外键约束</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 <span class="keyword">DROP</span> 字段名;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> employee <span class="keyword">DROP</span> <span class="keyword">FOREIGN</span> fk_employee_dept;</span><br></pre></td></tr></table></figure>
-
-<h2 id="修改-1"><a href="#修改-1" class="headerlink" title="修改"></a>修改</h2><p>注：如果 UPDATE 语句中 WHERE 条件走的是索引，则对该表施加的就是行锁；如果 SQL 语句没有走索引，则会全表扫描，行锁无法实现（行锁是通过索引加载的），取而代之的是表锁，即在此 UPDATE  语句执行完之前，任何对该表的 UPDATE 操作都是不允许的</p>
+<h2 id="修改">修改</h2>
+<p>注：如果 UPDATE 语句中 WHERE 条件走的是索引，则对该表施加的就是行锁；如果 SQL 语句没有走索引，则会全表扫描，行锁无法实现（行锁是通过索引加载的），取而代之的是表锁，即在此 UPDATE  语句执行完之前，任何对该表的 UPDATE 操作都是不允许的</p>
 <ul>
 <li>修改表名</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 旧表名称 RENAME 新表名称;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> employee RENAME emp;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>修改字段的数据类型</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 MODIFY 字段名称 新数据类型;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> emp MODIFY salary <span class="type">INT</span>(<span class="number">11</span>);</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>修改字段名称</li>
 </ul>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 CHANGE 旧字段名称  新字段名称  新数据类型;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> emp CHANGE name empName <span class="type">VARCHAR</span>(<span class="number">20</span>);</span><br></pre></td></tr></table></figure>
-
 <p></br></br></br></br></p>
  
       <!-- reward -->
@@ -546,6 +543,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 

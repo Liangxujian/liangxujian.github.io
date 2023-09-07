@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -109,67 +109,81 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="一、JDK、JRE、JVM-有什么关系？"><a href="#一、JDK、JRE、JVM-有什么关系？" class="headerlink" title="一、JDK、JRE、JVM 有什么关系？"></a>一、JDK、JRE、JVM 有什么关系？</h1><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1557711983254.png"></p>
+  <h1>一、JDK、JRE、JVM 有什么关系？</h1>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1557711983254.png" alt=""></p>
 <p>JDK（Java development toolkit）——相当于是 Java 的库函数，是编译、运行 Java 程序的工具包，是一切 Java 应用程序的基础，所有 Java 应用程序是构建在这个之上的。（汽车）</p>
 <p>JRE（Java Runtime Environment）——Java 运行环境，也就是 Java 平台。所有的 Java 程序都要在 JRE 下才能运行。JDK 的工具也是 Java 程序，也需要 JRE 才能运行。（汽车动力系统）</p>
 <p>JVM（Java Virtual Machine）——Java 虚拟机，是 JRE 的一部分。它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。JVM 有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。Java 语言最重要的特点就是跨平台运行。使用 JVM 就是为了支持与操作系统无关，实现跨平台。（汽车轮胎）</p>
-<h1 id="二、JVM-虚拟机"><a href="#二、JVM-虚拟机" class="headerlink" title="二、JVM 虚拟机"></a>二、JVM 虚拟机</h1><h2 id="2-1-JVM-基本结构"><a href="#2-1-JVM-基本结构" class="headerlink" title="2.1  JVM 基本结构"></a>2.1  JVM 基本结构</h2><p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/b2e6a2272094c3a0.png"></p>
+<h1>二、JVM 虚拟机</h1>
+<h2 id="2-1-jvm-基本结构">2.1  JVM 基本结构</h2>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/b2e6a2272094c3a0.png" alt=""></p>
 <p><a target="_blank" rel="noopener" href="https://www.yuque.com/liangxujian/ufl7zk/hh59qa">思维导图（语雀）</a></p>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/2c33c8b5415c6652.png"></p>
-<h2 id="2-2-JVM-线程共享区和非线程共享区"><a href="#2-2-JVM-线程共享区和非线程共享区" class="headerlink" title="2.2 JVM 线程共享区和非线程共享区"></a>2.2 JVM 线程共享区和非线程共享区</h2><p>概括来说，<strong>JVM 初始运行的时候都会分配好 Method Area（方法区） 和Heap（堆） ，而 JVM 每遇到一个线程，就为其分配一个 Program Counter Register（程序计数器） , VM Stack（虚拟机栈）和Native Method Stack（本地方法栈），当线程终止时，三者（虚拟机栈，本地方法栈和程序计数器）所占用的内存空间也会被释放掉</strong>。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/2c33c8b5415c6652.png" alt=""></p>
+<h2 id="2-2-jvm-线程共享区和非线程共享区">2.2 JVM 线程共享区和非线程共享区</h2>
+<p>概括来说，<strong>JVM 初始运行的时候都会分配好 Method Area（方法区） 和Heap（堆） ，而 JVM 每遇到一个线程，就为其分配一个 Program Counter Register（程序计数器） , VM Stack（虚拟机栈）和Native Method Stack（本地方法栈），当线程终止时，三者（虚拟机栈，本地方法栈和程序计数器）所占用的内存空间也会被释放掉</strong>。</p>
 <p>非线程共享的三个区域的生命周期与所属线程相同，而线程共享的区域与 JAVA 程序运行的生命周期相同，所以这也是系统垃圾回收的场所只发生在线程共享的区域（实际上对大部分虚拟机来说只发生在 Heap（堆区）上）的原因。</p>
 <p>案例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AppMain</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 运行时，JVM把AppMain的信息都放到方法区</span></span><br><span class="line"><span class="comment">     * main方法本身也放入方法区内</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// test1是引用，所以放到栈区中，而Sample是自定义对象，会被放到堆里</span></span><br><span class="line">        <span class="type">Sample</span> <span class="variable">test1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Sample</span>(<span class="string">&quot;测试1&quot;</span>);</span><br><span class="line">        <span class="type">Sample</span> <span class="variable">test2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Sample</span>(<span class="string">&quot;测试2&quot;</span>);</span><br><span class="line"></span><br><span class="line">        test1.printName();</span><br><span class="line">        test2.printName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Sample</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Sample</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * printName方法本身放到方法区中</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">printName</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1557710578795.png"></p>
-<h2 id="2-3-JVM-启动流程（略）"><a href="#2-3-JVM-启动流程（略）" class="headerlink" title="2.3 JVM 启动流程（略）"></a>2.3 JVM 启动流程（略）</h2><ol>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1557710578795.png" alt=""></p>
+<h2 id="2-3-jvm-启动流程-略">2.3 JVM 启动流程（略）</h2>
+<ol>
 <li>Java 虚拟机启动的命令是通过 java + xxx(类名，这个类中要有 main 方法)或者 javaw 启动的。</li>
 <li>执行命令后，系统第一步做的就是装载配置，会在当前路径中寻找 JVM 的 config 配置文件。</li>
 <li>找到 JVM 的 config 配置文件之后会去定位 jvm.dll 这个文件。这个文件就是 Java 虚拟机的主要实现。</li>
 <li>当找到匹配当前版本的 jvm.dll 文件后，就会使用这个 dll 去初始化 JVM 虚拟机。获得相关的接口。之后找到 main 方法开始运行。</li>
 </ol>
-<h1 id="三、Java-执行过程"><a href="#三、Java-执行过程" class="headerlink" title="三、Java 执行过程"></a>三、Java 执行过程</h1><h2 id="3-1-解释执行和编译执行"><a href="#3-1-解释执行和编译执行" class="headerlink" title="3.1 解释执行和编译执行"></a>3.1 解释执行和编译执行</h2><p>解释执行：一边将程序翻译成计算机可以执行的指令，一边交给计算机执行，翻译一句，执行一句。<em>（饭馆点菜，上一个吃一个）</em></p>
+<h1>三、Java 执行过程</h1>
+<h2 id="3-1-解释执行和编译执行">3.1 解释执行和编译执行</h2>
+<p>解释执行：一边将程序翻译成计算机可以执行的指令，一边交给计算机执行，翻译一句，执行一句。<em>（饭馆点菜，上一个吃一个）</em></p>
 <p>编译执行：将整个程序翻译成计算机及可以理解的指令，然后交给计算机执行。<em>（饭馆订桌，菜上齐后一并吃）</em></p>
-<h2 id="3-2-Java-的执行过程"><a href="#3-2-Java-的执行过程" class="headerlink" title="3.2 Java 的执行过程"></a>3.2 Java 的执行过程</h2><p>Java 严格来讲是一种“半解释半编译”的语言</p>
+<h2 id="3-2-java-的执行过程">3.2 Java 的执行过程</h2>
+<p>Java 严格来讲是一种“半解释半编译”的语言</p>
 <table>
 <thead>
 <tr>
 <th>User.java</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>↓<em>（javac源码编译器解释执行，即静态编译）</em></td>
+<tbody>
+<tr>
+<td>↓*（javac源码编译器解释执行，即静态编译）*</td>
 </tr>
 <tr>
-<td>User.class 字节码（ByteCode），ByteCode 是 JVM 唯一能够识别的指令，JVM 将 ByteCode 翻译成真正<br/>能够执行的机器码<strong>（PS：在这一步同时还会有一些对我们编写的 Java 源码的优化操作）</strong></td>
+<td>User.class 字节码（ByteCode），ByteCode 是 JVM 唯一能够识别的指令，JVM 将 ByteCode 翻译成真正<br/>能够执行的机器码**（PS：在这一步同时还会有一些对我们编写的 Java 源码的优化操作）**</td>
 </tr>
 <tr>
-<td>↓<em>（JVM 编译执行）</em></td>
+<td>↓*（JVM 编译执行）*</td>
 </tr>
 <tr>
 <td>机器码（machine code），这是电脑 CPU 可直接解读的数据，JVM 在不同的硬件平台上有不同实现，以<br/>达到所谓“一次编写，到处运行”的目标</td>
 </tr>
-</tbody></table>
-<h2 id="3-3-Java-运行比-C-慢？"><a href="#3-3-Java-运行比-C-慢？" class="headerlink" title="3.3 Java 运行比 C++ 慢？"></a>3.3 Java 运行比 C++ 慢？</h2><p>这种说法是在 <strong>JIT 编译器</strong>出现之前的情况。</p>
+</tbody>
+</table>
+<h2 id="3-3-java-运行比-c-慢？">3.3 Java 运行比 C++ 慢？</h2>
+<p>这种说法是在 <strong>JIT 编译器</strong>出现之前的情况。</p>
 <p>由于 Java 程序最初是仅仅通过解释器解释执行，即对字节码逐条解释执行，这种方式的执行速度相对会比较慢，<strong>尤其当某个方法或代码块运行的特别频繁时，这种方式的执行效率就显得很低</strong>。于是后来在虚拟机中引入了<strong>JIT 编译器（即时编译器，即时编译被内嵌于 java 字节码执行引擎之中，可以算的上是 jvm 的一个内存组件）</strong>，当虚拟机发现某个方法或代码块运行特别频繁时，就会把这些代码认定为“Hot Spot Code”（热点代码），为了提高热点代码的执行效率，在运行时，虚拟机将会把这些代码编译成与本地平台相关的机器码，并进行特别的优化，完成这项任务的正是 JIT 编译器。</p>
-<h2 id="3-4-JIT-编译器中的-C1、C2-即时编译器"><a href="#3-4-JIT-编译器中的-C1、C2-即时编译器" class="headerlink" title="3.4 JIT 编译器中的 C1、C2 即时编译器"></a>3.4 JIT 编译器中的 C1、C2 即时编译器</h2><ul>
+<h2 id="3-4-jit-编译器中的-c1-c2-即时编译器">3.4 JIT 编译器中的 C1、C2 即时编译器</h2>
+<ul>
 <li>C1 编译：将字节码编译为本地代码，进行简单、可靠的优化，如有必要将加入性能监控的逻辑。</li>
 <li>C2 编译：也是将字节码编译为本地代码，但是会启用一些编译耗时较长的优化，<strong>甚至会</strong>根据性能监控信息进行一些不可靠的<strong>激进优化</strong>。C2 编译主要是针对<strong>热点代码</strong>，对之做出更优的编译。</li>
 </ul>
-<p><em>注：实施分层编译后，C1 和 C2 将会同时工作，许多代码会被</em><strong>多次编译</strong><em>，用 C1 获取更高的编译速度，用 C2 来获取更好的编译质量，且在解释执行的时候解释器也无须再承担收集性能监控信息的任务</em></p>
-<h1 id="四、新生代、老年代、JavaCG-回收机制"><a href="#四、新生代、老年代、JavaCG-回收机制" class="headerlink" title="四、新生代、老年代、JavaCG 回收机制"></a>四、新生代、老年代、JavaCG 回收机制</h1><p>Java 中的堆是 JVM 所管理的最大的一块内存空间，主要用于存放各种类的实例对象。</p>
+<p><em>注：实施分层编译后，C1 和 C2 将会同时工作，许多代码会被</em><strong>多次编译</strong>*，用 C1 获取更高的编译速度，用 C2 来获取更好的编译质量，且在解释执行的时候解释器也无须再承担收集性能监控信息的任务*</p>
+<h1>四、新生代、老年代、JavaCG 回收机制</h1>
+<p>Java 中的堆是 JVM 所管理的最大的一块内存空间，主要用于存放各种类的实例对象。</p>
 <p>堆的内存模型大致为：</p>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1678097210489.png"></p>
-<p>从图中可以看出： 堆大小 &#x3D; 新生代 + 老年代。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1678097210489.png" alt=""></p>
+<p>从图中可以看出： 堆大小 = 新生代 + 老年代。</p>
 <p>JVM 三大性能调优参数： -Xms、-Xmx、-Xss</p>
 <ul>
 <li>参数 –Xms 指定堆的默认值（最小值），参数 -Xmx 指定堆的最大值；</li>
 <li>参数 -Xss 指定每个线程分配的内存大小【JDK 1.4 为 256KB；JDK 1.5+ 为 1M】，这决定了进程的数量。</li>
 </ul>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/JVM%E5%8F%82%E6%95%B0.png"></p>
-<h2 id="4-1-新生代和老年代"><a href="#4-1-新生代和老年代" class="headerlink" title="4.1 新生代和老年代"></a>4.1 新生代和老年代</h2><p>默认的，新生代 ( Young ) 与老年代 ( Old ) 的比例的值为 1:2。其中，新生代 ( Young ) 被细分为 <strong>Eden</strong>（伊甸园）和 两个 Survivor 区域，这两个 Survivor 区域分别被命名为 <strong>from</strong> 和 <strong>to</strong>，以示区分。</p>
-<p><em>注：JVM 每次只会使用 Eden 和其中的一块 Survivor 区域来为对象服务，所以无论什么时候，总是有一块 Survivor 区域是空闲着的。因此，新生代实际可用的内存空间为 9&#x2F;10 ( 即90% )的新生代空间。（ from 和 to 区域位置是平等的）</em></p>
-<h2 id="4-2-JavaCG-垃圾回收机制"><a href="#4-2-JavaCG-垃圾回收机制" class="headerlink" title="4.2 JavaCG 垃圾回收机制"></a>4.2 JavaCG 垃圾回收机制</h2><p>Java 的垃圾回收机制使用的是分代收集算法。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/JVM%E5%8F%82%E6%95%B0.png" alt=""></p>
+<h2 id="4-1-新生代和老年代">4.1 新生代和老年代</h2>
+<p>默认的，新生代 ( Young ) 与老年代 ( Old ) 的比例的值为 1:2。其中，新生代 ( Young ) 被细分为 <strong>Eden</strong>（伊甸园）和 两个 Survivor 区域，这两个 Survivor 区域分别被命名为 <strong>from</strong> 和 <strong>to</strong>，以示区分。</p>
+<p><em>注：JVM 每次只会使用 Eden 和其中的一块 Survivor 区域来为对象服务，所以无论什么时候，总是有一块 Survivor 区域是空闲着的。因此，新生代实际可用的内存空间为 9/10 ( 即90% )的新生代空间。（ from 和 to 区域位置是平等的）</em></p>
+<h2 id="4-2-javacg-垃圾回收机制">4.2 JavaCG 垃圾回收机制</h2>
+<p>Java 的垃圾回收机制使用的是分代收集算法。</p>
 <ol>
 <li>新创建的对象会被分配到 Eden 区；</li>
 <li>Eden 区满了会触发一次 Minor GC，仍存活的对象复制到 From 区，年龄+1（对于一些比较大的对象，需要分配一块较大的内存空间，会直接进入到老年代），清空 Eden 区，此时 To 区是空的；</li>
@@ -178,7 +192,7 @@
 </ol>
 <p>Full GC 是发生在<strong>老年代</strong>的垃圾收集动作，所采用的是<strong>标记-清除算法</strong>。</p>
 <p>由于老年代的对象都是比较稳定的<strong>热点代码</strong>，所以不会那么容易被回收。因此，<strong>Full GC 发生的次数不会有 Minor GC 那么频繁，并且做一次 Full GC 要比进行一次 Minor GC 的时间会更长。</strong></p>
-<p><em>另外，</em><strong>标记-清除算法收集垃圾的时候会产生许多的内存碎片</strong> <em>( 即不连续的内存空间 )，此后需要为较大的对象分配内存空间时，若无法找到足够的连续的内存空间，就会提前触发一次 GC 的收集动作。</em></p>
+<p>*另外，*<strong>标记-清除算法收集垃圾的时候会产生许多的内存碎片</strong> <em>( 即不连续的内存空间 )，此后需要为较大的对象分配内存空间时，若无法找到足够的连续的内存空间，就会提前触发一次 GC 的收集动作。</em></p>
 <p></br></br></br></br></p>
  
       <!-- reward -->
@@ -556,6 +570,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 

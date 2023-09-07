@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -109,23 +109,28 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="材料"><a href="#材料" class="headerlink" title="材料"></a>材料</h1><h2 id="主料"><a href="#主料" class="headerlink" title="主料"></a>主料</h2><ul>
-<li><input disabled="" type="checkbox"> 娃娃菜（1 颗）</li>
-<li><input disabled="" type="checkbox"> 新鲜虾仁（150g）</li>
-<li><input disabled="" type="checkbox"> 番茄（1-2 个）</li>
-<li><input disabled="" type="checkbox"> 金针菇</li>
-<li><input disabled="" type="checkbox"> 香菇（2-3 个）</li>
+  <h1>材料</h1>
+<h2 id="主料">主料</h2>
+<ul>
+<li>[ ] 娃娃菜（1 颗）</li>
+<li>[ ] 新鲜虾仁（150g）</li>
+<li>[ ] 番茄（1-2 个）</li>
+<li>[ ] 金针菇</li>
+<li>[ ] 香菇（2-3 个）</li>
 </ul>
-<h2 id="配料"><a href="#配料" class="headerlink" title="配料"></a>配料</h2><ul>
-<li><input disabled="" type="checkbox"> 葱</li>
-<li><input disabled="" type="checkbox"> 蒜</li>
+<h2 id="配料">配料</h2>
+<ul>
+<li>[ ] 葱</li>
+<li>[ ] 蒜</li>
 </ul>
-<h2 id="调味料"><a href="#调味料" class="headerlink" title="调味料"></a>调味料</h2><ul>
-<li><input disabled="" type="checkbox"> 油</li>
-<li><input disabled="" type="checkbox"> 盐</li>
-<li><input disabled="" type="checkbox"> 胡椒粉</li>
+<h2 id="调味料">调味料</h2>
+<ul>
+<li>[ ] 油</li>
+<li>[ ] 盐</li>
+<li>[ ] 胡椒粉</li>
 </ul>
-<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
+<h1>步骤</h1>
+<ol>
 <li>娃娃菜切掉根部，对半切开</li>
 <li>番茄去皮六等分切，再切半</li>
 <li>葱切葱花，蒜切蒜片</li>
@@ -512,6 +517,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 

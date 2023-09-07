@@ -42,7 +42,7 @@
         }
       </style>
     <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-</head>
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
   </html>
 </html>
 
@@ -114,34 +114,39 @@
 <p>[<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bigdata1024/p/15254164.html">Elasticsearch] ES更新问题踩坑记录 - chaplinthink - 博客园 (cnblogs.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42764468/article/details/121252151">解决elasticsearch更新数据后不能立即刷新的问题_es更新后立马刷新_我一直在流浪的博客-CSDN博客</a></p>
 </blockquote>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>前端请求，对 ES 中的数据进行 update。然后进行查询刚刚操作完毕的数据，或者数据列表。</p>
+<h1>问题</h1>
+<p>前端请求，对 ES 中的数据进行 update。然后进行查询刚刚操作完毕的数据，或者数据列表。</p>
 <p>不过查询到的却是 update 前的数据。</p>
-<h1 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h1><p>Elesticsearch 更新数据后会有延迟。</p>
+<h1>原因分析</h1>
+<p>Elesticsearch 更新数据后会有延迟。</p>
 <p>ES 实现的是一种【近实时搜索（Real-time Search）】的策略：</p>
 <ol>
 <li>ES 产生<strong>一个</strong>新分段（Segment），把数据缓存到 Index Buffer；</li>
 <li>refresh：1s 后（默认配置），ES 清空写缓存，新段 write 到文件系统缓存（FileSystem Cache）；</li>
-<li>flush：通过手工调用 flush 接口（POST &#x2F;my-index-000001&#x2F;_flush），或者操作系统通过一定策略（默认每隔 30 分钟或者 translog 达到一定大小的时候：由 index.translog.flush_threshold_size 控制，默认 512MB），将 Index Buffer 中的数据全部刷新到磁盘里的一个新的 Segment 中，清空 Index Buffer。然后调用 Lucene 的 commit 方法将所有内存中的 Segment 持久化（fsync）到磁盘，一个 commit point 写入磁盘中，同时清空 translog 日志文件。</li>
+<li>flush：通过手工调用 flush 接口（POST /my-index-000001/_flush），或者操作系统通过一定策略（默认每隔 30 分钟或者 translog 达到一定大小的时候：由 index.translog.flush_threshold_size 控制，默认 512MB），将 Index Buffer 中的数据全部刷新到磁盘里的一个新的 Segment 中，清空 Index Buffer。然后调用 Lucene 的 commit 方法将所有内存中的 Segment 持久化（fsync）到磁盘，一个 commit point 写入磁盘中，同时清空 translog 日志文件。</li>
 </ol>
 <p><em>提交点（commit point）：记录当前所有可用的 Segment ，一个索引一般只有一个 commit point，而每个 commit point 都会维护一个 .del 文件（ ES 删除数据本质是不属于物理删除），当 ES 做删改操作时首先会在 .del 文件中声明某个 Document 已经被删除，文件内记录了在某个 Segment 内某个 Document 已经被删除，当查询请求过来时在 Segment 中被删除的文件是能够查出来的，但是当返回结果时会根据 commit point 维护的那个 .del 文件把已经删除的文档过滤掉。</em></p>
 <p>这种策略可以大幅提升写入的效率。因为从 write 接口返回 success 开始，无论数据有没有被刷到磁盘，该数据已经对读取可见。</p>
-<h1 id="处理方案"><a href="#处理方案" class="headerlink" title="处理方案"></a>处理方案</h1><p>方案一：修改 ES refresh 的间隔时间</p>
+<h1>处理方案</h1>
+<p>方案一：修改 ES refresh 的间隔时间</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XPUT  http://ip:9200/meta_es_data/_settings?pretty -d <span class="string">&#x27;&#123;&quot;refresh_interval&quot; : &quot;500ms&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
 <p>方案二：在每次更新操作后，休眠 1s</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">baseSearchService.update(docBean);</span><br><span class="line"> </span><br><span class="line">Thread.sleep(<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
-
 <p>方案三：在 ES 请求接口有请求后强制 refresh（当写测试的时候， 手动刷新很有用，但是不要在生产环境下每次索引一个文档都去手动刷新。 “相反，你的应用需要意识到 Elasticsearch 的近实时的性质，并接受它的不足” ~~~）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);</span><br></pre></td></tr></table></figure>
-
-<h1 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h1><h2 id="拓展一"><a href="#拓展一" class="headerlink" title="拓展一"></a>拓展一</h2><p>ES 的 refresh 虽然可以配置刷新的时间，但是没必要，频繁的刷新会造成压力过大。</p>
+<h1>拓展</h1>
+<h2 id="拓展一">拓展一</h2>
+<p>ES 的 refresh 虽然可以配置刷新的时间，但是没必要，频繁的刷新会造成压力过大。</p>
 <p>因为 ES 每次 refresh 都产生一个新段（Segment），频繁的 refresh 会导致段数量的暴增。段数量过多会导致过多的消耗文件句柄、内存和 CPU 时间；而且段的数量越多，查询的速度也会越慢。</p>
-<p>虽然 ES 可以进行【段合并】，但是段的合并会消耗掉大量系统资源，尤其是磁盘 I&#x2F;O。</p>
-<h2 id="拓展二"><a href="#拓展二" class="headerlink" title="拓展二"></a>拓展二</h2><p>ES 数据在更新的时候并不是在原来的数据上做修改的，而是找到该数据的索引 ID，把原来的数据删掉，再重新插入一条，但索引 ID 是相同的。</p>
-<h2 id="拓展三"><a href="#拓展三" class="headerlink" title="拓展三"></a>拓展三</h2><p>当删除、更新两个操作间隔很短时间执行，上一个数据还没有 refresh 到 FileSystem Cache 区域，就无法查询。</p>
+<p>虽然 ES 可以进行【段合并】，但是段的合并会消耗掉大量系统资源，尤其是磁盘 I/O。</p>
+<h2 id="拓展二">拓展二</h2>
+<p>ES 数据在更新的时候并不是在原来的数据上做修改的，而是找到该数据的索引 ID，把原来的数据删掉，再重新插入一条，但索引 ID 是相同的。</p>
+<h2 id="拓展三">拓展三</h2>
+<p>当删除、更新两个操作间隔很短时间执行，上一个数据还没有 refresh 到 FileSystem Cache 区域，就无法查询。</p>
 <p><code>final TableDocBean docBean = baseSearchService.getById(id);</code>（获取不到数据，会导致数据更新失败）</p>
-<h2 id="拓展四"><a href="#拓展四" class="headerlink" title="拓展四"></a>拓展四</h2><p>由于系统是先缓存了一段数据才写，且新段不会立即刷入磁盘中，这两个过程如果出现某些意外情况（例如主机断电等），则会存在丢失数据的风险。通用的处理方法是【记录事务日志】，每次对 ES 进行操作时均记录事务日志，当 ES 启动的时候，重放 translog 中所有在最后一次提交后发生的变更操作。比如 HBase 等都有自己的事务日志。</p>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/682547-20210911111058551-693695339.png"></p>
+<h2 id="拓展四">拓展四</h2>
+<p>由于系统是先缓存了一段数据才写，且新段不会立即刷入磁盘中，这两个过程如果出现某些意外情况（例如主机断电等），则会存在丢失数据的风险。通用的处理方法是【记录事务日志】，每次对 ES 进行操作时均记录事务日志，当 ES 启动的时候，重放 translog 中所有在最后一次提交后发生的变更操作。比如 HBase 等都有自己的事务日志。</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/682547-20210911111058551-693695339.png" alt=""></p>
 <p></br></br></br></br></p>
  
       <!-- reward -->
@@ -219,6 +224,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/blog/ef6a6c4d.html" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Butter-Fly-和田光司
+          
+        </div>
+      </a>
     
     
       <a href="/blog/a44a3538.html" class="article-nav-link">
@@ -510,6 +524,30 @@
     viewer_init()
 </script> 
 <!-- MathJax -->
+ <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/MathJax.js"></script>
+<script src="https://cdn.staticfile.org/mathjax/2.7.7/config/TeX-AMS-MML_HTMLorMML-full.js"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true,
+  };
+</script>
 
 <!-- Katex -->
 
