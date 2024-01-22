@@ -6874,4 +6874,19 @@ FDD 是由 Jeff De Luca 和大师 Peter Coad 提出来的。像其他方法一�
         <tag>学习</tag>
       </tags>
   </entry>
+  <entry>
+    <title>视频片头片尾批量剪切</title>
+    <url>/blog/eefdcde7.html</url>
+    <content><![CDATA[<h1>视频片头片尾批量剪切</h1>
+<p>放在 ffmpeg.exe 目录下运行批处理可实现批量剪片头片尾</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off &amp; setlocal enabledelayedexpansion</span><br><span class="line"></span><br><span class="line">rem ===================需手动设置===================</span><br><span class="line">rem 设定片头片尾长度，格式为 HH:mm:ss.fff</span><br><span class="line"><span class="built_in">set</span> <span class="string">&quot;s1=00:02:23.0&quot;</span></span><br><span class="line"><span class="built_in">set</span> <span class="string">&quot;s2=00:01:46.0&quot;</span></span><br><span class="line">rem ================================================</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> /f <span class="string">&quot;tokens=1-4delims=:.&quot;</span> %%a <span class="keyword">in</span> (<span class="string">&quot;%s2%&quot;</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="built_in">set</span> /a <span class="string">&quot;t2=(1%%a %% 100 *3600 + 1%%b %% 100 * 60 + 1%%c %% 100) * 1000 + 1%%d %% 1000&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">md myvideo 2&gt;nul</span><br><span class="line"><span class="keyword">for</span> %%i <span class="keyword">in</span> (*.avi *.mkv *.mp4 *.flv) <span class="keyword">do</span> (</span><br><span class="line">    <span class="keyword">for</span> /f <span class="string">&quot;tokens=2-5delims=:., &quot;</span> %%a <span class="keyword">in</span> (<span class="string">&#x27;ffmpeg -i &quot;%%i&quot; 2^&gt;^&amp;1 ^| find &quot;Duration:&quot;&#x27;</span>) <span class="keyword">do</span> (</span><br><span class="line">        <span class="built_in">set</span> /a <span class="string">&quot;t=(1%%a%%100*3600+1%%b%%100*60+1%%c%%100)*1000+1%%d0%%1000,t-=t2,ms=t%%1000,t/=1000&quot;</span></span><br><span class="line">        <span class="built_in">set</span> /a h=t/3600,m=t%%3600/60,s=t%%60,h+=100,m+=100,s+=100,ms+=1000</span><br><span class="line">        <span class="built_in">set</span> <span class="string">&quot;t=!h:~1!:!m:~1!:!s:~1!.!ms:~1!&quot;</span></span><br><span class="line">        ffmpeg -ss !s1! -to !t! -accurate_seek -i <span class="string">&quot;%%i&quot;</span>  -c copy -avoid_negative_ts 1 <span class="string">&quot;myvideo\%%i&quot;</span> -y</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>生活</category>
+        <category>视频</category>
+      </categories>
+      <tags>
+        <tag>视频</tag>
+      </tags>
+  </entry>
 </search>

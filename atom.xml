@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-09-07T06:57:09.181Z</updated>
+  <updated>2024-01-22T01:54:22.944Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>视频片头片尾批量剪切</title>
+    <link href="http://example.com/blog/eefdcde7.html"/>
+    <id>http://example.com/blog/eefdcde7.html</id>
+    <published>2024-01-22T01:51:51.160Z</published>
+    <updated>2024-01-22T01:54:22.944Z</updated>
+    
+    <content type="html"><![CDATA[<h1>视频片头片尾批量剪切</h1><p>放在 ffmpeg.exe 目录下运行批处理可实现批量剪片头片尾</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off &amp; setlocal enabledelayedexpansion</span><br><span class="line"></span><br><span class="line">rem ===================需手动设置===================</span><br><span class="line">rem 设定片头片尾长度，格式为 HH:mm:ss.fff</span><br><span class="line"><span class="built_in">set</span> <span class="string">&quot;s1=00:02:23.0&quot;</span></span><br><span class="line"><span class="built_in">set</span> <span class="string">&quot;s2=00:01:46.0&quot;</span></span><br><span class="line">rem ================================================</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> /f <span class="string">&quot;tokens=1-4delims=:.&quot;</span> %%a <span class="keyword">in</span> (<span class="string">&quot;%s2%&quot;</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="built_in">set</span> /a <span class="string">&quot;t2=(1%%a %% 100 *3600 + 1%%b %% 100 * 60 + 1%%c %% 100) * 1000 + 1%%d %% 1000&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">md myvideo 2&gt;nul</span><br><span class="line"><span class="keyword">for</span> %%i <span class="keyword">in</span> (*.avi *.mkv *.mp4 *.flv) <span class="keyword">do</span> (</span><br><span class="line">    <span class="keyword">for</span> /f <span class="string">&quot;tokens=2-5delims=:., &quot;</span> %%a <span class="keyword">in</span> (<span class="string">&#x27;ffmpeg -i &quot;%%i&quot; 2^&gt;^&amp;1 ^| find &quot;Duration:&quot;&#x27;</span>) <span class="keyword">do</span> (</span><br><span class="line">        <span class="built_in">set</span> /a <span class="string">&quot;t=(1%%a%%100*3600+1%%b%%100*60+1%%c%%100)*1000+1%%d0%%1000,t-=t2,ms=t%%1000,t/=1000&quot;</span></span><br><span class="line">        <span class="built_in">set</span> /a h=t/3600,m=t%%3600/60,s=t%%60,h+=100,m+=100,s+=100,ms+=1000</span><br><span class="line">        <span class="built_in">set</span> <span class="string">&quot;t=!h:~1!:!m:~1!:!s:~1!.!ms:~1!&quot;</span></span><br><span class="line">        ffmpeg -ss !s1! -to !t! -accurate_seek -i <span class="string">&quot;%%i&quot;</span>  -c copy -avoid_negative_ts 1 <span class="string">&quot;myvideo\%%i&quot;</span> -y</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1&gt;视频片头片尾批量剪切&lt;/h1&gt;
+&lt;p&gt;放在 ffmpeg.exe 目录下运行批处理可实现批量剪片头片尾&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;l</summary>
+      
+    
+    
+    
+    <category term="生活" scheme="http://example.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    <category term="视频" scheme="http://example.com/categories/%E7%94%9F%E6%B4%BB/%E8%A7%86%E9%A2%91/"/>
+    
+    
+    <category term="视频" scheme="http://example.com/tags/%E8%A7%86%E9%A2%91/"/>
+    
+  </entry>
   
   <entry>
     <title>软件设计师</title>
@@ -581,38 +609,6 @@
     <summary type="html">&lt;h1&gt;NodeJS 下载&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&quot;https://nodejs.org/en/&quot;&gt;下载 NodeJS 的长期支持版本&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://nodejs.org/en/about/releases/&quot;&gt;查看 NodeJ</summary>
-      
-    
-    
-    
-    <category term="编程" scheme="http://example.com/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="NodeJS" scheme="http://example.com/categories/%E7%BC%96%E7%A8%8B/NodeJS/"/>
-    
-    
-    <category term="NodeJS" scheme="http://example.com/tags/NodeJS/"/>
-    
-    <category term="JavaScript" scheme="http://example.com/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NodeJS简介</title>
-    <link href="http://example.com/blog/ff8c64c0.html"/>
-    <id>http://example.com/blog/ff8c64c0.html</id>
-    <published>2023-06-09T03:33:37.000Z</published>
-    <updated>2023-08-25T01:35:25.157Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>参考自博客：</p><p>相关网址：</p><p><a href="https://www.cnblogs.com/yinzhengjie/p/14219259.html">NodeJS简介</a></p><p><a href="https://nodejs.org/zh-cn/docs/">NodeJS doc</a></p></blockquote><h1>关于 NodeJS</h1><p>Node.js 是一个大部分基本模块都用 JavaScript 编写的，能够在服务器端运行的 JavaScript 的开放源代码，跨平台 JavaScript 运行环境。</p><p>Node.js 采用 Google 的 V8 引擎运行 JS 代码，使用事件驱动，非阻塞和异步 I/O 模型等技术来提高性能，可优化应用程序的传输量和规模。</p><h1>NodeJS 可以做什么</h1><ol><li>Web服务API，比如REST；</li><li>实时多人游戏；</li><li>后端的Web服务，例如跨域，服务器端的请求；</li><li>基于Web的应用；</li><li>多客户端的通信，如即时通信</li></ol><p>Node.js 是基于单线程实现的，但是后台拥有一个 I/O 线程池。可以说 Node.js 成也单线程，败也单线程，尽管单线程的处理效率很高，但也是有极限的。不过值得庆幸的是，Node.js 支持分布式，即单节点性能达到瓶颈，我们可以增加机器来解决性能问题。</p><p>综上所述，在超大并发的场景下，Node.js 并不太适合做后端的服务器开发语言，建议还是选择支持高并发的语言，比如 Java，C++，Golang 等。当然，Python 也是可以的，但由于 GIL 的存在，因此它在后端开发能力上相比 Java 和 Go，并没有特别可圈可点的地方。</p><h1>NodeJS VS JavaScript</h1><p>JavaScript 是在浏览器中运行的代码，他的作用域只在浏览器中，并不能超出浏览器所有的权限，而 Node.js 则跳出了浏览器的限制，可以像 Java，Python，Golang 这样的编程语言一样，可以直接和操作系统进行交互。</p><p>从 C/S 架构来说，JavaScript 是在客户端浏览器上渲染的程序，而 Node.js 既可以充当 Client 角色，也可以充当 Server 端角色。</p><h1>关于 npm</h1><p>npm 是 Node 的包管理器。</p><h1>关于 yarn</h1><p></br></br></br></br></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;参考自博客：&lt;/p&gt;
-&lt;p&gt;相关网址：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/yinzhengjie/p/14219259.html&quot;&gt;NodeJS简介&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https:</summary>
       
     
     
