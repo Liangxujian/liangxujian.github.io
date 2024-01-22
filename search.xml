@@ -73,6 +73,29 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker安装与配置_Linux</title>
+    <url>/blog/edc3fdf.html</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://docs.docker.com/">官方在线文档</a></p>
+</blockquote>
+<h1>一、Docker 安装</h1>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1、查看</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1、卸载旧版本</span></span><br><span class="line">[root@localhost ~]# yum remove docker</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">No Match for argument: docker</span><br><span class="line">No Packages marked for removal</span><br><span class="line"></span><br><span class="line">yum remove docker \</span><br><span class="line">docker-client \</span><br><span class="line">docker-client-latest \</span><br><span class="line">docker-common \</span><br><span class="line">docker-latest \</span><br><span class="line">docker-latest-logrotate \</span><br><span class="line">docker-logrotate \</span><br><span class="line">docker-engine</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2、下载安装包</span></span><br><span class="line">yum install -y yum-utils</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3、设置镜像仓库</span></span><br><span class="line">yum-config-manager \</span><br><span class="line">--add-repo \</span><br><span class="line">https://download.docker.com/linux/centos/docker-ce.repo # 官网默认使用国外地址，慢</span><br><span class="line">yum-config-manager \</span><br><span class="line">--add-repo \</span><br><span class="line">http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo # 国内阿里云镜像加速地址，快</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新yum软件包索引</span></span><br><span class="line">yum makecache fast</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">4、安装Docker</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">docker-ce：ce表示社区版；ee表示企业版</span></span><br><span class="line">yum install docker-ce docker-ce-cli containerd.io</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">5、启动Docker</span></span><br><span class="line">systemctl start docker</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">6、判断Docker是否安装及启动成功</span></span><br><span class="line">docker version</span><br></pre></td></tr></table></figure>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1649487811778.png" alt=""></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">9、查看下载的镜像</span></span><br><span class="line">[root@localhost ~]# docker images</span><br><span class="line">REPOSITORY   TAG       IMAGE ID   CREATED   SIZE</span><br></pre></td></tr></table></figure>
+<h1>二、Docker 卸载</h1>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">卸载docker依赖</span></span><br><span class="line">[root@localhost ~]# yum remove docker-ce docker-ce-cli containerd.io</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除docker环境（这里是docker的默认工作路径）</span></span><br><span class="line">[root@localhost ~]# rm -rf /var/lib/docker</span><br></pre></td></tr></table></figure>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>中间件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker介绍</title>
     <url>/blog/6489f8a9.html</url>
     <content><![CDATA[<blockquote>
@@ -142,29 +165,6 @@
 <li><a href="https://wiki.openstack.org/wiki/Docker">https://wiki.openstack.org/wiki/Docker</a></li>
 <li><a href="https://wiki.archlinux.org/index.php/Docker">https://wiki.archlinux.org/index.php/Docker</a></li>
 </ul>
-<p></br></br></br></br></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-        <tag>中间件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker安装与配置_Linux</title>
-    <url>/blog/edc3fdf.html</url>
-    <content><![CDATA[<blockquote>
-<p><a href="https://docs.docker.com/">官方在线文档</a></p>
-</blockquote>
-<h1>一、Docker 安装</h1>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1、查看</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1、卸载旧版本</span></span><br><span class="line">[root@localhost ~]# yum remove docker</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">No Match for argument: docker</span><br><span class="line">No Packages marked for removal</span><br><span class="line"></span><br><span class="line">yum remove docker \</span><br><span class="line">docker-client \</span><br><span class="line">docker-client-latest \</span><br><span class="line">docker-common \</span><br><span class="line">docker-latest \</span><br><span class="line">docker-latest-logrotate \</span><br><span class="line">docker-logrotate \</span><br><span class="line">docker-engine</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2、下载安装包</span></span><br><span class="line">yum install -y yum-utils</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3、设置镜像仓库</span></span><br><span class="line">yum-config-manager \</span><br><span class="line">--add-repo \</span><br><span class="line">https://download.docker.com/linux/centos/docker-ce.repo # 官网默认使用国外地址，慢</span><br><span class="line">yum-config-manager \</span><br><span class="line">--add-repo \</span><br><span class="line">http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo # 国内阿里云镜像加速地址，快</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新yum软件包索引</span></span><br><span class="line">yum makecache fast</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">4、安装Docker</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">docker-ce：ce表示社区版；ee表示企业版</span></span><br><span class="line">yum install docker-ce docker-ce-cli containerd.io</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">5、启动Docker</span></span><br><span class="line">systemctl start docker</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">6、判断Docker是否安装及启动成功</span></span><br><span class="line">docker version</span><br></pre></td></tr></table></figure>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1649487811778.png" alt=""></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">9、查看下载的镜像</span></span><br><span class="line">[root@localhost ~]# docker images</span><br><span class="line">REPOSITORY   TAG       IMAGE ID   CREATED   SIZE</span><br></pre></td></tr></table></figure>
-<h1>二、Docker 卸载</h1>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">卸载docker依赖</span></span><br><span class="line">[root@localhost ~]# yum remove docker-ce docker-ce-cli containerd.io</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除docker环境（这里是docker的默认工作路径）</span></span><br><span class="line">[root@localhost ~]# rm -rf /var/lib/docker</span><br></pre></td></tr></table></figure>
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
@@ -684,6 +684,23 @@
       </tags>
   </entry>
   <entry>
+    <title>Lombok介绍</title>
+    <url>/blog/b369cd6a.html</url>
+    <content><![CDATA[<h1>一、Lombok 是什么</h1>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1672124784402-4a31184d-a98c-4c97-a15c-d0a900b54c4f.png" alt=""></p>
+<p>Lombok 项目是一个 <strong>Java 库</strong>，它可以自动插入到编辑器和构建工具中，增强 Java 的性能。不需要再写 getter、setter 或 equals方法，只要有一个注解，你的类就有一个功能齐全的构建器、自动记录变量等等。</p>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Lombok</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Lombok</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Lombok注解记录</title>
     <url>/blog/47f664bf.html</url>
     <content><![CDATA[<h1>@Setter</h1>
@@ -730,23 +747,6 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译前代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor(force = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String gender;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译后代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">gender</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">UserInfo</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1>@AllArgsConstructor</h1>
 <p>生成全参的构造方法。</p>
-<p></br></br></br></br></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-        <category>Lombok</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Lombok</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Lombok介绍</title>
-    <url>/blog/b369cd6a.html</url>
-    <content><![CDATA[<h1>一、Lombok 是什么</h1>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1672124784402-4a31184d-a98c-4c97-a15c-d0a900b54c4f.png" alt=""></p>
-<p>Lombok 项目是一个 <strong>Java 库</strong>，它可以自动插入到编辑器和构建工具中，增强 Java 的性能。不需要再写 getter、setter 或 equals方法，只要有一个注解，你的类就有一个功能齐全的构建器、自动记录变量等等。</p>
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
@@ -1344,26 +1344,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Nginx介绍</title>
-    <url>/blog/deab9856.html</url>
-    <content><![CDATA[<h1>一、Nginx 是什么</h1>
-<p>Nginx 是一个 web 服务器，也可以用来做【负载均衡】及【反向代理】使用，目前使用最多的就是负载均衡。</p>
-<h2 id="负载均衡">负载均衡</h2>
-<p>负载均衡就是把请求分摊到集群的多个服务上执行，例如在那个集约化改造项目的时候，我们就使用了 Nginx 的负载均衡功能，然后使用的是 ip_hash 的策略，保证每个访客访问的是同一个服务器，由此解决了 session 的问题。</p>
-<h2 id="反向代理">反向代理</h2>
-<p>反向代理就是用户只需要把请求发给特定的反向代理服务器，由 Nginx 完成对请求的分发处理，例如一个商场项目，分为商品（shopping）、订单（order）、交易（business）等服务，但是对客户端来说只需要正常的访问，然后在 url 中标识要请求的服务即可。</p>
-<p></br></br></br></br></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-        <category>Nginx</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Nginx</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Netty学习</title>
     <url>/blog/cfd68dd0.html</url>
     <content><![CDATA[<h1>一、Buffer（缓冲区）</h1>
@@ -1624,6 +1604,26 @@
       </tags>
   </entry>
   <entry>
+    <title>Nginx介绍</title>
+    <url>/blog/deab9856.html</url>
+    <content><![CDATA[<h1>一、Nginx 是什么</h1>
+<p>Nginx 是一个 web 服务器，也可以用来做【负载均衡】及【反向代理】使用，目前使用最多的就是负载均衡。</p>
+<h2 id="负载均衡">负载均衡</h2>
+<p>负载均衡就是把请求分摊到集群的多个服务上执行，例如在那个集约化改造项目的时候，我们就使用了 Nginx 的负载均衡功能，然后使用的是 ip_hash 的策略，保证每个访客访问的是同一个服务器，由此解决了 session 的问题。</p>
+<h2 id="反向代理">反向代理</h2>
+<p>反向代理就是用户只需要把请求发给特定的反向代理服务器，由 Nginx 完成对请求的分发处理，例如一个商场项目，分为商品（shopping）、订单（order）、交易（business）等服务，但是对客户端来说只需要正常的访问，然后在 url 中标识要请求的服务即可。</p>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>Nginx</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Nginx配置</title>
     <url>/blog/ad720447.html</url>
     <content><![CDATA[<blockquote>
@@ -1755,6 +1755,30 @@
       </tags>
   </entry>
   <entry>
+    <title>NodeJS安装</title>
+    <url>/blog/a3f5c67b.html</url>
+    <content><![CDATA[<h1>NodeJS 下载</h1>
+<p><a href="https://nodejs.org/en/">下载 NodeJS 的长期支持版本</a></p>
+<p><a href="https://nodejs.org/en/about/releases/">查看 NodeJS 长期支持版本的生命周期</a></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1671692583874-b094e213-b87b-4954-8775-efbc1d91ff24.png" alt=""></p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1671692611593-ae3989db-654e-4cc6-b36c-5e123ae233bd.png" alt=""></p>
+<h1>NodeJS 安装</h1>
+<p>一直 next 直至安装完成，安装位置建议：D:/nodejs/</p>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1671692749278-1f23235d-a537-45ce-9c76-ca2de0bf3900.png" alt=""></p>
+<h1>NodeJS 安装完成检查</h1>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1671692930610-af309999-e17a-4346-b17a-b8e0f21e4c9a.png" alt=""></p>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>NodeJS</category>
+      </categories>
+      <tags>
+        <tag>NodeJS</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>NodeJS简介</title>
     <url>/blog/ff8c64c0.html</url>
     <content><![CDATA[<blockquote>
@@ -1782,30 +1806,6 @@
 <h1>关于 npm</h1>
 <p>npm 是 Node 的包管理器。</p>
 <h1>关于 yarn</h1>
-<p></br></br></br></br></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-        <category>NodeJS</category>
-      </categories>
-      <tags>
-        <tag>NodeJS</tag>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>NodeJS安装</title>
-    <url>/blog/a3f5c67b.html</url>
-    <content><![CDATA[<h1>NodeJS 下载</h1>
-<p><a href="https://nodejs.org/en/">下载 NodeJS 的长期支持版本</a></p>
-<p><a href="https://nodejs.org/en/about/releases/">查看 NodeJS 长期支持版本的生命周期</a></p>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1671692583874-b094e213-b87b-4954-8775-efbc1d91ff24.png" alt=""></p>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1671692611593-ae3989db-654e-4cc6-b36c-5e123ae233bd.png" alt=""></p>
-<h1>NodeJS 安装</h1>
-<p>一直 next 直至安装完成，安装位置建议：D:/nodejs/</p>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1671692749278-1f23235d-a537-45ce-9c76-ca2de0bf3900.png" alt=""></p>
-<h1>NodeJS 安装完成检查</h1>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1671692930610-af309999-e17a-4346-b17a-b8e0f21e4c9a.png" alt=""></p>
 <p></br></br></br></br></p>
 ]]></content>
       <categories>
@@ -1912,6 +1912,21 @@
       </tags>
   </entry>
   <entry>
+    <title>Scrcpy手机投屏</title>
+    <url>/blog/7b850af8.html</url>
+    <content><![CDATA[<p><a href="https://www.yuque.com/liangxujian/rfusnk/gv83t6">Scrcpy手机投屏 (yuque.com)</a></p>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+        <tag>玩机</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>About Me</title>
     <url>/blog/f0b34752.html</url>
     <content><![CDATA[<blockquote>
@@ -1927,21 +1942,6 @@ QQ: 785770487<br>
 ]]></content>
       <tags>
         <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Scrcpy手机投屏</title>
-    <url>/blog/7b850af8.html</url>
-    <content><![CDATA[<p><a href="https://www.yuque.com/liangxujian/rfusnk/gv83t6">Scrcpy手机投屏 (yuque.com)</a></p>
-<p></br></br></br></br></p>
-]]></content>
-      <categories>
-        <category>生活</category>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>学习</tag>
-        <tag>玩机</tag>
       </tags>
   </entry>
   <entry>
@@ -2002,6 +2002,43 @@ QQ: 785770487<br>
       </tags>
   </entry>
   <entry>
+    <title>nvm使用与报错</title>
+    <url>/blog/dd102d8e.html</url>
+    <content><![CDATA[<p>nvm 安装后建议修改镜像地址，否则 nodejs 下载会很慢</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm node_mirror https://npm.taobao.org/mirrors/node/</span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm npm_mirror https://npm.taobao.org/mirrors/npm/</span><br></pre></td></tr></table></figure>
+<h1>nvm list</h1>
+<p>查看已安装的 nodejs版本</p>
+<h1>nvm install</h1>
+<h1>nvm uninstall</h1>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm list</span><br><span class="line"></span><br><span class="line">  * <span class="number">16.18</span>.<span class="number">0</span> (Currently <span class="keyword">using</span> 64-bit executable)</span><br><span class="line">    <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm install <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line">Downloading node.js version <span class="number">12.22</span>.<span class="number">12</span> (<span class="number">64</span><span class="literal">-bit</span>)...</span><br><span class="line">Complete</span><br><span class="line">Creating D:\nvm\temp</span><br><span class="line"></span><br><span class="line">Downloading npm version <span class="number">6.14</span>.<span class="number">16</span>... Complete</span><br><span class="line">Installing npm v6.<span class="number">14.16</span>...</span><br><span class="line"></span><br><span class="line">Installation complete. <span class="keyword">If</span> you want to use this version, <span class="built_in">type</span></span><br><span class="line"></span><br><span class="line">nvm use <span class="number">12.22</span>.<span class="number">12</span></span><br></pre></td></tr></table></figure>
+<h1>nvm use 报错</h1>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm list</span><br><span class="line"></span><br><span class="line">  * <span class="number">16.18</span>.<span class="number">0</span> (Currently <span class="keyword">using</span> 64-bit executable)</span><br><span class="line">    <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm use <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="keyword">exit</span> status <span class="number">145</span>: Ŀ¼���ǿյġ�</span><br><span class="line"></span><br><span class="line"><span class="keyword">exit</span> status <span class="number">1</span>: ���ļ��Ѵ���ʱ���޷��������ļ���</span><br></pre></td></tr></table></figure>
+<h2 id="exit-status-1-乱码">exit status 1: 乱码</h2>
+<p>报错原因：当前的CMD窗口没有执行该命令的权限，需要使用管理员权限打开的窗口执行nvm use命令</p>
+<p>报错原因：之前多次安装 node，出错了就删除包，再次安装，在 C:\Program Files 下是有一个 nodejs 的，但是由于已经删除了 node 的包，所以这个 nodejs 是个无效文件</p>
+<p>报错解决：重新安装该版本 nodejs</p>
+<h2 id="exit-status-5-乱码">exit status 5: 乱码</h2>
+<p>报错原因：nvm 不是安装在 C 盘，且当前命令提示符窗口是 user 权限</p>
+<p>报错解决：cmd 窗口使用管理员权限打开即可</p>
+<h2 id="exit-status-145-乱码">exit status 145: 乱码</h2>
+<p>报错原因：安装 nvm 或 nodejs 的文件本身或路径有误</p>
+<p>报错解决：如果是覆盖旧的 nvm 安装，建议删除 nvm 文件夹，然后重新安装 nvm</p>
+<ol>
+<li>检查安装 nvm 路径与设置放置 nodejs 的路径或文件，是否出现空格或中文，比如默认安装路径 C:\Program Files 中出现了空格。如果有，更改路径或文件夹名称后再使用 nvm use</li>
+<li>安装 nvm 前是否原本就有 nodejs 其它版本。如果有，且安装过程中选择合并了以前版本，可以删除 nvm 中所有 nodejs 版本（主要是安装 nvm 前就有的版本），重新安装所需 nodejs，再运行 nvm use</li>
+</ol>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>NodeJS</category>
+      </categories>
+      <tags>
+        <tag>NodeJS</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/blog/4a17b156.html</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -2020,6 +2057,66 @@ QQ: 785770487<br>
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 <p></br></br></br></br></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>事务的四种隔离级别</title>
+    <url>/blog/ebc52c.html</url>
+    <content><![CDATA[<ol>
+<li>Read Uncommitted（读未提交）：保证了读取过程中不会读取到非法数据。</li>
+<li>READ COMMITTED（读已提交）：大多数主流数据库的默认事务等级，保证了一个事务不会读到另一个并行事务已修改但仍未提交的数据，避免了“脏读”。该级别适用大多数系统。</li>
+<li>REPEATABLE READ（可重复读）：保证了一个事务不会修改已经由另一个事务读取但未提交（回滚）的数据。避免了“脏读”和“不可重复读”，但是带来了更多的性能损失。</li>
+<li>Serializable（串行化）：最严格的级别，事务串行执行，资源消耗最大。</li>
+</ol>
+<table border="1" style="table-layout:fixed;">
+	<tr>
+		<th style="text-align:center">隔离级别</th>
+		<th style="text-align:center">脏读<br>Dirty reads</th>
+		<th style="text-align:center">脏读<br>Dirty reads</th>
+		<th style="text-align:center">幻读<br>phantom</th>
+	</tr>
+	<tr>
+		<td>Read Uncommitted<br>读未提交（不加锁）</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+	</tr>
+	<tr>
+		<td>READ COMMITTED<br>读已提交（RC）</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+	</tr>
+	<tr>
+		<td>REPEATABLE READ<br>可重复读（RR）（默认）</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+		<td bgcolor="#73d13d" style="text-align:center">√</td>
+	</tr>
+	<tr>
+		<td>Serializable<br>串行化（全程加锁）</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
+	</tr>
+</table>
+<ul>
+<li>脏读：读到了其他事务未提交的脏数据。<br>
+例如：事务 B 执行过程中修改了数据 X，在未提交前，事务 A 也读取了 X，但事务 B 却回滚了，这样事务 A 就形成了脏读。</li>
+<li>不可重复读：在一个事务内，最开始读到的数据和事务结束前任意时刻读到的同一批数据出现不一致的情况。<br>
+例如：事务 A 先读取了一条数据，然后再执行逻辑的时候，事务 B 将这条数据改变了，然后事务 A 再次读取该数据，发现数据不匹配，这就是所谓的不可重复读。</li>
+<li>幻读：事务的某次 select 操作得到的结果所表示的数据状态无法支撑其后续的业务操作。<br>
+例如：事务 A select 某条记录是否存在，不存在，准备插入此记录，但执行 insert 操作的时候发现此记录已存在，此时就产生了幻读。</li>
+</ul>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Database</tag>
+      </tags>
   </entry>
   <entry>
     <title>世界が終るまでは･･･-WANDS</title>
@@ -2083,124 +2180,6 @@ QQ: 785770487<br>
       </tags>
   </entry>
   <entry>
-    <title>nvm使用与报错</title>
-    <url>/blog/dd102d8e.html</url>
-    <content><![CDATA[<p>nvm 安装后建议修改镜像地址，否则 nodejs 下载会很慢</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm node_mirror https://npm.taobao.org/mirrors/node/</span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm npm_mirror https://npm.taobao.org/mirrors/npm/</span><br></pre></td></tr></table></figure>
-<h1>nvm list</h1>
-<p>查看已安装的 nodejs版本</p>
-<h1>nvm install</h1>
-<h1>nvm uninstall</h1>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm list</span><br><span class="line"></span><br><span class="line">  * <span class="number">16.18</span>.<span class="number">0</span> (Currently <span class="keyword">using</span> 64-bit executable)</span><br><span class="line">    <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm install <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line">Downloading node.js version <span class="number">12.22</span>.<span class="number">12</span> (<span class="number">64</span><span class="literal">-bit</span>)...</span><br><span class="line">Complete</span><br><span class="line">Creating D:\nvm\temp</span><br><span class="line"></span><br><span class="line">Downloading npm version <span class="number">6.14</span>.<span class="number">16</span>... Complete</span><br><span class="line">Installing npm v6.<span class="number">14.16</span>...</span><br><span class="line"></span><br><span class="line">Installation complete. <span class="keyword">If</span> you want to use this version, <span class="built_in">type</span></span><br><span class="line"></span><br><span class="line">nvm use <span class="number">12.22</span>.<span class="number">12</span></span><br></pre></td></tr></table></figure>
-<h1>nvm use 报错</h1>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm list</span><br><span class="line"></span><br><span class="line">  * <span class="number">16.18</span>.<span class="number">0</span> (Currently <span class="keyword">using</span> 64-bit executable)</span><br><span class="line">    <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="built_in">PS</span> C:\Windows\system32&gt; nvm use <span class="number">12.22</span>.<span class="number">12</span></span><br><span class="line"><span class="keyword">exit</span> status <span class="number">145</span>: Ŀ¼���ǿյġ�</span><br><span class="line"></span><br><span class="line"><span class="keyword">exit</span> status <span class="number">1</span>: ���ļ��Ѵ���ʱ���޷��������ļ���</span><br></pre></td></tr></table></figure>
-<h2 id="exit-status-1-乱码">exit status 1: 乱码</h2>
-<p>报错原因：当前的CMD窗口没有执行该命令的权限，需要使用管理员权限打开的窗口执行nvm use命令</p>
-<p>报错原因：之前多次安装 node，出错了就删除包，再次安装，在 C:\Program Files 下是有一个 nodejs 的，但是由于已经删除了 node 的包，所以这个 nodejs 是个无效文件</p>
-<p>报错解决：重新安装该版本 nodejs</p>
-<h2 id="exit-status-5-乱码">exit status 5: 乱码</h2>
-<p>报错原因：nvm 不是安装在 C 盘，且当前命令提示符窗口是 user 权限</p>
-<p>报错解决：cmd 窗口使用管理员权限打开即可</p>
-<h2 id="exit-status-145-乱码">exit status 145: 乱码</h2>
-<p>报错原因：安装 nvm 或 nodejs 的文件本身或路径有误</p>
-<p>报错解决：如果是覆盖旧的 nvm 安装，建议删除 nvm 文件夹，然后重新安装 nvm</p>
-<ol>
-<li>检查安装 nvm 路径与设置放置 nodejs 的路径或文件，是否出现空格或中文，比如默认安装路径 C:\Program Files 中出现了空格。如果有，更改路径或文件夹名称后再使用 nvm use</li>
-<li>安装 nvm 前是否原本就有 nodejs 其它版本。如果有，且安装过程中选择合并了以前版本，可以删除 nvm 中所有 nodejs 版本（主要是安装 nvm 前就有的版本），重新安装所需 nodejs，再运行 nvm use</li>
-</ol>
-<p></br></br></br></br></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-        <category>NodeJS</category>
-      </categories>
-      <tags>
-        <tag>NodeJS</tag>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>事务的四种隔离级别</title>
-    <url>/blog/ebc52c.html</url>
-    <content><![CDATA[<ol>
-<li>Read Uncommitted（读未提交）：保证了读取过程中不会读取到非法数据。</li>
-<li>READ COMMITTED（读已提交）：大多数主流数据库的默认事务等级，保证了一个事务不会读到另一个并行事务已修改但仍未提交的数据，避免了“脏读”。该级别适用大多数系统。</li>
-<li>REPEATABLE READ（可重复读）：保证了一个事务不会修改已经由另一个事务读取但未提交（回滚）的数据。避免了“脏读”和“不可重复读”，但是带来了更多的性能损失。</li>
-<li>Serializable（串行化）：最严格的级别，事务串行执行，资源消耗最大。</li>
-</ol>
-<table border="1" style="table-layout:fixed;">
-	<tr>
-		<th style="text-align:center">隔离级别</th>
-		<th style="text-align:center">脏读<br>Dirty reads</th>
-		<th style="text-align:center">脏读<br>Dirty reads</th>
-		<th style="text-align:center">幻读<br>phantom</th>
-	</tr>
-	<tr>
-		<td>Read Uncommitted<br>读未提交（不加锁）</td>
-		<td bgcolor="#73d13d" style="text-align:center">√</td>
-		<td bgcolor="#73d13d" style="text-align:center">√</td>
-		<td bgcolor="#73d13d" style="text-align:center">√</td>
-	</tr>
-	<tr>
-		<td>READ COMMITTED<br>读已提交（RC）</td>
-		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
-		<td bgcolor="#73d13d" style="text-align:center">√</td>
-		<td bgcolor="#73d13d" style="text-align:center">√</td>
-	</tr>
-	<tr>
-		<td>REPEATABLE READ<br>可重复读（RR）（默认）</td>
-		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
-		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
-		<td bgcolor="#73d13d" style="text-align:center">√</td>
-	</tr>
-	<tr>
-		<td>Serializable<br>串行化（全程加锁）</td>
-		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
-		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
-		<td bgcolor="#ff4d4f" style="text-align:center">×</td>
-	</tr>
-</table>
-<ul>
-<li>脏读：读到了其他事务未提交的脏数据。<br>
-例如：事务 B 执行过程中修改了数据 X，在未提交前，事务 A 也读取了 X，但事务 B 却回滚了，这样事务 A 就形成了脏读。</li>
-<li>不可重复读：在一个事务内，最开始读到的数据和事务结束前任意时刻读到的同一批数据出现不一致的情况。<br>
-例如：事务 A 先读取了一条数据，然后再执行逻辑的时候，事务 B 将这条数据改变了，然后事务 A 再次读取该数据，发现数据不匹配，这就是所谓的不可重复读。</li>
-<li>幻读：事务的某次 select 操作得到的结果所表示的数据状态无法支撑其后续的业务操作。<br>
-例如：事务 A select 某条记录是否存在，不存在，准备插入此记录，但执行 insert 操作的时候发现此记录已存在，此时就产生了幻读。</li>
-</ul>
-<p></br></br></br></br></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>Database</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>广州地铁</title>
-    <url>/blog/ca50bba4.html</url>
-    <content><![CDATA[<h1>广州市城市轨道交通第三期建设规划（2017-2023）</h1>
-<p><img src="http://localhost:4000/assets/%E5%B9%BF%E5%B7%9E%E5%9C%B0%E9%93%81/homePage.jpg" alt=""></p>
-<h2 id="地铁05号线">地铁05号线</h2>
-<p><img src="http://localhost:4000/assets/%E5%B9%BF%E5%B7%9E%E5%9C%B0%E9%93%81/2.%E5%9C%B0%E9%93%81%E4%BA%94%E5%8F%B7%E7%BA%BF%E4%B8%9C%E5%BB%B6%E6%AE%B5%E5%B7%A5%E7%A8%8B%E7%BA%BF%E8%B7%AF%E5%B9%B3%E9%9D%A2%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg" alt=""></p>
-<h2 id="地铁07号线">地铁07号线</h2>
-<p><img src="http://localhost:4000/assets/%E5%B9%BF%E5%B7%9E%E5%9C%B0%E9%93%81/4.%E5%9C%B0%E9%93%81%E4%B8%83%E5%8F%B7%E7%BA%BF%E4%BA%8C%E6%9C%9F%E5%B7%A5%E7%A8%8B%E7%BA%BF%E8%B7%AF%E5%B9%B3%E9%9D%A2%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg" alt=""></p>
-<h2 id="地铁13号线">地铁13号线</h2>
-<h2 id="地铁21号线">地铁21号线</h2>
-<p></br></br></br></br></p>
-]]></content>
-      <categories>
-        <category>生活</category>
-        <category>日常</category>
-      </categories>
-      <tags>
-        <tag>日常</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Springboot获取本地图片字节流，传入前端显示</title>
     <url>/blog/a52cdf37.html</url>
     <content><![CDATA[<blockquote>
@@ -2226,6 +2205,27 @@ QQ: 785770487<br>
       <tags>
         <tag>工作记录</tag>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>广州地铁</title>
+    <url>/blog/ca50bba4.html</url>
+    <content><![CDATA[<h1>广州市城市轨道交通第三期建设规划（2017-2023）</h1>
+<p><img src="http://localhost:4000/assets/%E5%B9%BF%E5%B7%9E%E5%9C%B0%E9%93%81/homePage.jpg" alt=""></p>
+<h2 id="地铁05号线">地铁05号线</h2>
+<p><img src="http://localhost:4000/assets/%E5%B9%BF%E5%B7%9E%E5%9C%B0%E9%93%81/2.%E5%9C%B0%E9%93%81%E4%BA%94%E5%8F%B7%E7%BA%BF%E4%B8%9C%E5%BB%B6%E6%AE%B5%E5%B7%A5%E7%A8%8B%E7%BA%BF%E8%B7%AF%E5%B9%B3%E9%9D%A2%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg" alt=""></p>
+<h2 id="地铁07号线">地铁07号线</h2>
+<p><img src="http://localhost:4000/assets/%E5%B9%BF%E5%B7%9E%E5%9C%B0%E9%93%81/4.%E5%9C%B0%E9%93%81%E4%B8%83%E5%8F%B7%E7%BA%BF%E4%BA%8C%E6%9C%9F%E5%B7%A5%E7%A8%8B%E7%BA%BF%E8%B7%AF%E5%B9%B3%E9%9D%A2%E7%A4%BA%E6%84%8F%E5%9B%BE.jpg" alt=""></p>
+<h2 id="地铁13号线">地铁13号线</h2>
+<h2 id="地铁21号线">地铁21号线</h2>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>日常</tag>
       </tags>
   </entry>
   <entry>
@@ -2260,6 +2260,52 @@ QQ: 785770487<br>
       </categories>
       <tags>
         <tag>饮品</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>豆腐萝卜菌菇汤</title>
+    <url>/blog/d2066371.html</url>
+    <content><![CDATA[<h1>材料</h1>
+<h2 id="主料">主料</h2>
+<ul>
+<li>[ ] 白萝卜</li>
+<li>[ ] 老豆腐</li>
+<li>[ ] 金针菇</li>
+<li>[ ] 海鲜菇</li>
+<li>[ ] 鸡蛋</li>
+</ul>
+<ul>
+<li>虾皮 or 虾米</li>
+</ul>
+<h2 id="配料">配料</h2>
+<ul>
+<li>[ ] 葱</li>
+</ul>
+<h2 id="调味料">调味料</h2>
+<ul>
+<li>[ ] 盐</li>
+</ul>
+<h1>步骤</h1>
+<ol>
+<li>烧开水</li>
+<li>金针菇、海鲜菇清洗</li>
+<li>白萝卜去皮切粗条</li>
+<li>老豆腐对角切三角形，太厚的话继续切薄</li>
+<li>2 个鸡蛋打鸡蛋液淋到切好的豆腐上</li>
+<li>下油煎豆腐至两面金黄，然后加入开水（，加虾皮 or 虾米）</li>
+<li>加入金针菇 + 蟹味菇 + 白萝卜条，上盖中大火 10 分钟</li>
+<li>葱切葱花</li>
+<li>放盐调味，葱花点缀 End</li>
+</ol>
+<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/%E6%B5%B7%E9%B2%9C%E8%8F%87.jpg" alt="海鲜菇"></p>
+<p></br></br></br></br></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+        <category>汤水</category>
+      </categories>
+      <tags>
+        <tag>汤水</tag>
       </tags>
   </entry>
   <entry>
@@ -2307,49 +2353,18 @@ QQ: 785770487<br>
       </tags>
   </entry>
   <entry>
-    <title>豆腐萝卜菌菇汤</title>
-    <url>/blog/d2066371.html</url>
-    <content><![CDATA[<h1>材料</h1>
-<h2 id="主料">主料</h2>
-<ul>
-<li>[ ] 白萝卜</li>
-<li>[ ] 老豆腐</li>
-<li>[ ] 金针菇</li>
-<li>[ ] 海鲜菇</li>
-<li>[ ] 鸡蛋</li>
-</ul>
-<ul>
-<li>虾皮 or 虾米</li>
-</ul>
-<h2 id="配料">配料</h2>
-<ul>
-<li>[ ] 葱</li>
-</ul>
-<h2 id="调味料">调味料</h2>
-<ul>
-<li>[ ] 盐</li>
-</ul>
-<h1>步骤</h1>
-<ol>
-<li>烧开水</li>
-<li>金针菇、海鲜菇清洗</li>
-<li>白萝卜去皮切粗条</li>
-<li>老豆腐对角切三角形，太厚的话继续切薄</li>
-<li>2 个鸡蛋打鸡蛋液淋到切好的豆腐上</li>
-<li>下油煎豆腐至两面金黄，然后加入开水（，加虾皮 or 虾米）</li>
-<li>加入金针菇 + 蟹味菇 + 白萝卜条，上盖中大火 10 分钟</li>
-<li>葱切葱花</li>
-<li>放盐调味，葱花点缀 End</li>
-</ol>
-<p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/%E6%B5%B7%E9%B2%9C%E8%8F%87.jpg" alt="海鲜菇"></p>
-<p></br></br></br></br></p>
+    <title>视频片头片尾批量剪切</title>
+    <url>/blog/eefdcde7.html</url>
+    <content><![CDATA[<h1>视频片头片尾批量剪切</h1>
+<p>放在 ffmpeg.exe 目录下运行批处理可实现批量剪片头片尾</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off &amp; setlocal enabledelayedexpansion</span><br><span class="line"></span><br><span class="line">rem ===================需手动设置===================</span><br><span class="line">rem 设定片头片尾长度，格式为 HH:mm:ss.fff</span><br><span class="line"><span class="built_in">set</span> <span class="string">&quot;s1=00:02:23.0&quot;</span></span><br><span class="line"><span class="built_in">set</span> <span class="string">&quot;s2=00:01:46.0&quot;</span></span><br><span class="line">rem ================================================</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> /f <span class="string">&quot;tokens=1-4delims=:.&quot;</span> %%a <span class="keyword">in</span> (<span class="string">&quot;%s2%&quot;</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="built_in">set</span> /a <span class="string">&quot;t2=(1%%a %% 100 *3600 + 1%%b %% 100 * 60 + 1%%c %% 100) * 1000 + 1%%d %% 1000&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">md myvideo 2&gt;nul</span><br><span class="line"><span class="keyword">for</span> %%i <span class="keyword">in</span> (*.avi *.mkv *.mp4 *.flv) <span class="keyword">do</span> (</span><br><span class="line">    <span class="keyword">for</span> /f <span class="string">&quot;tokens=2-5delims=:., &quot;</span> %%a <span class="keyword">in</span> (<span class="string">&#x27;ffmpeg -i &quot;%%i&quot; 2^&gt;^&amp;1 ^| find &quot;Duration:&quot;&#x27;</span>) <span class="keyword">do</span> (</span><br><span class="line">        <span class="built_in">set</span> /a <span class="string">&quot;t=(1%%a%%100*3600+1%%b%%100*60+1%%c%%100)*1000+1%%d0%%1000,t-=t2,ms=t%%1000,t/=1000&quot;</span></span><br><span class="line">        <span class="built_in">set</span> /a h=t/3600,m=t%%3600/60,s=t%%60,h+=100,m+=100,s+=100,ms+=1000</span><br><span class="line">        <span class="built_in">set</span> <span class="string">&quot;t=!h:~1!:!m:~1!:!s:~1!.!ms:~1!&quot;</span></span><br><span class="line">        ffmpeg -ss !s1! -to !t! -accurate_seek -i <span class="string">&quot;%%i&quot;</span>  -c copy -avoid_negative_ts 1 <span class="string">&quot;myvideo\%%i&quot;</span> -y</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>生活</category>
-        <category>汤水</category>
+        <category>视频</category>
       </categories>
       <tags>
-        <tag>汤水</tag>
+        <tag>视频</tag>
       </tags>
   </entry>
   <entry>
@@ -6872,21 +6887,6 @@ FDD 是由 Jeff De Luca 和大师 Peter Coad 提出来的。像其他方法一�
       </categories>
       <tags>
         <tag>学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>视频片头片尾批量剪切</title>
-    <url>/blog/eefdcde7.html</url>
-    <content><![CDATA[<h1>视频片头片尾批量剪切</h1>
-<p>放在 ffmpeg.exe 目录下运行批处理可实现批量剪片头片尾</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off &amp; setlocal enabledelayedexpansion</span><br><span class="line"></span><br><span class="line">rem ===================需手动设置===================</span><br><span class="line">rem 设定片头片尾长度，格式为 HH:mm:ss.fff</span><br><span class="line"><span class="built_in">set</span> <span class="string">&quot;s1=00:02:23.0&quot;</span></span><br><span class="line"><span class="built_in">set</span> <span class="string">&quot;s2=00:01:46.0&quot;</span></span><br><span class="line">rem ================================================</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> /f <span class="string">&quot;tokens=1-4delims=:.&quot;</span> %%a <span class="keyword">in</span> (<span class="string">&quot;%s2%&quot;</span>) <span class="keyword">do</span> (</span><br><span class="line">    <span class="built_in">set</span> /a <span class="string">&quot;t2=(1%%a %% 100 *3600 + 1%%b %% 100 * 60 + 1%%c %% 100) * 1000 + 1%%d %% 1000&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">md myvideo 2&gt;nul</span><br><span class="line"><span class="keyword">for</span> %%i <span class="keyword">in</span> (*.avi *.mkv *.mp4 *.flv) <span class="keyword">do</span> (</span><br><span class="line">    <span class="keyword">for</span> /f <span class="string">&quot;tokens=2-5delims=:., &quot;</span> %%a <span class="keyword">in</span> (<span class="string">&#x27;ffmpeg -i &quot;%%i&quot; 2^&gt;^&amp;1 ^| find &quot;Duration:&quot;&#x27;</span>) <span class="keyword">do</span> (</span><br><span class="line">        <span class="built_in">set</span> /a <span class="string">&quot;t=(1%%a%%100*3600+1%%b%%100*60+1%%c%%100)*1000+1%%d0%%1000,t-=t2,ms=t%%1000,t/=1000&quot;</span></span><br><span class="line">        <span class="built_in">set</span> /a h=t/3600,m=t%%3600/60,s=t%%60,h+=100,m+=100,s+=100,ms+=1000</span><br><span class="line">        <span class="built_in">set</span> <span class="string">&quot;t=!h:~1!:!m:~1!:!s:~1!.!ms:~1!&quot;</span></span><br><span class="line">        ffmpeg -ss !s1! -to !t! -accurate_seek -i <span class="string">&quot;%%i&quot;</span>  -c copy -avoid_negative_ts 1 <span class="string">&quot;myvideo\%%i&quot;</span> -y</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>生活</category>
-        <category>视频</category>
-      </categories>
-      <tags>
-        <tag>视频</tag>
       </tags>
   </entry>
 </search>
