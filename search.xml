@@ -7116,7 +7116,7 @@ FDD 是由 Jeff De Luca 和大师 Peter Coad 提出来的。像其他方法一�
 <h3 id="6-1-3-项目的作用">6.1.3 项目的作用</h3>
 <ul>
 <li><code>驱动变更</code>：推动组织从一个状态（<code>当前状态</code>）转到另一个状态（<code>将来状态</code>）。</li>
-<li><code>创造价值</code>
+<li><code>创造价值</code>：
 <ul>
 <li><code>有形价值</code>：货币资产、股东权益、固定资产、工具、市场份额等</li>
 <li><code>无形价值</code>：商誉、品牌认知度、公共利益、战略联盟等</li>
@@ -7172,6 +7172,81 @@ FDD 是由 Jeff De Luca 和大师 Peter Coad 提出来的。像其他方法一�
 <li>【过】<code>过程资产</code>：<code>模板</code>、框架；<code>工具</code>、<code>方法</code>；PMO 资源</li>
 </ul>
 <h2 id="6-5-组织结构">6.5 组织结构</h2>
+<ul>
+<li><code>职能型</code>：兼职项目经理（<code>联络员</code>）；项目经理几乎无权；<code>职业路径清晰</code>；<code>横向联系薄弱</code>；</li>
+<li><code>矩阵型</code>：<code>资源利用率高、有利于跨部门协调</code>；<code>多头领导</code>；<code>管理难度大</code>；<code>资源争夺</code>；
+<ul>
+<li><code>弱矩阵型</code>：兼职项目经理（<code>协调员</code>）；<code>职权</code>：小；项目经理＜职能经理</li>
+<li><code>平衡矩阵</code>：<code>职权</code>：小~中；项目经理 = 职能经理</li>
+<li><code>强矩阵</code>：<code>职权</code>：中~高；项目经理＞职能经理；项目经理<code>全职</code>；有<code>项目经理的经理</code>；</li>
+</ul>
+</li>
+<li><code>项目型</code>：项目经理几乎全权；<code>有利于指挥、沟通方便</code>；<code>重复配置、不利于知识共享、无家可归</code>；</li>
+</ul>
+<h2 id="6-6-项目管理办公室-pmo">6.6 项目管理办公室（PMO）</h2>
+<ul>
+<li><code>支持型</code></li>
+<li><code>控制型</code></li>
+<li><code>指令型</code></li>
+</ul>
+<h3 id="6-6-1-项目管理办公室的职能">6.6.1 项目管理办公室的职能</h3>
+<ol>
+<li>对 PMO 所辖全部项目的<code>共享资源</code>进行<code>管理</code>；</li>
+<li>识别和<code>制定</code>项目管理办法、<code>最佳实践</code>和<code>标准</code>；</li>
+<li><code>指导</code>、辅导、<code>培训</code>和<code>监督</code>；</li>
+<li>通过项目<code>审计</code>，<code>监督</code>项目对项目管理标准、政策、程序和模板的<code>合规性</code>；</li>
+<li>制定和<code>管理</code>项目政策、程序、模板及其他共享的文件（<code>组织过程资产</code>）；</li>
+<li>对<code>跨项目的沟通</code>进行<code>协调</code></li>
+</ol>
+<h2 id="6-7-项目经理">6.7 项目经理</h2>
+<p>项目经理是由<code>执行组织委派</code>，<code>领导</code>团队<code>实现项目目标</code>的个人。</p>
+<h3 id="6-7-1-项目经理的影响力范围">6.7.1 项目经理的影响力范围</h3>
+<ul>
+<li><code>项目</code>：
+<ul>
+<li>领导项目团队<code>实现项目目标</code>和<code>干系人的期望</code></li>
+<li>利用可用资源，<code>平衡</code>相互竞争的<code>制约因素</code></li>
+<li><code>承担</code>项目发起人、团队成员与其他<code>干系人之间的沟通者</code></li>
+</ul>
+</li>
+<li><code>组织</code>：
+<ul>
+<li>需<code>积极</code>地与组织内其他项目经理<code>互动</code></li>
+<li>在组织内<code>扮演</code>着强有力的<code>倡导者角色</code></li>
+<li>应<code>提高</code>自己在组织内的总体<code>项目管理能力</code>和技能</li>
+</ul>
+</li>
+<li><code>行业</code>：应时刻<code>关注</code>行业的最新<code>发展趋势</code></li>
+<li><code>专业学科</code>：持续的<code>知识传递</code>和<code>整合</code></li>
+<li><code>跨领域</code>：担任<code>非正式的宣传大使</code></li>
+</ul>
+<h3 id="6-7-2-项目经理的三个能力">6.7.2 项目经理的三个能力</h3>
+<ul>
+<li><code>项目管理</code>：可以帮助<code>达成项目目标</code>；</li>
+<li><code>战略和商务</code>：有助于项目经理<code>了解</code>与项目相关的<code>商业因素</code>；</li>
+<li><code>领导力</code>：指导、<code>激励</code>和<code>带领团队</code>。包括：协商、抗压、沟通、解决问题、人际关系技能
+<ul>
+<li><code>人际交往</code>：占据项目经理工作的<code>绝大部分</code>；</li>
+<li><code>领导者品质和技能</code>：有远见、乐观、乐于合作、关注重要的事情等；</li>
+<li><code>政策和权力</code>：
+<ul>
+<li><code>专家权力</code>：<code>个人</code>专业技能</li>
+<li><code>参照权力</code>：<code>个人</code>优秀品质</li>
+<li><code>地位权力</code>：组织授予<code>职位</code></li>
+<li><code>奖励权力</code>：<code>职位</code>可行使的奖励</li>
+<li><code>惩罚权力</code>：<code>职位</code>可行使的惩罚</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-7-3-项目经理的两个角色">6.7.3 项目经理的两个角色</h3>
+<ul>
+<li><code>领导者</code>：<code>指导、影响与合作</code>；激发信任；做正确的事；<code>关注愿景</code>、<code>一致性</code>和<code>动力</code>、激励；</li>
+<li><code>管理者</code>：<code>利用职位权力</code>；依赖控制；正确地做事；<code>关注问题的解决</code>；</li>
+</ul>
+<h3 id="6-7-4-项目经理的几种领导力风格">6.7.4 项目经理的几种领导力风格</h3>
+<p>放任型、交易型、服务型、变革型、魅力型、交互型；</p>
 <h1>七、项目立项管理</h1>
 <h1>八、项目整合管理</h1>
 <h1>九、项目范围管理</h1>
