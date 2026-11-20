@@ -28,6 +28,7 @@
     if (!scroller) return;
     if (scroller === document.documentElement) {
       window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(syncTotop, 400);
       return;
     }
     try {
@@ -38,6 +39,7 @@
     // 平滑滚动被禁用时的兜底
     setTimeout(function () {
       if (scroller.scrollTop > 400) scroller.scrollTop = 0;
+      syncTotop();
     }, 900);
   }
 
