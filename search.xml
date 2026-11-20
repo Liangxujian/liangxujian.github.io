@@ -3093,7 +3093,297 @@ QQ: 785770487<br>
     <title>日语学习</title>
     <url>/blog/5cdb78f2.html</url>
     <content><![CDATA[<h1>平假</h1>
+<p>平假名与片假名一一对应，同一个音有两套写法：平假用于固有词、语法成分，片假用于外来语、拟声词与强调。下表每格按「<strong>平假 / 片假 / 罗马字</strong>」排列。</p>
+<h2 id="清音-五十音">清音（五十音）</h2>
+<table>
+<thead>
+<tr>
+<th>行</th>
+<th>あ段</th>
+<th>い段</th>
+<th>う段</th>
+<th>え段</th>
+<th>お段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>あ行</td>
+<td>あ / ア / a</td>
+<td>い / イ / i</td>
+<td>う / ウ / u</td>
+<td>え / エ / e</td>
+<td>お / オ / o</td>
+</tr>
+<tr>
+<td>か行</td>
+<td>か / カ / ka</td>
+<td>き / キ / ki</td>
+<td>く / ク / ku</td>
+<td>け / ケ / ke</td>
+<td>こ / コ / ko</td>
+</tr>
+<tr>
+<td>さ行</td>
+<td>さ / サ / sa</td>
+<td>し / シ / shi</td>
+<td>す / ス / su</td>
+<td>せ / セ / se</td>
+<td>そ / ソ / so</td>
+</tr>
+<tr>
+<td>た行</td>
+<td>た / タ / ta</td>
+<td>ち / チ / chi</td>
+<td>つ / ツ / tsu</td>
+<td>て / テ / te</td>
+<td>と / ト / to</td>
+</tr>
+<tr>
+<td>な行</td>
+<td>な / ナ / na</td>
+<td>に / ニ / ni</td>
+<td>ぬ / ヌ / nu</td>
+<td>ね / ネ / ne</td>
+<td>の / ノ / no</td>
+</tr>
+<tr>
+<td>は行</td>
+<td>は / ハ / ha</td>
+<td>ひ / ヒ / hi</td>
+<td>ふ / フ / fu</td>
+<td>へ / ヘ / he</td>
+<td>ほ / ホ / ho</td>
+</tr>
+<tr>
+<td>ま行</td>
+<td>ま / マ / ma</td>
+<td>み / ミ / mi</td>
+<td>む / ム / mu</td>
+<td>め / メ / me</td>
+<td>も / モ / mo</td>
+</tr>
+<tr>
+<td>や行</td>
+<td>や / ヤ / ya</td>
+<td>（い / イ / i）</td>
+<td>ゆ / ユ / yu</td>
+<td>（え / エ / e）</td>
+<td>よ / ヨ / yo</td>
+</tr>
+<tr>
+<td>ら行</td>
+<td>ら / ラ / ra</td>
+<td>り / リ / ri</td>
+<td>る / ル / ru</td>
+<td>れ / レ / re</td>
+<td>ろ / ロ / ro</td>
+</tr>
+<tr>
+<td>わ行</td>
+<td>わ / ワ / wa</td>
+<td>（ゐ / ヰ / i）</td>
+<td>（う / ウ / u）</td>
+<td>（ゑ / ヱ / e）</td>
+<td>を / ヲ / o</td>
+</tr>
+<tr>
+<td>撥音</td>
+<td>ん / ン / n</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>や行、わ行的空缺位在古语里存在（ゐ、ゑ），现代日语已与い、え合流，只在历史文献里出现。</p>
+</blockquote>
+<h2 id="浊音-半浊音">浊音・半浊音</h2>
+<table>
+<thead>
+<tr>
+<th>行</th>
+<th>あ段</th>
+<th>い段</th>
+<th>う段</th>
+<th>え段</th>
+<th>お段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>が行</td>
+<td>が / ガ / ga</td>
+<td>ぎ / ギ / gi</td>
+<td>ぐ / グ / gu</td>
+<td>げ / ゲ / ge</td>
+<td>ご / ゴ / go</td>
+</tr>
+<tr>
+<td>ざ行</td>
+<td>ざ / ザ / za</td>
+<td>じ / ジ / ji</td>
+<td>ず / ズ / zu</td>
+<td>ぜ / ゼ / ze</td>
+<td>ぞ / ゾ / zo</td>
+</tr>
+<tr>
+<td>だ行</td>
+<td>だ / ダ / da</td>
+<td>ぢ / ヂ / ji</td>
+<td>づ / ヅ / zu</td>
+<td>で / デ / de</td>
+<td>ど / ド / do</td>
+</tr>
+<tr>
+<td>ば行</td>
+<td>ば / バ / ba</td>
+<td>び / ビ / bi</td>
+<td>ぶ / ブ / bu</td>
+<td>べ / ベ / be</td>
+<td>ぼ / ボ / bo</td>
+</tr>
+<tr>
+<td>ぱ行</td>
+<td>ぱ / パ / pa</td>
+<td>ぴ / ピ / pi</td>
+<td>ぷ / プ / pu</td>
+<td>ぺ / ペ / pe</td>
+<td>ぽ / ポ / po</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>ぢ、づ 与 じ、ず 发音相同，现代日语几乎只用 じ、ず；ぢ、づ 仅出现在连浊（鼻血 はなぢ）等少数词里。</p>
+</blockquote>
+<h2 id="拗音">拗音</h2>
+<table>
+<thead>
+<tr>
+<th>行</th>
+<th>や段</th>
+<th>ゆ段</th>
+<th>よ段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>か行</td>
+<td>きゃ / キャ / kya</td>
+<td>きゅ / キュ / kyu</td>
+<td>きょ / キョ / kyo</td>
+</tr>
+<tr>
+<td>さ行</td>
+<td>しゃ / シャ / sha</td>
+<td>しゅ / シュ / shu</td>
+<td>しょ / ショ / sho</td>
+</tr>
+<tr>
+<td>た行</td>
+<td>ちゃ / チャ / cha</td>
+<td>ちゅ / チュ / chu</td>
+<td>ちょ / チョ / cho</td>
+</tr>
+<tr>
+<td>な行</td>
+<td>にゃ / ニャ / nya</td>
+<td>にゅ / ニュ / nyu</td>
+<td>にょ / ニョ / nyo</td>
+</tr>
+<tr>
+<td>は行</td>
+<td>ひゃ / ヒャ / hya</td>
+<td>ひゅ / ヒュ / hyu</td>
+<td>ひょ / ヒョ / hyo</td>
+</tr>
+<tr>
+<td>ま行</td>
+<td>みゃ / ミャ / mya</td>
+<td>みゅ / ミュ / myu</td>
+<td>みょ / ミョ / myo</td>
+</tr>
+<tr>
+<td>ら行</td>
+<td>りゃ / リャ / rya</td>
+<td>りゅ / リュ / ryu</td>
+<td>りょ / リョ / ryo</td>
+</tr>
+<tr>
+<td>が行</td>
+<td>ぎゃ / ギャ / gya</td>
+<td>ぎゅ / ギュ / gyu</td>
+<td>ぎょ / ギョ / gyo</td>
+</tr>
+<tr>
+<td>ざ行</td>
+<td>じゃ / ジャ / ja</td>
+<td>じゅ / ジュ / ju</td>
+<td>じょ / ジョ / jo</td>
+</tr>
+<tr>
+<td>だ行</td>
+<td>ぢゃ / ヂャ / ja</td>
+<td>ぢゅ / ヂュ / ju</td>
+<td>ぢょ / ヂョ / jo</td>
+</tr>
+<tr>
+<td>ば行</td>
+<td>びゃ / ビャ / bya</td>
+<td>びゅ / ビュ / byu</td>
+<td>びょ / ビョ / byo</td>
+</tr>
+<tr>
+<td>ぱ行</td>
+<td>ぴゃ / ピャ / pya</td>
+<td>ぴゅ / ピュ / pyu</td>
+<td>ぴょ / ピョ / pyo</td>
+</tr>
+</tbody>
+</table>
+<h2 id="特殊音">特殊音</h2>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>写法</th>
+<th>说明</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>长音</td>
+<td>平假：あ段＋あ、い段＋い、う段＋う、え段＋い、お段＋う<br>片假：ー</td>
+<td>把元音拉长一拍</td>
+<td><ruby>学校<rp>（</rp><rt>がっこう</rt><rp>）</rp></ruby>、コーヒー</td>
+</tr>
+<tr>
+<td>促音</td>
+<td>っ / ッ</td>
+<td>停顿一拍，片假用小ッ</td>
+<td><ruby>切手<rp>（</rp><rt>きって</rt><rp>）</rp></ruby>、バッグ</td>
+</tr>
+<tr>
+<td>拨音</td>
+<td>ん / ン</td>
+<td>独立一拍，读音随前后变化</td>
+<td><ruby>天気<rp>（</rp><rt>てんき</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>外来音</td>
+<td>ヴ、ファ、ティ、ウィ 等</td>
+<td>片假专用于拼写外语原音</td>
+<td>ヴァイオリン、パーティー、ウィンドウ</td>
+</tr>
+</tbody>
+</table>
 <h1>片假</h1>
+<p>片假名的音与上表右半部分完全对应，区别在用途：外来语、拟声拟态词、动植物名、强调。拼写外语时还会出现平假没有的组合，如 ファ（fa）、ティ（ti）、ウィ（wi）、ヴ（vu）。</p>
+<p>下面这段是本文档里 ruby 注音标签的两种写法（渲染效果相同，前者更简洁，推荐）：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ruby</span>&gt;</span>飯<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>はん<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;/<span class="name">ruby</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ruby</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>飯<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>はん<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;/<span class="name">ruby</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ruby</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>月<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>げつ<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>曜<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>よう<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>日<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>び<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ruby</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ruby</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>月<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>げつ<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>曜<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>よう<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>日<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>び<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;/<span class="name">ruby</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ruby</span>&gt;</span>飯<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>はん<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;/<span class="name">ruby</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ruby</span>&gt;</span>ご<span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>飯<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>はん<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;/<span class="name">ruby</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ruby</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>月<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>げつ<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>曜<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>よう<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>日<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>び<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ruby</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ruby</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>月<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>げつ<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>曜<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>よう<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span><span class="tag">&lt;/<span class="name">rt</span>&gt;</span>日<span class="tag">&lt;<span class="name">rp</span>&gt;</span>（<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;<span class="name">rt</span>&gt;</span>び<span class="tag">&lt;/<span class="name">rt</span>&gt;</span><span class="tag">&lt;<span class="name">rp</span>&gt;</span>）<span class="tag">&lt;/<span class="name">rp</span>&gt;</span><span class="tag">&lt;/<span class="name">ruby</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h1>称呼</h1>
 <table>
@@ -3300,9 +3590,9 @@ QQ: 785770487<br>
 <td></td>
 </tr>
 <tr>
-<td><ruby><rt></rt>一百<rp>（</rp><rt>ひゃく</rt><rp>）</rp><rt><rt></rt>一十<rp>（</rp><rt>じゅう</rt><rp>）</rp><rt></rt>一<rp>（</rp><rt>いち</rt><rp>）</rp></ruby></td>
-<td><ruby><rt></rt>一百<rp>（</rp><rt>ひゃく</rt><rp>）</rp><rt><rt></rt>二<rp>（</rp><rt>に</rt><rp>）</rp><rt></rt>十<rp>（</rp><rt>じゅう</rt><rp>）</rp><rt></rt>一<rp>（</rp><rt>いち</rt><rp>）</rp></ruby></td>
-<td><ruby><rt></rt>两<rp>（</rp><rt>に</rt><rp>）</rp><rt><rt></rt>百<rp>（</rp><rt>ひゃく</rt><rp>）</rp></ruby></td>
+<td><ruby><rt></rt>一百<rp>（</rp><rt>ひゃく</rt><rp>）</rp><rt></rt>一十<rp>（</rp><rt>じゅう</rt><rp>）</rp><rt></rt>一<rp>（</rp><rt>いち</rt><rp>）</rp></ruby></td>
+<td><ruby><rt></rt>一百<rp>（</rp><rt>ひゃく</rt><rp>）</rp><rt></rt>二<rp>（</rp><rt>に</rt><rp>）</rp><rt></rt>十<rp>（</rp><rt>じゅう</rt><rp>）</rp><rt></rt>一<rp>（</rp><rt>いち</rt><rp>）</rp></ruby></td>
+<td><ruby><rt></rt>两<rp>（</rp><rt>に</rt><rp>）</rp><rt></rt>百<rp>（</rp><rt>ひゃく</rt><rp>）</rp></ruby></td>
 </tr>
 <tr>
 <td><ruby><rt></rt>千<rp>（</rp><rt>せん</rt><rp>）</rp></ruby></td>
@@ -3397,11 +3687,11 @@ QQ: 785770487<br>
 </thead>
 <tbody>
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td><ruby>先々週<rp>（</rp><rt>せんせんしゅう</rt><rp>）</rp></ruby></td>
+<td><ruby>先週<rp>（</rp><rt>せんしゅう</rt><rp>）</rp></ruby></td>
+<td><ruby>今週<rp>（</rp><rt>こんしゅう</rt><rp>）</rp></ruby></td>
+<td><ruby>来週<rp>（</rp><rt>らいしゅう</rt><rp>）</rp></ruby></td>
+<td><ruby>再来週<rp>（</rp><rt>さらいしゅう</rt><rp>）</rp></ruby></td>
 </tr>
 </tbody>
 </table>
@@ -3417,11 +3707,11 @@ QQ: 785770487<br>
 </thead>
 <tbody>
 <tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td><ruby>先々月<rp>（</rp><rt>せんせんげつ</rt><rp>）</rp></ruby></td>
+<td><ruby>先月<rp>（</rp><rt>せんげつ</rt><rp>）</rp></ruby></td>
+<td><ruby>今月<rp>（</rp><rt>こんげつ</rt><rp>）</rp></ruby></td>
+<td><ruby>来月<rp>（</rp><rt>らいげつ</rt><rp>）</rp></ruby></td>
+<td><ruby>再来月<rp>（</rp><rt>さらいげつ</rt><rp>）</rp></ruby></td>
 </tr>
 </tbody>
 </table>
@@ -3437,15 +3727,241 @@ QQ: 785770487<br>
 </thead>
 <tbody>
 <tr>
+<td><ruby>一昨年<rp>（</rp><rt>おととし</rt><rp>）</rp></ruby></td>
+<td><ruby>去年<rp>（</rp><rt>きょねん</rt><rp>）</rp></ruby></td>
+<td><ruby>今年<rp>（</rp><rt>ことし</rt><rp>）</rp></ruby></td>
+<td><ruby>来年<rp>（</rp><rt>らいねん</rt><rp>）</rp></ruby></td>
+<td><ruby>再来年<rp>（</rp><rt>さらいねん</rt><rp>）</rp></ruby></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>规律：「先」指过去、「来」指未来，「再来」＝跳过最近的那一个（下下个／后年），「先々」同理往前数两个。今年、去年、一昨年 是训读，不按规律来。</p>
+</blockquote>
+<h2 id="时分秒">时分秒</h2>
+<h3 id="时-じ">时（じ）</h3>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>日文</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 点</td>
+<td><ruby>一<rp>（</rp><rt>いち</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
 <td></td>
+</tr>
+<tr>
+<td>2 点</td>
+<td><ruby>二<rp>（</rp><rt>に</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
 <td></td>
+</tr>
+<tr>
+<td>3 点</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
 <td></td>
+</tr>
+<tr>
+<td>4 点</td>
+<td><ruby>四<rp>（</rp><rt>よ</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
+<td><strong>读 よじ，不是 しじ</strong></td>
+</tr>
+<tr>
+<td>5 点</td>
+<td><ruby>五<rp>（</rp><rt>ご</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
 <td></td>
+</tr>
+<tr>
+<td>6 点</td>
+<td><ruby>六<rp>（</rp><rt>ろく</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>7 点</td>
+<td><ruby>七<rp>（</rp><rt>しち</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
+<td>也可读 ななじ</td>
+</tr>
+<tr>
+<td>8 点</td>
+<td><ruby>八<rp>（</rp><rt>はち</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>9 点</td>
+<td><ruby>九<rp>（</rp><rt>く</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
+<td><strong>读 くじ，不是 きゅうじ</strong></td>
+</tr>
+<tr>
+<td>10 点</td>
+<td><ruby>十<rp>（</rp><rt>じゅう</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>11 点</td>
+<td><ruby>十<rp>（</rp><rt>じゅう</rt><rp>）</rp></ruby><ruby>一<rp>（</rp><rt>いち</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>12 点</td>
+<td><ruby>十<rp>（</rp><rt>じゅう</rt><rp>）</rp></ruby><ruby>二<rp>（</rp><rt>に</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>几点</td>
+<td><ruby>何<rp>（</rp><rt>なん</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby></td>
+<td>何時ですか = 几点了</td>
+</tr>
+</tbody>
+</table>
+<h3 id="分-ふん-ぷん">分（ふん／ぷん）</h3>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>日文</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 分</td>
+<td><ruby>一<rp>（</rp><rt>いっ</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ぷん</rt><rp>）</rp></ruby></td>
+<td>促音＋ぷん</td>
+</tr>
+<tr>
+<td>2 分</td>
+<td><ruby>二<rp>（</rp><rt>に</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ふん</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>3 分</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ぷん</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>4 分</td>
+<td><ruby>四<rp>（</rp><rt>よん</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ぷん</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>5 分</td>
+<td><ruby>五<rp>（</rp><rt>ご</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ふん</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>6 分</td>
+<td><ruby>六<rp>（</rp><rt>ろっ</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ぷん</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>7 分</td>
+<td><ruby>七<rp>（</rp><rt>なな</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ふん</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>8 分</td>
+<td><ruby>八<rp>（</rp><rt>はっ</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ぷん</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>9 分</td>
+<td><ruby>九<rp>（</rp><rt>きゅう</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ふん</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>10 分</td>
+<td><ruby>十<rp>（</rp><rt>じゅっ</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ぷん</rt><rp>）</rp></ruby></td>
+<td>也读 じっぷん</td>
+</tr>
+<tr>
+<td>15 分</td>
+<td><ruby>十<rp>（</rp><rt>じゅう</rt><rp>）</rp></ruby><ruby>五<rp>（</rp><rt>ご</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ふん</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>30 分</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby><ruby>十<rp>（</rp><rt>じゅっ</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ぷん</rt><rp>）</rp></ruby></td>
+<td>也可说「半（はん）」</td>
+</tr>
+<tr>
+<td>几分</td>
+<td><ruby>何<rp>（</rp><rt>なん</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ぷん</rt><rp>）</rp></ruby></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<h2 id="时分秒">时分秒</h2>
+<h3 id="秒-びょう">秒（びょう）</h3>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>日文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 秒</td>
+<td><ruby>一<rp>（</rp><rt>いち</rt><rp>）</rp></ruby><ruby>秒<rp>（</rp><rt>びょう</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>10 秒</td>
+<td><ruby>十<rp>（</rp><rt>じゅう</rt><rp>）</rp></ruby><ruby>秒<rp>（</rp><rt>びょう</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>30 秒</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby><ruby>十<rp>（</rp><rt>じゅう</rt><rp>）</rp></ruby><ruby>秒<rp>（</rp><rt>びょう</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>几秒</td>
+<td><ruby>何<rp>（</rp><rt>なん</rt><rp>）</rp></ruby><ruby>秒<rp>（</rp><rt>びょう</rt><rp>）</rp></ruby></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>秒 全部按「数字＋びょう」，无音变，是最省心的一档。</p>
+</blockquote>
+<h3 id="时间说法">时间说法</h3>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>日文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>现在几点</td>
+<td><ruby>今<rp>（</rp><rt>いま</rt><rp>）</rp></ruby><ruby>何<rp>（</rp><rt>なん</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby>ですか</td>
+</tr>
+<tr>
+<td>三点十分</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby><ruby>十<rp>（</rp><rt>じゅっ</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ぷん</rt><rp>）</rp></ruby>です</td>
+</tr>
+<tr>
+<td>三点半</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby><ruby>半<rp>（</rp><rt>はん</rt><rp>）</rp></ruby>です</td>
+</tr>
+<tr>
+<td>三点过五分</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby><ruby>五<rp>（</rp><rt>ご</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ふん</rt><rp>）</rp></ruby><ruby>過<rp>（</rp><rt>す</rt><rp>）</rp></ruby>ぎです</td>
+</tr>
+<tr>
+<td>差五分三点</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby><ruby>五<rp>（</rp><rt>ご</rt><rp>）</rp></ruby><ruby>分<rp>（</rp><rt>ふん</rt><rp>）</rp></ruby><ruby>前<rp>（</rp><rt>まえ</rt><rp>）</rp></ruby>です</td>
+</tr>
+<tr>
+<td>上午／下午</td>
+<td><ruby>午前<rp>（</rp><rt>ごぜん</rt><rp>）</rp></ruby>／<ruby>午後<rp>（</rp><rt>ごご</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>在三点（做某事）</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby><ruby>時<rp>（</rp><rt>じ</rt><rp>）</rp></ruby>に…（时间点后面接 に）</td>
+</tr>
+</tbody>
+</table>
 <h2 id="星期">星期</h2>
 <table>
 <thead>
@@ -3486,99 +4002,461 @@ QQ: 785770487<br>
 </tbody>
 </table>
 <h2 id="月份">月份</h2>
-<h1>方位</h1>
+<h3 id="月份-月">月份（〜月）</h3>
 <table>
 <thead>
 <tr>
-<th>这</th>
-<th>那</th>
-<th>哪</th>
+<th>中文</th>
+<th>日文</th>
+<th>注意</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><ruby>这里<rp>（</rp><rt>ここ</rt><rp>）</rp></ruby></td>
-<td><ruby>那里<rp>（</rp><rt>そこ</rt><rp>）</rp></ruby></td>
-<td><ruby>哪里<rp>（</rp><rt>どこ</rt><rp>）</rp></ruby></td>
-</tr>
-<tr>
-<td><ruby>这是<rp>（</rp><rt>これは</rt><rp>）</rp></ruby></td>
-<td><ruby>那是<rp>（</rp><rt>あれは</rt><rp>）</rp></ruby></td>
+<td>1 月</td>
+<td><ruby>一<rp>（</rp><rt>いち</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
 <td></td>
 </tr>
 <tr>
-<td><ruby>在这里<rp>（</rp><rt>ここ</rt><rp>）</rp></ruby></td>
-<td><ruby>在那里<rp>（</rp><rt>あそこ</rt><rp>）</rp></ruby></td>
-<td><ruby>在哪里<rp>（</rp><rt>どこ</rt><rp>）</rp></ruby></td>
+<td>2 月</td>
+<td><ruby>二<rp>（</rp><rt>に</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>3 月</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>4 月</td>
+<td><ruby>四<rp>（</rp><rt>し</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td><strong>读 しがつ，不是 よんがつ</strong></td>
+</tr>
+<tr>
+<td>5 月</td>
+<td><ruby>五<rp>（</rp><rt>ご</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>6 月</td>
+<td><ruby>六<rp>（</rp><rt>ろく</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>7 月</td>
+<td><ruby>七<rp>（</rp><rt>しち</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td><strong>读 しちがつ，不是 なながつ</strong></td>
+</tr>
+<tr>
+<td>8 月</td>
+<td><ruby>八<rp>（</rp><rt>はち</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>9 月</td>
+<td><ruby>九<rp>（</rp><rt>く</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td><strong>读 くがつ，不是 きゅうがつ</strong></td>
+</tr>
+<tr>
+<td>10 月</td>
+<td><ruby>十<rp>（</rp><rt>じゅう</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>11 月</td>
+<td><ruby>十<rp>（</rp><rt>じゅう</rt><rp>）</rp></ruby><ruby>一<rp>（</rp><rt>いち</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>12 月</td>
+<td><ruby>十<rp>（</rp><rt>じゅう</rt><rp>）</rp></ruby><ruby>二<rp>（</rp><rt>に</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>几月</td>
+<td><ruby>何<rp>（</rp><rt>なん</rt><rp>）</rp></ruby><ruby>月<rp>（</rp><rt>がつ</rt><rp>）</rp></ruby></td>
+<td>何月ですか = 几月</td>
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p>4、7、9 月是三个必须硬记的例外：しがつ、しちがつ、くがつ。其余全是「数字（音读）＋がつ」。</p>
+</blockquote>
+<h3 id="月数-ヶ月">月数（〜ヶ月）</h3>
 <table>
 <thead>
 <tr>
-<th></th>
-<th></th>
-<th></th>
+<th>中文</th>
+<th>日文</th>
+<th>注意</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>左上</td>
-<td><ruby>上<rp>（</rp><rt>ぅぇ</rt><rp>）</rp></ruby></td>
-<td>右上</td>
+<td>1 个月</td>
+<td><ruby>一<rp>（</rp><rt>いっ</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>促音：いっかげつ</td>
 </tr>
 <tr>
-<td>左</td>
-<td>中</td>
-<td>右</td>
+<td>2 个月</td>
+<td><ruby>二<rp>（</rp><rt>に</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>にかげつ</td>
 </tr>
 <tr>
-<td>左下</td>
-<td>下</td>
-<td>右下</td>
+<td>3 个月</td>
+<td><ruby>三<rp>（</rp><rt>さん</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>さんかげつ</td>
+</tr>
+<tr>
+<td>4 个月</td>
+<td><ruby>四<rp>（</rp><rt>よん</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>よんかげつ</td>
+</tr>
+<tr>
+<td>5 个月</td>
+<td><ruby>五<rp>（</rp><rt>ご</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>ごかげつ</td>
+</tr>
+<tr>
+<td>6 个月</td>
+<td><ruby>六<rp>（</rp><rt>ろっ</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>促音：ろっかげつ</td>
+</tr>
+<tr>
+<td>7 个月</td>
+<td><ruby>七<rp>（</rp><rt>なな</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>ななかげつ</td>
+</tr>
+<tr>
+<td>8 个月</td>
+<td><ruby>八<rp>（</rp><rt>はっ</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>促音：はっかげつ</td>
+</tr>
+<tr>
+<td>9 个月</td>
+<td><ruby>九<rp>（</rp><rt>きゅう</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>きゅうかげつ</td>
+</tr>
+<tr>
+<td>10 个月</td>
+<td><ruby>十<rp>（</rp><rt>じゅう</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>じゅうかげつ</td>
+</tr>
+<tr>
+<td>几个月</td>
+<td><ruby>何<rp>（</rp><rt>なん</rt><rp>）</rp></ruby>ヶ<ruby>月<rp>（</rp><rt>げつ</rt><rp>）</rp></ruby></td>
+<td>なんかげつ</td>
 </tr>
 </tbody>
 </table>
-<h1>频率</h1>
-<h1>颜色</h1>
+<blockquote>
+<p>「ヶ」只是写法，读作「か」，不读 け。表里 1、6、8 三个月因为前面数字以元音或 っ 结尾，变成促音（いっかげつ、ろっかげつ、はっかげつ）。</p>
+</blockquote>
+<h1>方位</h1>
+<h2 id="こそあど-指示体系">こそあど 指示体系</h2>
+<p>日语用「こ・そ・あ・ど」四套词指代远近，同一个位置换一个首字就变指代对象：</p>
 <table>
 <thead>
 <tr>
-<th>颜色</th>
-<th></th>
+<th>指代什么</th>
+<th>近称（这，说话人身边）</th>
+<th>中称（那，听话人身边）</th>
+<th>远称（那，双方之外）</th>
+<th>疑问（哪）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>东西</td>
+<td>これ</td>
+<td>それ</td>
+<td>あれ</td>
+<td>どれ</td>
+</tr>
+<tr>
+<td>东西＋名词</td>
+<td>この〜</td>
+<td>その〜</td>
+<td>あの〜</td>
+<td>どの〜</td>
+</tr>
+<tr>
+<td>场所</td>
+<td>ここ</td>
+<td>そこ</td>
+<td>あそこ</td>
+<td>どこ</td>
+</tr>
+<tr>
+<td>方向／方面</td>
+<td>こちら</td>
+<td>そちら</td>
+<td>あちら</td>
+<td>どちら</td>
+</tr>
+<tr>
+<td>人（礼貌）</td>
+<td>こちら</td>
+<td>そちら</td>
+<td>あちら</td>
+<td>どなた</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>日文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>这是什么</td>
+<td>これは<ruby>何<rp>（</rp><rt>なん</rt><rp>）</rp></ruby>ですか</td>
+</tr>
+<tr>
+<td>那是什么（远）</td>
+<td>あれは<ruby>何<rp>（</rp><rt>なん</rt><rp>）</rp></ruby>ですか</td>
+</tr>
+<tr>
+<td>洗手间在哪里</td>
+<td>トイレはどこですか</td>
+</tr>
+<tr>
+<td>你要去哪边</td>
+<td>どちらへ<ruby>行<rp>（</rp><rt>い</rt><rp>）</rp></ruby>きますか</td>
+</tr>
+<tr>
+<td>我在这边</td>
+<td>こちらです</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>常见错误：<code>これは</code> 是「这是」而不是「这里」，表场所要用 <code>ここ</code>。「那里」按距离分 <code>そこ</code>（近听话人）和 <code>あそこ</code>（离双方都远）。</p>
+</blockquote>
+<h2 id="方位词">方位词</h2>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>日文</th>
+<th>中文</th>
+<th>日文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上</td>
+<td><ruby>上<rp>（</rp><rt>うえ</rt><rp>）</rp></ruby></td>
+<td>下</td>
+<td><ruby>下<rp>（</rp><rt>した</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>左</td>
+<td><ruby>左<rp>（</rp><rt>ひだり</rt><rp>）</rp></ruby></td>
+<td>右</td>
+<td><ruby>右<rp>（</rp><rt>みぎ</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>前</td>
+<td><ruby>前<rp>（</rp><rt>まえ</rt><rp>）</rp></ruby></td>
+<td>后</td>
+<td><ruby>後<rp>（</rp><rt>うし</rt><rp>）</rp></ruby>ろ</td>
+</tr>
+<tr>
+<td>中</td>
+<td><ruby>中<rp>（</rp><rt>なか</rt><rp>）</rp></ruby></td>
+<td>外</td>
+<td><ruby>外<rp>（</rp><rt>そと</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>旁边</td>
+<td><ruby>隣<rp>（</rp><rt>となり</rt><rp>）</rp></ruby></td>
+<td>之间</td>
+<td><ruby>間<rp>（</rp><rt>あいだ</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>里面</td>
+<td><ruby>奥<rp>（</rp><rt>おく</rt><rp>）</rp></ruby></td>
+<td>角落</td>
+<td><ruby>隅<rp>（</rp><rt>すみ</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>正上方</td>
+<td><ruby>真上<rp>（</rp><rt>まうえ</rt><rp>）</rp></ruby></td>
+<td>正下方</td>
+<td><ruby>真下<rp>（</rp><rt>ました</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>正面</td>
+<td><ruby>正面<rp>（</rp><rt>しょうめん</rt><rp>）</rp></ruby></td>
+<td>对面</td>
+<td><ruby>向<rp>（</rp><rt>む</rt><rp>）</rp></ruby>かい</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>日文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>桌子上有书</td>
+<td><ruby>机<rp>（</rp><rt>つくえ</rt><rp>）</rp></ruby>の<ruby>上<rp>（</rp><rt>うえ</rt><rp>）</rp></ruby>に<ruby>本<rp>（</rp><rt>ほん</rt><rp>）</rp></ruby>があります</td>
+</tr>
+<tr>
+<td>家前面有公园</td>
+<td><ruby>家<rp>（</rp><rt>いえ</rt><rp>）</rp></ruby>の<ruby>前<rp>（</rp><rt>まえ</rt><rp>）</rp></ruby>に<ruby>公園<rp>（</rp><rt>こうえん</rt><rp>）</rp></ruby>があります</td>
+</tr>
+<tr>
+<td>车站旁边有便利店</td>
+<td><ruby>駅<rp>（</rp><rt>えき</rt><rp>）</rp></ruby>の<ruby>隣<rp>（</rp><rt>となり</rt><rp>）</rp></ruby>にコンビニがあります</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>「〜の上」表示位置的接触面（桌上有），「〜の中」表示被包围的内部（包里、房间里）。方位词后面常接 <code>に</code>（存在位置）或 <code>で</code>（动作发生场所）。</p>
+</blockquote>
+<h1>频率</h1>
+<h1>颜色</h1>
+<h2 id="基本颜色">基本颜色</h2>
+<p>日语颜色词有两套用法：名词形（赤、青）与形容词形（赤い、青い）。名词形直接修饰名词要加「の」，形容词形可以直接接名词。</p>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>日文（汉字＋注音）</th>
+<th>形容词形</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>红色</td>
+<td><ruby>赤<rp>（</rp><rt>あか</rt><rp>）</rp></ruby></td>
+<td><ruby>赤<rp>（</rp><rt>あか</rt><rp>）</rp></ruby>い</td>
+</tr>
+<tr>
 <td>白色</td>
+<td><ruby>白<rp>（</rp><rt>しろ</rt><rp>）</rp></ruby></td>
+<td><ruby>白<rp>（</rp><rt>しろ</rt><rp>）</rp></ruby>い</td>
 </tr>
 <tr>
-<td>橙色</td>
 <td>黑色</td>
-</tr>
-<tr>
-<td>黄色</td>
-<td>粉色</td>
-</tr>
-<tr>
-<td>绿色</td>
-<td></td>
+<td><ruby>黒<rp>（</rp><rt>くろ</rt><rp>）</rp></ruby></td>
+<td><ruby>黒<rp>（</rp><rt>くろ</rt><rp>）</rp></ruby>い</td>
 </tr>
 <tr>
 <td>蓝色</td>
-<td></td>
+<td><ruby>青<rp>（</rp><rt>あお</rt><rp>）</rp></ruby></td>
+<td><ruby>青<rp>（</rp><rt>あお</rt><rp>）</rp></ruby>い</td>
 </tr>
 <tr>
-<td>青色</td>
-<td></td>
+<td>黄色</td>
+<td><ruby>黄色<rp>（</rp><rt>きいろ</rt><rp>）</rp></ruby></td>
+<td><ruby>黄色<rp>（</rp><rt>きいろ</rt><rp>）</rp></ruby>い</td>
+</tr>
+<tr>
+<td>绿色</td>
+<td><ruby>緑<rp>（</rp><rt>みどり</rt><rp>）</rp></ruby></td>
+<td>—（无形容词形）</td>
 </tr>
 <tr>
 <td>紫色</td>
-<td></td>
+<td><ruby>紫<rp>（</rp><rt>むらさき</rt><rp>）</rp></ruby></td>
+<td>—</td>
+</tr>
+<tr>
+<td>棕色</td>
+<td><ruby>茶色<rp>（</rp><rt>ちゃいろ</rt><rp>）</rp></ruby></td>
+<td>—</td>
+</tr>
+<tr>
+<td>灰色</td>
+<td><ruby>灰色<rp>（</rp><rt>はいいろ</rt><rp>）</rp></ruby></td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
+<h2 id="其他常用">其他常用</h2>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>日文</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>橙色</td>
+<td><ruby>橙色<rp>（</rp><rt>だいだいいろ</rt><rp>）</rp></ruby>／オレンジ</td>
+<td>日常多说 オレンジ</td>
+</tr>
+<tr>
+<td>粉色</td>
+<td><ruby>桃色<rp>（</rp><rt>ももいろ</rt><rp>）</rp></ruby>／ピンク</td>
+<td>日常多说 ピンク</td>
+</tr>
+<tr>
+<td>水蓝色</td>
+<td><ruby>水色<rp>（</rp><rt>みずいろ</rt><rp>）</rp></ruby></td>
+<td>日语里是独立颜色词，不是「蓝色加水」</td>
+</tr>
+<tr>
+<td>金色</td>
+<td><ruby>金色<rp>（</rp><rt>きんいろ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>银色</td>
+<td><ruby>銀色<rp>（</rp><rt>ぎんいろ</rt><rp>）</rp></ruby></td>
+<td></td>
+</tr>
+<tr>
+<td>咖啡色</td>
+<td>コーヒー色</td>
+<td>外来语式</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>日文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>红色的苹果</td>
+<td><ruby>赤<rp>（</rp><rt>あか</rt><rp>）</rp></ruby>いリンゴ</td>
+</tr>
+<tr>
+<td>蓝色的天空</td>
+<td><ruby>青<rp>（</rp><rt>あお</rt><rp>）</rp></ruby>い<ruby>空<rp>（</rp><rt>そら</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>绿色的树叶</td>
+<td><ruby>緑<rp>（</rp><rt>みどり</rt><rp>）</rp></ruby>の<ruby>葉<rp>（</rp><rt>は</rt><rp>）</rp></ruby></td>
+</tr>
+<tr>
+<td>茶色的包</td>
+<td><ruby>茶色<rp>（</rp><rt>ちゃいろ</rt><rp>）</rp></ruby>のカバン</td>
+</tr>
+<tr>
+<td>这是什么颜色</td>
+<td>これは何色（なにいろ）ですか</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>硬记点：只有 赤・白・黒・青・黄色 有「〜い」形容词形；緑・紫・茶色・灰色・水色 直接接「の」。另外 <code>青</code> 在日语里涵盖蓝与青，绿灯叫「青信号」，跟中文「青」的语感一样。</p>
+</blockquote>
 <h1>常用句子</h1>
 <table>
 <thead>
