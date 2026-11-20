@@ -41,8 +41,8 @@
           font-size: 1.6rem;
         }
       </style>
-    <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
+    <link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /><link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
+</head>
   </html>
 </html>
 
@@ -114,10 +114,10 @@
 <p>[<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bigdata1024/p/15254164.html">Elasticsearch] ES更新问题踩坑记录 - chaplinthink - 博客园 (cnblogs.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42764468/article/details/121252151">解决elasticsearch更新数据后不能立即刷新的问题_es更新后立马刷新_我一直在流浪的博客-CSDN博客</a></p>
 </blockquote>
-<h1>问题</h1>
+<h1 id="问题">问题</h1>
 <p>前端请求，对 ES 中的数据进行 update。然后进行查询刚刚操作完毕的数据，或者数据列表。</p>
 <p>不过查询到的却是 update 前的数据。</p>
-<h1>原因分析</h1>
+<h1 id="原因分析">原因分析</h1>
 <p>Elesticsearch 更新数据后会有延迟。</p>
 <p>ES 实现的是一种【近实时搜索（Real-time Search）】的策略：</p>
 <ol>
@@ -127,14 +127,14 @@
 </ol>
 <p><em>提交点（commit point）：记录当前所有可用的 Segment ，一个索引一般只有一个 commit point，而每个 commit point 都会维护一个 .del 文件（ ES 删除数据本质是不属于物理删除），当 ES 做删改操作时首先会在 .del 文件中声明某个 Document 已经被删除，文件内记录了在某个 Segment 内某个 Document 已经被删除，当查询请求过来时在 Segment 中被删除的文件是能够查出来的，但是当返回结果时会根据 commit point 维护的那个 .del 文件把已经删除的文档过滤掉。</em></p>
 <p>这种策略可以大幅提升写入的效率。因为从 write 接口返回 success 开始，无论数据有没有被刷到磁盘，该数据已经对读取可见。</p>
-<h1>处理方案</h1>
+<h1 id="处理方案">处理方案</h1>
 <p>方案一：修改 ES refresh 的间隔时间</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XPUT  http://ip:9200/meta_es_data/_settings?pretty -d <span class="string">&#x27;&#123;&quot;refresh_interval&quot; : &quot;500ms&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>方案二：在每次更新操作后，休眠 1s</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">baseSearchService.update(docBean);</span><br><span class="line"> </span><br><span class="line">Thread.sleep(<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
 <p>方案三：在 ES 请求接口有请求后强制 refresh（当写测试的时候， 手动刷新很有用，但是不要在生产环境下每次索引一个文档都去手动刷新。 “相反，你的应用需要意识到 Elasticsearch 的近实时的性质，并接受它的不足” ~~~）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);</span><br></pre></td></tr></table></figure>
-<h1>拓展</h1>
+<h1 id="拓展">拓展</h1>
 <h2 id="拓展一">拓展一</h2>
 <p>ES 的 refresh 虽然可以配置刷新的时间，但是没必要，频繁的刷新会造成压力过大。</p>
 <p>因为 ES 每次 refresh 都产生一个新段（Segment），频繁的 refresh 会导致段数量的暴增。段数量过多会导致过多的消耗文件句柄、内存和 CPU 时间；而且段的数量越多，查询的速度也会越慢。</p>

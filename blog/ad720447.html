@@ -41,8 +41,8 @@
           font-size: 1.6rem;
         }
       </style>
-    <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
+    <link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /><link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
+</head>
   </html>
 </html>
 
@@ -114,7 +114,7 @@
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jingmoxukong/p/5945200.html">Nginx 简易教程</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/bed000e1830b">WEB请求处理二：Nginx请求反向代理</a></p>
 </blockquote>
-<h1>一、预热</h1>
+<h1 id="一-预热">一、预热</h1>
 <h2 id="1-1-反向代理是什么？">1.1 反向代理是什么？</h2>
 <p>反向代理（Reverse Proxy）是指以代理服务器来接受 internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 internet 上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。</p>
 <h2 id="1-2-正向代理是什么？">1.2 正向代理是什么？</h2>
@@ -125,7 +125,7 @@
 <li>正向代理：客户端 &lt;一&gt; 代理 一&gt;服务端</li>
 <li>反向代理：客户端 一&gt; 代理 &lt;一&gt;服务端</li>
 </ul>
-<h1>二、http 反向代理配置</h1>
+<h1 id="二-http-反向代理配置">二、http 反向代理配置</h1>
 <h2 id="2-1-解析域名反向代理到-webapp">2.1 解析域名反向代理到 webapp</h2>
 <h3 id="2-1-1-配置-nginx-conf">2.1.1 配置 nginx.conf</h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx //进入nginx安装目录</span><br><span class="line">cd conf //进入conf目录</span><br><span class="line">mkdir vhost //创建vhost文件夹</span><br><span class="line">vim nginx.conf //修改nginx的配置文件cd /usr/local/nginx //进入nginx安装目录</span><br><span class="line">cd conf //进入conf目录</span><br><span class="line">mkdir vhost //创建vhost文件夹</span><br><span class="line">vim nginx.conf //修改nginx的配置文件</span><br></pre></td></tr></table></figure>
@@ -160,7 +160,7 @@
 <p>功能是当用户输入 <code>image.baidu.com</code> 的时候，转发到本地的 <code>/ftpfile/</code> 文件。</p>
 <h3 id="2-2-3-刷新-nginx-服务器配置">2.2.3 刷新 Nginx 服务器配置</h3>
 <h3 id="2-2-4-测试效果-略">2.2.4 测试效果（略）</h3>
-<h1>三、负载均衡配置</h1>
+<h1 id="三-负载均衡配置">三、负载均衡配置</h1>
 <p>负载均衡是干嘛的？举个例子：我们的小网站，刚开始就一台 nginx 服务器，后来，随着业务量增大，用户增多，一台服务器已经不够用了，我们就又多加了几台服务器。那么这几台服务器如何调度？如何均匀的提供访问？这就是负载均衡。</p>
 <p><strong>负载均衡的目的是为了解决单个节点压力过大，造成 Web 服务响应过慢，甚至严重的情况下导致服务瘫痪，无法正常提供服务。其好处是可以集群多台机器一起工作，并且对外的 IP 和域名是一样的，外界看起来就好像一台机器一样。</strong></p>
 <h2 id="3-1-基于-weight-权重的负载">3.1 基于 weight 权重的负载</h2>
@@ -183,11 +183,11 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">upstream webservers&#123;</span><br><span class="line">    ip_hash;</span><br><span class="line">    server 192.168.33.11 weight=1 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.12 weight=1 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.13 down;</span><br><span class="line">&#125;upstream webservers&#123;</span><br><span class="line">    ip_hash;</span><br><span class="line">    server 192.168.33.11 weight=1 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.12 weight=1 max_fails=2 fail_timeout=30s;</span><br><span class="line">    server 192.168.33.13 down;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>ip_hash 模式下，最好不要设置 weight 参数</strong>，因为你设置了，就相当于手动设置了，将会导致很多的流量分配不均匀。</p>
 <p><strong>ip_hash 模式下，backup 参数不可用</strong>，加了会报错，为啥呢？因为，本身我们的访问就是固定的了，其实，备用已经不管什么作用了。</p>
-<h1>四、网站有多个 webapp 配置</h1>
-<h1>五、https 反向代理配置</h1>
-<h1>六、静态站点配置</h1>
-<h1>七、搭建文件服务器</h1>
-<h1>八、跨域解决方案</h1>
+<h1 id="四-网站有多个-webapp-配置">四、网站有多个 webapp 配置</h1>
+<h1 id="五-https-反向代理配置">五、https 反向代理配置</h1>
+<h1 id="六-静态站点配置">六、静态站点配置</h1>
+<h1 id="七-搭建文件服务器">七、搭建文件服务器</h1>
+<h1 id="八-跨域解决方案">八、跨域解决方案</h1>
 <h2 id="8-1-nginx-反向代理解决跨域">8.1 Nginx 反向代理解决跨域</h2>
 <h3 id="8-1-1-nginx-处理跨域原理">8.1.1 Nginx 处理跨域原理</h3>
 <p>a 网站向 b 网站请求 1.js 文件时，向 b 网站发送一个获取的请求，nginx 根据配置文件接收这个请求，代替 a 网站向 b 网站来请求这个资源，nginx 拿到这个资源后再返回给 a 网站，以此来解决了跨域问题。</p>

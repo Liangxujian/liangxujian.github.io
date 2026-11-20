@@ -41,8 +41,8 @@
           font-size: 1.6rem;
         }
       </style>
-    <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
+    <link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /><link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
+</head>
   </html>
 </html>
 
@@ -109,18 +109,18 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1>@Setter</h1>
+  <h1 id="setter">@Setter</h1>
 <p>自动添加类中所有属性相关的 set() 方法</p>
-<h1>@Getter</h1>
+<h1 id="getter">@Getter</h1>
 <p>自动添加类中所有属性相关的 get() 方法</p>
-<h1>@Builder</h1>
+<h1 id="builder">@Builder</h1>
 <p>使得该类可以通过 builder（建造者模式）构建对象</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student.builder().sno(<span class="string">&quot;001&quot;</span>).sname(<span class="string">&quot;admin&quot;</span>).sage(<span class="number">18</span>).sphone(<span class="string">&quot;110&quot;</span>).build();</span><br></pre></td></tr></table></figure>
-<h1>@RequiredArgsConstructor</h1>
+<h1 id="requiredargsconstructor">@RequiredArgsConstructor</h1>
 <p>生成一个该类的构造方法，禁止无参构造</p>
-<h1>@ToString</h1>
+<h1 id="tostring">@ToString</h1>
 <p>重写该类的 toString() 方法</p>
-<h1>@EqualsAndHashCode</h1>
+<h1 id="equalsandhashcode">@EqualsAndHashCode</h1>
 <p>重写该类的 equals() 和 hashCode() 方法</p>
 <h2 id="callsuper-true">callSuper = true</h2>
 <p>根据（子类自身的字段值 + 从父类继承的字段值）生成 hashcode</p>
@@ -128,11 +128,11 @@
 <h2 id="callsuper-false">callSuper = false</h2>
 <p>根据（子类自身的字段值）生成 hashcode</p>
 <p>当两个子类对象比较时，如果只有子类对象的本身的字段值相同，equals() 就返回 true（父类字段值可以不同）</p>
-<h1>@Data</h1>
+<h1 id="data">@Data</h1>
 <p>= @Setter + @Getter + @RequiredArgsConstructor + @ToString + @EqualsAndHashCode</p>
 <p>@Data 默认比较两个对象的 hashCode，需要依据业务要求显式重写 equals() 方法，或者类上加上注解：@EqualsAndHashCode(onlyExplicitlyIncluded = true)，然后为每一个需要比较的属性加上注解：@EqualsAndHashCode.Include</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.EqualsAndHashCode;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode(onlyExplicitlyIncluded = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Cs</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line">    <span class="meta">@EqualsAndHashCode</span>.Include</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Cs</span><span class="params">(<span class="type">int</span> id, String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1>@NoArgsConstructor</h1>
+<h1 id="noargsconstructor">@NoArgsConstructor</h1>
 <p>生成无参的构造方法。</p>
 <h2 id="staticname">staticName</h2>
 <p>staticName 代表的是是否生成静态构造方法，也就是说当 staticName 属性有值时则会生成一个静态构造方法，这时无参构造方法会被私有，然后创建一个指定名称的静态构造方法，并且是公有的，如下所示：</p>
@@ -151,7 +151,7 @@
 <h2 id="force">force</h2>
 <p>当类中有被 final 关键字修饰的字段未被初始化时，编译器会报错，这时也可以设置 force 属性为 true 来为字段根据类型生成一个默认值 0/false/null，这样编译器就不会再报错了，如下所示：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译前代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequiredArgsConstructor(force = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String gender;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 编译后代码</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserInfo</span>() &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">gender</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">UserInfo</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1>@AllArgsConstructor</h1>
+<h1 id="allargsconstructor">@AllArgsConstructor</h1>
 <p>生成全参的构造方法。</p>
 <p></br></br></br></br></p>
  

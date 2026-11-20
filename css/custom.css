@@ -14,6 +14,16 @@
 .search-form-wrap {
   right: 8rem;
 }
+/* Tocbot 目录树：默认全部展开，不随滚动折叠；只有最外层保留滚动条 */
+.toc-list.is-collapsible {
+  max-height: none !important;
+  overflow: visible !important;
+  transition: none !important;
+}
+.toc-list.is-collapsed {
+  max-height: none !important;
+  overflow: visible !important;
+}
 @media (min-width: 768px) {
   .outer,
   .wrap {

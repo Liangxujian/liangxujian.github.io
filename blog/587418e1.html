@@ -41,8 +41,8 @@
           font-size: 1.6rem;
         }
       </style>
-    <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
+    <link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /><link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
+</head>
   </html>
 </html>
 
@@ -112,7 +112,7 @@
   <p>数据库事务就是一组 SQL 语句，这组 SQL 语句是一个逻辑工作单元。该单元<strong>作为一个整体永久性地修改</strong>或<strong>作为一个整体取消</strong>对数据库的修改。</p>
 <p>定义事务的语句一般有三条：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> TRANSACTION; <span class="comment">-- 表示事务开始</span></span><br><span class="line"><span class="keyword">COMMIT</span>;            <span class="comment">-- 表示事务提交</span></span><br><span class="line"><span class="keyword">ROLLBACK</span>;          <span class="comment">-- 表示事务回滚</span></span><br></pre></td></tr></table></figure>
-<h1>一、 当前读和快照读</h1>
+<h1 id="一-当前读和快照读">一、 当前读和快照读</h1>
 <h2 id="1-1-当前读">1.1 当前读</h2>
 <p>当前读<strong>读取的是数据的最新版本</strong>，要保证其他并发事务不能修改当前记录，所以会对读取的记录进行加锁。</p>
 <p>像 select …… lock in share mode（共享锁）；select …… for update，update，insert，delete（排他锁）这些操作都会触发当前读。</p>
@@ -120,7 +120,7 @@
 <p>像不加锁的 select …… 操作就是快照读，即不加锁的非阻塞读。</p>
 <p>快照读的前提是：<strong>隔离级别不是串行级别</strong>，串行级别下的快照读会退化成当前读。</p>
 <p>之所以出现快照读的情况，是基于提高并发性能的考虑，快照读的实现是基于多版本并发控制，即 MVCC，可以认为 MVCC 是行锁的一个变种，但它在很多情况下，避免了加锁操作，降低了开销；既然是基于多版本，即快照读<strong>可能读到的并不一定是数据的最新版本，而有可能是之前的历史版本</strong>。</p>
-<h1>二、MVCC（多版本并发控制）</h1>
+<h1 id="二-mvcc-多版本并发控制">二、MVCC（多版本并发控制）</h1>
 <p>MVCC（Multi-Version Concurrency Control），即多版本并发控制，是 MySQL 事务隔离级别中的一个重要概念。</p>
 <p>这是一种并发控制的方法，一般在数据库管理系统中，实现对数据库的并发访问，在编程语言中实现事务内存。</p>
 <p>MVCC 在 MySQL InnoDB 中的实现主要是为了提高数据库并发性能，用更好的方式去处理读-写冲突，做到即使有读写冲突时，也能做到不加锁，非阻塞并发读。</p>
@@ -292,7 +292,7 @@
 <li>隔离级别为读已提交（RC）的时候，事务2 select ……（快照读）可以看到事务4 commit 的记录；</li>
 <li>隔离级别为可重复读（RR）的时候，事务2 select ……（快照读）看不到事务4 commit 的记录</li>
 </ul>
-<h1>三、事务的 ACID 特性</h1>
+<h1 id="三-事务的-acid-特性">三、事务的 ACID 特性</h1>
 <h2 id="3-1-a-atomicity-原子性">3.1 A【Atomicity（原子性）】</h2>
 <p>一个事务中所包含的全部 SQL 语句是一个执行整体，不可分割，要么全执行，要么全取消。</p>
 <p><strong>通过【回滚日志（undolog）】来实现</strong></p>
@@ -359,7 +359,7 @@
 <li>redolog 处于 prepare 状态，binlog 未写入，干掉 redolog 的 prepare 状态，数据更新操作丢失、回滚；</li>
 <li>redolog 处于 prepare 状态，binlog 已写入，redolog 的 prepare 状态改为 commit，更新数据提交</li>
 </ul>
-<h1>四、不能用于事务的操作</h1>
+<h1 id="四-不能用于事务的操作">四、不能用于事务的操作</h1>
 <ul>
 <li>创建数据库（create database）</li>
 <li>修改数据库（alter database）</li>

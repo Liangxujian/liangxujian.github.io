@@ -41,8 +41,8 @@
           font-size: 1.6rem;
         }
       </style>
-    <link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
-<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head>
+    <link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /><link rel="alternate" href="/atom.xml" title="Liangxj" type="application/atom+xml">
+</head>
   </html>
 </html>
 
@@ -109,12 +109,12 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1>一、JDK、JRE、JVM 有什么关系？</h1>
+  <h1 id="一-jdk-jre-jvm-有什么关系？">一、JDK、JRE、JVM 有什么关系？</h1>
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1557711983254.png" alt=""></p>
 <p>JDK（Java development toolkit）——相当于是 Java 的库函数，是编译、运行 Java 程序的工具包，是一切 Java 应用程序的基础，所有 Java 应用程序是构建在这个之上的。（汽车）</p>
 <p>JRE（Java Runtime Environment）——Java 运行环境，也就是 Java 平台。所有的 Java 程序都要在 JRE 下才能运行。JDK 的工具也是 Java 程序，也需要 JRE 才能运行。（汽车动力系统）</p>
 <p>JVM（Java Virtual Machine）——Java 虚拟机，是 JRE 的一部分。它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。JVM 有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。Java 语言最重要的特点就是跨平台运行。使用 JVM 就是为了支持与操作系统无关，实现跨平台。（汽车轮胎）</p>
-<h1>二、JVM 虚拟机</h1>
+<h1 id="二-jvm-虚拟机">二、JVM 虚拟机</h1>
 <h2 id="2-1-jvm-基本结构">2.1  JVM 基本结构</h2>
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/b2e6a2272094c3a0.png" alt=""></p>
 <p><a target="_blank" rel="noopener" href="https://www.yuque.com/liangxujian/ufl7zk/hh59qa">思维导图（语雀）</a></p>
@@ -132,7 +132,7 @@
 <li>找到 JVM 的 config 配置文件之后会去定位 jvm.dll 这个文件。这个文件就是 Java 虚拟机的主要实现。</li>
 <li>当找到匹配当前版本的 jvm.dll 文件后，就会使用这个 dll 去初始化 JVM 虚拟机。获得相关的接口。之后找到 main 方法开始运行。</li>
 </ol>
-<h1>三、Java 执行过程</h1>
+<h1 id="三-java-执行过程">三、Java 执行过程</h1>
 <h2 id="3-1-解释执行和编译执行">3.1 解释执行和编译执行</h2>
 <p>解释执行：一边将程序翻译成计算机可以执行的指令，一边交给计算机执行，翻译一句，执行一句。<em>（饭馆点菜，上一个吃一个）</em></p>
 <p>编译执行：将整个程序翻译成计算机及可以理解的指令，然后交给计算机执行。<em>（饭馆订桌，菜上齐后一并吃）</em></p>
@@ -168,7 +168,7 @@
 <li>C2 编译：也是将字节码编译为本地代码，但是会启用一些编译耗时较长的优化，<strong>甚至会</strong>根据性能监控信息进行一些不可靠的<strong>激进优化</strong>。C2 编译主要是针对<strong>热点代码</strong>，对之做出更优的编译。</li>
 </ul>
 <p><em>注：实施分层编译后，C1 和 C2 将会同时工作，许多代码会被</em><strong>多次编译</strong>*，用 C1 获取更高的编译速度，用 C2 来获取更好的编译质量，且在解释执行的时候解释器也无须再承担收集性能监控信息的任务*</p>
-<h1>四、新生代、老年代、JavaCG 回收机制</h1>
+<h1 id="四-新生代-老年代-javacg-回收机制">四、新生代、老年代、JavaCG 回收机制</h1>
 <p>Java 中的堆是 JVM 所管理的最大的一块内存空间，主要用于存放各种类的实例对象。</p>
 <p>堆的内存模型大致为：</p>
 <p><img src="https://md-pic-liangxj.oss-cn-guangzhou.aliyuncs.com/1678097210489.png" alt=""></p>
