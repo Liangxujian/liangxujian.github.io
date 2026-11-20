@@ -24,6 +24,24 @@
   max-height: none !important;
   overflow: visible !important;
 }
+/* main.content 上的 transform 会建立新的包含块，使 .tocbot 的 position:fixed 退化为跟随滚动，
+   表现为目录跟着页面滑走、右上角留白。桌面端去掉 transform（移动端的抽屉动画在 max-width:768 里，不受影响）。 */
+@media (min-width: 769px) {
+  .content {
+    transform: none !important;
+  }
+}
+/* 回到顶部按钮改由 float-btns-fix.js 用 class 控制显隐，覆盖 jQuery 内联的 display:none / opacity */
+.totop {
+  display: block !important;
+  opacity: 0 !important;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.totop.is-shown {
+  opacity: 0.6 !important;
+  pointer-events: auto;
+}
 @media (min-width: 768px) {
   .outer,
   .wrap {
