@@ -42,7 +42,7 @@
 @media (min-width: 769px) and (max-width: 1500px) {
   .content {
     padding-right: 300px !important;
-    padding-left: 2rem !important;
+    padding-left: 10rem !important;
   }
   .outer,
   .wrap {
