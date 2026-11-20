@@ -36,7 +36,12 @@
     } catch (e) {
       scroller.scrollTop = 0;
     }
-    // 平滑滚动被禁用时的兜底
+    // 平滑滚动结束后收尾：部分环境不会连续派发 scroll 事件
+    var t0 = Date.now();
+    (function tick() {
+      syncTotop();
+      if (scroller.scrollTop > 0 && Date.now() - t0 < 2000) setTimeout(tick, 120);
+    })();
     setTimeout(function () {
       if (scroller.scrollTop > 400) scroller.scrollTop = 0;
       syncTotop();
