@@ -10,7 +10,12 @@
     var st = scroller === document.documentElement
       ? window.scrollY || document.documentElement.scrollTop
       : scroller.scrollTop;
-    totop.classList.toggle("is-shown", st > 300);
+    var shown = st > 300;
+    totop.classList.toggle("is-shown", shown);
+    // 用 important 内联值，压过主题里 jQuery fadeTo 写入的普通内联 opacity
+    totop.style.setProperty("display", "block", "important");
+    totop.style.setProperty("opacity", shown ? "0.6" : "0", "important");
+    totop.style.setProperty("pointer-events", shown ? "auto" : "none", "important");
   }
 
   if (scroller) {
