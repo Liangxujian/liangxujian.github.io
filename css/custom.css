@@ -36,7 +36,7 @@
   display: block !important;
   opacity: 0 !important;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: none !important;
 }
 .totop.is-shown {
   opacity: 0.6 !important;
