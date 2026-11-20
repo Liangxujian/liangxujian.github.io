@@ -6,6 +6,23 @@
   if (!list) return;
 
   var pending = false;
+  // 点击目录节点做锚点跳转时，tocbot 的激活项会短暂回落成第一项，
+  // 若此时跟随"激活项可见"，列表会被拽回顶部。因此点击后短暂冻结跟随，并还原点击前的列表位置。
+  var suppressUntil = 0;
+  var savedTop = 0;
+
+  toc.addEventListener("click", function (e) {
+    var link = e.target && e.target.closest ? e.target.closest("a.toc-link") : null;
+    if (!link) return;
+    savedTop = list.scrollTop;
+    suppressUntil = Date.now() + 1800;
+    var restore = function () {
+      if (Date.now() < suppressUntil && list.scrollTop !== savedTop) list.scrollTop = savedTop;
+    };
+    setTimeout(restore, 80);
+    setTimeout(restore, 400);
+    setTimeout(restore, 900);
+  }, true);
 
   // 目录内容的真实底边（末项底边），用来把滚动量卡在“末项贴底”处，避免滚出空白
   function maxScrollTop() {
@@ -20,6 +37,10 @@
 
   function keepActiveVisible() {
     pending = false;
+    if (Date.now() < suppressUntil) {
+      if (list.scrollTop !== savedTop) list.scrollTop = savedTop;
+      return;
+    }
     if (list.scrollHeight <= list.clientHeight + 2) return;
     var act = toc.querySelector(".is-active-link");
     if (!act) return;

@@ -36,6 +36,19 @@
     transform: none !important;
   }
 }
+/* 主题给 .tocbot 加了 .is-position-fixed：fixed + top:0 + right:6rem + 白底 + z-index 996，
+   是一块不透明浮层。窗口不够宽时它会压住标题首行/正文右侧（实测 1280 宽时与标题重叠 68px，
+   1000 宽时重叠 208px）。给正文区预留右侧空间，目录就落在空白区，不再盖内容。 */
+@media (min-width: 769px) and (max-width: 1500px) {
+  .content {
+    padding-right: 300px !important;
+  }
+  .outer,
+  .wrap {
+    width: auto !important;
+    max-width: 100%;
+  }
+}
 /* 回到顶部按钮改由 float-btns-fix.js 用 class 控制显隐，覆盖 jQuery 内联的 display:none / opacity */
 .totop {
   display: block !important;
