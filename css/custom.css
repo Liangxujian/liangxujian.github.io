@@ -24,6 +24,11 @@
   max-height: none !important;
   overflow: visible !important;
 }
+/* 主题给 a.toc-link 设了 height:100%，会把目录列表的 scrollHeight 撑大（实测 740px 内容撑到 1183px），
+   导致列表能滚过最后一项、把末项顶到面板顶部并留出大片空白。改成 auto。 */
+.tocbot a.toc-link {
+  height: auto !important;
+}
 /* main.content 上的 transform 会建立新的包含块，使 .tocbot 的 position:fixed 退化为跟随滚动，
    表现为目录跟着页面滑走、右上角留白。桌面端去掉 transform（移动端的抽屉动画在 max-width:768 里，不受影响）。 */
 @media (min-width: 769px) {
