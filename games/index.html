@@ -175,6 +175,10 @@
   .play-stage.open {
     display: flex;
   }
+  /* 侧栏汉堡按钮层级比舞台高，会压在顶栏的返回按钮上；游戏期间隐藏它 */
+  body.playing .navbar-toggle {
+    display: none !important;
+  }
   @media (min-width: 769px) {
     .play-stage {
       left: 8rem;
@@ -269,6 +273,7 @@
       stage.classList.add("open");
       stage.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
+      document.body.classList.add("playing");
       // 侧栏的汉堡按钮层级高于舞台，会压在舞台顶栏上；游戏期间先收起来
       var toggle = document.querySelector(".navbar-toggle");
       if (toggle) toggle.style.display = "none";
@@ -278,6 +283,7 @@
       stage.setAttribute("aria-hidden", "true");
       frame.src = "about:blank";
       document.body.style.overflow = "";
+      document.body.classList.remove("playing");
       var toggle = document.querySelector(".navbar-toggle");
       if (toggle) toggle.style.display = "";
     }
