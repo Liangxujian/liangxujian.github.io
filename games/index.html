@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>轻松一下 · Liangxj</title>
+<link rel="canonical" href="https://liangxujian.github.io/games/">
+<style>
+  :root{
+    --ink:#403e3e; --sub:#8a7a5c; --line:#e8dfcd;
+    --bg1:#fdf8ef; --bg2:#f6efe0; --card:#fffdf8;
+    --accent:#c8763a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;min-height:100%;}
+  body{
+    background:linear-gradient(170deg,var(--bg1) 0%,var(--bg2) 100%);
+    color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+    min-height:100vh;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 48px;}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .brand{display:flex;align-items:baseline;gap:10px;}
+  .brand b{font-size:26px;letter-spacing:.06em;}
+  .brand span{font-size:13px;color:var(--sub);letter-spacing:.08em;}
+  .links{display:flex;gap:10px;}
+  .links a{
+    font-size:13px;color:var(--ink);text-decoration:none;
+    border:1px solid var(--line);background:var(--card);
+    padding:7px 13px;border-radius:999px;transition:.2s;
+  }
+  .links a:hover{border-color:var(--accent);color:var(--accent);}
+  .lead{margin:18px 0 26px;font-size:14px;line-height:1.9;color:var(--sub);max-width:720px;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;}
+  .card{
+    text-align:left;cursor:pointer;font:inherit;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:18px 18px 16px;box-shadow:0 6px 18px rgba(140,110,60,.08);
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(140,110,60,.16);border-color:#dfc9a2;}
+  .card .emoji{font-size:30px;line-height:1;display:block;margin-bottom:10px;}
+  .card h3{margin:0 0 6px;font-size:17px;letter-spacing:.03em;}
+  .card p{margin:0;font-size:13px;line-height:1.7;color:var(--sub);}
+  .card .go{margin-top:12px;font-size:12px;color:var(--accent);letter-spacing:.08em;}
+
+  .soon{opacity:.55;cursor:default;}
+  .soon:hover{transform:none;box-shadow:0 6px 18px rgba(140,110,60,.08);border-color:var(--line);}
+
+  /* 内嵌舞台：点击卡片后在页面内打开游戏，带返回按钮 */
+  .stage{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;background:#fff;}
+  .stage.open{display:flex;}
+  .stage-bar{
+    display:flex;align-items:center;gap:12px;padding:10px 14px;
+    background:rgba(253,248,239,.92);border-bottom:1px solid var(--line);
+    backdrop-filter:blur(8px);flex-wrap:wrap;
+  }
+  .stage-bar .title{font-size:15px;font-weight:600;letter-spacing:.04em;}
+  .stage-bar .spacer{flex:1;}
+  .btn{
+    font:inherit;font-size:13px;cursor:pointer;text-decoration:none;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    padding:7px 13px;border-radius:999px;transition:.2s;
+  }
+  .btn:hover{border-color:var(--accent);color:var(--accent);}
+  #frame{flex:1;width:100%;border:0;display:block;background:#fff;}
+  .tip{margin-top:26px;font-size:12px;color:#a99a80;letter-spacing:.04em;}
+  @media (max-width:640px){
+    .wrap{padding:20px 14px 36px;}
+    .brand b{font-size:22px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <div class="brand"><b>轻松一下</b><span>GAMES</span></div>
+    <div class="links">
+      <a href="/">博客首页</a>
+      <a href="/archives">文章归档</a>
+    </div>
+  </div>
+
+  <p class="lead">写代码累了就点一个，页面内直接开在下面这块区域里，玩完点「返回游戏列表」就回来。</p>
+
+  <div class="grid">
+    <button class="card" data-src="/games/circle-the-cat.html" data-title="围住神经猫">
+      <span class="emoji">🐱</span>
+      <h3>围住神经猫</h3>
+      <p>六边形蜂窝棋盘，轮流落子把这只到处乱窜的猫围起来。三种难度，猫的路线不一样。</p>
+      <div class="go">点击开玩 →</div>
+    </button>
+    <button class="card soon" disabled>
+      <span class="emoji">🚧</span>
+      <h3>占位：下一款</h3>
+      <p>新游戏做好了直接把卡片加进这个列表，布局会自动排。</p>
+      <div class="go">敬请期待</div>
+    </button>
+  </div>
+
+  <p class="tip">当前收录 1 款 · 全部纯前端，不需要联网也能玩</p>
+</div>
+
+<div class="stage" id="stage" aria-hidden="true">
+  <div class="stage-bar">
+    <button class="btn" id="backToList">← 返回游戏列表</button>
+    <span class="title" id="stageTitle">围住神经猫</span>
+    <span class="spacer"></span>
+    <a class="btn" href="/">博客首页</a>
+  </div>
+  <iframe id="frame" title="小游戏" allow="fullscreen; autoplay"></iframe>
+</div>
+
+<script>
+(function () {
+  var stage = document.getElementById("stage");
+  var frame = document.getElementById("frame");
+  var stageTitle = document.getElementById("stageTitle");
+  var back = document.getElementById("backToList");
+
+  function open(src, title) {
+    stageTitle.textContent = title || "";
+    frame.src = src;
+    stage.classList.add("open");
+    stage.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+  function close() {
+    stage.classList.remove("open");
+    stage.setAttribute("aria-hidden", "true");
+    frame.src = "about:blank";
+    document.body.style.overflow = "";
+    try { history.replaceState(null, "", location.pathname); } catch (e) {}
+  }
+
+  document.querySelectorAll(".card[data-src]").forEach(function (card) {
+    card.addEventListener("click", function () {
+      open(card.dataset.src, card.dataset.title);
+    });
+  });
+  back.addEventListener("click", close);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && stage.classList.contains("open")) close();
+  });
+
+  // 支持 /games/?g=circle-the-cat 这种直接进入
+  var q = new URLSearchParams(location.search).get("g");
+  if (q) {
+    var card = document.querySelector('.card[data-src*="' + q + '"]');
+    if (card) open(card.dataset.src, card.dataset.title);
+  }
+})();
+</script>
+</body>
+</html>

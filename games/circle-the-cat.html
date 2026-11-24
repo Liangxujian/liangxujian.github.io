@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>围住神经猫</title>
+<style>
+  * { box-sizing: border-box; }
+  :root { --tw: 54px; }          /* 六边形宽度；高度 = 1.1547 × 宽 */
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(160deg, #fdf3df 0%, #fbe8c6 55%, #f7ddab 100%);
+    color: #4a3f2e;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 24px 12px 40px;
+    user-select: none;
+  }
+  h1 { margin: 4px 0 2px; font-size: 30px; letter-spacing: .08em; }
+  .subtitle { margin: 0 0 12px; font-size: 14px; color: #8a7a5c; text-align: center; max-width: 640px; line-height: 1.6; }
+  #status {
+    min-height: 26px; margin: 0 0 14px; font-size: 16px; font-weight: 600;
+    color: #5c4d33; text-align: center;
+  }
+  #status.win  { color: #1e8e4e; }
+  #status.lose { color: #c23b3b; }
+
+  /* ========== 六边形蜂窝 ==========
+     关键：每个格子必须按真实列号 c 定位，被裁掉的列用隐藏格子占位，
+     否则行内紧凑排列会破坏邻接关系，造成“猫穿墙”的错觉。 */
+  .board-wrap { position: relative; }
+  #board {
+    background: #fff7e6;
+    border: 2px solid #e5cf9e;
+    border-radius: 20px;
+    padding: 22px 34px 20px;
+    box-shadow: 0 10px 26px rgba(120,90,30,.18);
+  }
+  .row {
+    display: flex;
+    /* 行距 = 0.75h，行高 = h → 需要重叠 0.25h = 0.2887 × 宽 */
+    margin-top: calc(var(--tw) * -0.2887);
+  }
+  .row:first-child { margin-top: 0; }
+  .row.odd { transform: translateX(calc(var(--tw) / 2)); }
+  .hex {
+    width: var(--tw);
+    height: calc(var(--tw) * 1.1547);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: #dfc287;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+  .hex .in {
+    width: calc(var(--tw) - 5px);
+    height: calc(var(--tw) * 1.1547 - 6px);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: linear-gradient(#ffeeca, #ffdfa3);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .12s;
+  }
+  .hex.blank { visibility: hidden; pointer-events: none; }   /* 占位，保持列坐标 */
+  .hex:hover:not(.wall):not(.cat):not(.blank) .in { background: linear-gradient(#ffe3a4, #ffc96b); }
+  .hex.wall .in  { background: linear-gradient(#5f6470, #414651); }
+  .hex.wall      { cursor: default; }
+
+  /* 猫：落地轻跳一下，再进入呼吸发光；被围住后只停动画，颜色不变 */
+  .hex.cat       { cursor: default; }
+  .hex.cat .in {
+    background: linear-gradient(#ffd979, #f5b838);
+    animation: cat-hop .4s ease-out 1, catglow 1.3s ease-in-out .4s infinite;
+  }
+  .hex.cat.caught .in { animation: none; }
+  .hex .cat-svg { width: calc(var(--tw) * 0.6); height: calc(var(--tw) * 0.6); }
+
+  /* 上一格：短暂余晖后淡回普通色（不常驻） */
+  .hex.prev:not(.wall):not(.cat) .in { animation: prev-fade 1.4s ease-out forwards; }
+  @keyframes prev-fade {
+    0%   { background: linear-gradient(#ffd48e, #f3a94f); }
+    100% { background: linear-gradient(#ffeeca, #ffdfa3); }
+  }
+  /* 失败时：猫的逃跑路线 */
+  .hex.trail:not(.wall):not(.cat) .in { background: linear-gradient(#f8b08c, #e87c5c); }
+
+  @keyframes cat-hop {
+    0%   { transform: translateY(0) scale(1); }
+    35%  { transform: translateY(-16%) scale(1.07); }
+    72%  { transform: translateY(0) scale(.96); }
+    100% { transform: translateY(0) scale(1); }
+  }
+  @keyframes catglow {
+    0%, 100% { background: linear-gradient(#ffd979, #f5b838); }
+    50%      { background: linear-gradient(#ffe8a8, #ffcd55); }
+  }
+
+  #controls {
+    margin-top: 18px; display: flex; align-items: center;
+    justify-content: center; flex-wrap: wrap; gap: 14px 18px;
+  }
+  .diff { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #8a7a5c; }
+  .diff label { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+  .diff input { accent-color: #e88c30; cursor: pointer; }
+  button {
+    font: inherit; font-weight: 700;
+    padding: 9px 22px; border-radius: 12px;
+    border: none; cursor: pointer;
+    background: #e88c30; color: #fff;
+    box-shadow: 0 4px 0 #b96a1c;
+    transition: transform .08s, box-shadow .08s;
+  }
+  button:active { transform: translateY(3px); box-shadow: 0 1px 0 #b96a1c; }
+  #moves { font-size: 14px; color: #8a7a5c; }
+
+  #overlay {
+    position: fixed; inset: 0;
+    background: rgba(60,45,20,.12);   /* 只轻微压暗，不把棋盘颜色染灰 */
+    display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 22vh;
+    opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  #overlay.show { opacity: 1; pointer-events: auto; }
+  #overlay-card {
+    background: #fffaf0; border-radius: 16px;
+    padding: 20px 34px; text-align: center;
+    box-shadow: 0 14px 34px rgba(0,0,0,.28);
+    transform: translateY(-8px); transition: transform .25s;
+  }
+  #overlay.show #overlay-card { transform: translateY(0); }
+  #overlay-text { font-size: 19px; font-weight: 800; margin: 0 0 14px; }
+  #overlay-text.win  { color: #1e8e4e; }
+  #overlay-text.lose { color: #c23b3b; }
+
+  @media (max-width: 600px) {
+    :root { --tw: clamp(26px, 8vw, 40px); }
+    #board { padding: 14px 18px 12px; }
+    h1 { font-size: 24px; }
+    #overlay { padding-top: 16vh; }
+  }
+
+  /* 返回游戏列表：放在页面左上角，嵌套在 /games/ 里时用 target=_top 跳出 iframe */
+  .game-back {
+    position: fixed; left: 14px; top: 14px; z-index: 30;
+    display: inline-block; font-size: 13px; text-decoration: none;
+    color: #5c4d33; background: rgba(255,255,255,.92);
+    border: 1px solid #e5cf9e; border-radius: 999px;
+    padding: 7px 13px; box-shadow: 0 4px 12px rgba(120,90,30,.12);
+    transition: .2s;
+  }
+  .game-back:hover { color: #c8763a; border-color: #d9a86a; }
+</style>
+</head>
+<body>
+  <h1>围住神经猫</h1>
+  <p class="subtitle">点击空格筑墙，把猫困住。猫先用广度优先搜索算最短逃路，再用最小割挑「最难封死」的方向——单堵一格拦不住，得提前在它和边缘之间连成一道横贯的封闭墙。</p>
+  <p id="status">猫在盯着你呢……</p>
+
+  <div class="board-wrap">
+    <div id="board" aria-label="棋盘"></div>
+  </div>
+
+  <div id="controls">
+    <button id="reset">重新开始</button>
+    <div class="diff">
+      <span>难度</span>
+      <label title="初始障碍 16 个，适合练习"><input type="radio" name="diff" value="normal" checked> 普通</label>
+      <label title="初始障碍 12 个，棋盘更开阔、猫极难围住"><input type="radio" name="diff" value="hard"> 困难</label>
+    </div>
+    <span id="moves">步数：0</span>
+  </div>
+
+  <div id="overlay">
+    <div id="overlay-card">
+      <p id="overlay-text"></p>
+      <button id="again">再玩一次</button>
+    </div>
+  </div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- 棋盘几何：9x9 六边形（odd-r 错位），圆形掩码 ---------- */
+  var R = 9, C = 9;
+  var CENTER = { x: 2, z: 4, y: -6 };
+
+  function cube(r, c) {
+    var x = c - ((r - (r & 1)) >> 1);
+    var z = r;
+    return { x: x, z: z, y: -x - z };
+  }
+  function inMask(r, c) {
+    if (r < 0 || r >= R || c < 0 || c >= C) return false;
+    var q = cube(r, c);
+    return Math.max(Math.abs(q.x - CENTER.x), Math.abs(q.y - CENTER.y), Math.abs(q.z - CENTER.z)) <= 4;
+  }
+  var DIR_EVEN = [[0,-1],[0,1],[-1,-1],[-1,0],[1,-1],[1,0]];
+  var DIR_ODD  = [[0,-1],[0,1],[-1, 0],[-1,1],[1, 0],[1,1]];
+  function neighbors(r, c) {
+    var dirs = (r & 1) ? DIR_ODD : DIR_EVEN, out = [];
+    for (var i = 0; i < 6; i++) out.push([r + dirs[i][0], c + dirs[i][1]]);
+    return out;
+  }
+  function neighborsInMask(r, c) {
+    return neighbors(r, c).filter(function (n) { return inMask(n[0], n[1]); });
+  }
+  function key(r, c) { return r * C + c; }
+  function rc(k) { return [Math.floor(k / C), k % C]; }
+
+  // 出口格：存在棋盘外邻格的格子。猫踏上任意出口格即逃走成功。
+  var EXIT = new Set();
+  (function () {
+    for (var r = 0; r < R; r++) for (var c = 0; c < C; c++) {
+      if (!inMask(r, c)) continue;
+      var nbs = neighbors(r, c);
+      for (var j = 0; j < 6; j++) {
+        if (!inMask(nbs[j][0], nbs[j][1])) { EXIT.add(key(r, c)); break; }
+      }
+    }
+  })();
+
+  /* ---------- 猫的形象 ---------- */
+  var CAT_SVG =
+    '<svg class="cat-svg" viewBox="0 0 40 40">' +
+    '<path d="M9 15 L11 4 L17 11 Z" fill="#5d626e"/>' +
+    '<path d="M31 15 L29 4 L23 11 Z" fill="#5d626e"/>' +
+    '<path d="M11.5 12 L12.3 8 L15 11 Z" fill="#e8a0a0"/>' +
+    '<path d="M28.5 12 L27.7 8 L25 11 Z" fill="#e8a0a0"/>' +
+    '<circle cx="20" cy="22" r="14" fill="#6d7280"/>' +
+    '<circle cx="15" cy="20" r="2.3" fill="#22252b"/>' +
+    '<circle cx="25" cy="20" r="2.3" fill="#22252b"/>' +
+    '<circle cx="15.7" cy="19.3" r="0.8" fill="#fff"/>' +
+    '<circle cx="25.7" cy="19.3" r="0.8" fill="#fff"/>' +
+    '<path d="M17.5 27 Q20 29.5 22.5 27" stroke="#2c2f36" stroke-width="1.6" fill="none" stroke-linecap="round"/>' +
+    '<path d="M20 24.5 L20 26.5" stroke="#2c2f36" stroke-width="1.2"/>' +
+    '<path d="M6 21 L12 22 M6 25 L12 25 M34 21 L28 22 M34 25 L28 25" stroke="#4a4e58" stroke-width="1.2"/>' +
+    '</svg>';
+
+  /* ---------- 游戏状态 ---------- */
+  var CAT_START = [4, 4];
+  var walls, cat, catTrail, moves, over, difficulty = 'normal';
+  var prevCell;
+  var boardEl = document.getElementById('board');
+  var statusEl = document.getElementById('status');
+  var movesEl = document.getElementById('moves');
+  var overlayEl = document.getElementById('overlay');
+  var overlayText = document.getElementById('overlay-text');
+
+  function shuffled(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  /* ---------- ① 距离图：多源 BFS ----------
+     从所有「出口格」同时出发向内扩散，得到每格到最近出口的最少步数。
+     这是 GitHub 上各版围住神经猫（crazycat / runcat / game-nerve-cat）的通用做法：
+     猫每步只走距离下降的方向，保证最快向边缘推进。 */
+  function distMap() {
+    var d = {}, order = [], q = [];
+    EXIT.forEach(function (e) {
+      if (!walls.has(e)) { d[e] = 0; order.push(e); q.push(e); }
+    });
+    for (var h = 0; h < q.length; h++) {
+      var k = q[h], dk = d[k], p = rc(k);
+      var nbs = neighborsInMask(p[0], p[1]);
+      for (var i = 0; i < nbs.length; i++) {
+        var nk = key(nbs[i][0], nbs[i][1]);
+        if (walls.has(nk) || (nk in d)) continue;
+        d[nk] = dk + 1;
+        order.push(nk); q.push(nk);
+      }
+    }
+    return { d: d, order: order };
+  }
+
+  /* 围住判定：猫到不了任何出口格（flood fill 连通性），立即判玩家胜 */
+  function catTrapped() {
+    return !(key(cat[0], cat[1]) in distMap().d);
+  }
+
+  /* ---------- ② 最短路条数 DP ----------
+     order 是 BFS 插入序（距离非降），故可一遍算出每格到出口的最短路条数。
+     这是 CSDN/Egret 版提到的「筛选有多个终点的路径」优化，这里只作次级打分。 */
+  function pathCountMap(DM) {
+    var cnt = {}, d = DM.d, order = DM.order;
+    for (var i = 0; i < order.length; i++) {
+      var k = order[i], dk = d[k];
+      if (dk === 0) { cnt[k] = 1; continue; }
+      var p = rc(k), nbs = neighborsInMask(p[0], p[1]), s = 0;
+      for (var j = 0; j < nbs.length; j++) {
+        var nk = key(nbs[j][0], nbs[j][1]);
+        if (d[nk] === dk - 1) s += cnt[nk];
+      }
+      cnt[k] = s;
+    }
+    return cnt;
+  }
+
+  /* ---------- ③ 最小割 / 最大流：封死某格需要几堵墙 ----------
+     光数「最短路条数」会被骗：一堆路最后全挤过同一个窄口，条数很多但一堵就死。
+     把每格拆成 in→out（容量 1，源格为无穷），相邻 out→in 容量为无穷，
+     出口 out→汇容量为无穷。由 Menger 定理，最大流 = 点不相交逃路数
+     = 玩家要完全封死这只猫所需的最少墙数。猫走割数最大的方向，
+     就能精确避开「看着开阔、其实只有一个瓶颈」的死胡同。 */
+  var INF = 1000, NS = 200, NT = 201, NN = 202;
+  function minCut(src) {
+    var head = new Int32Array(NN).fill(-1);
+    var to = [], cap = [], nxt = [];
+    function ae(u, v, c) {
+      var i = to.length;
+      to.push(v); cap.push(c); nxt.push(head[u]); head[u] = i;
+      to.push(u); cap.push(0); nxt.push(head[v]); head[v] = i + 1;
+    }
+    var r, c, k, i, nbs, nk;
+    for (r = 0; r < R; r++) for (c = 0; c < C; c++) {
+      k = key(r, c);
+      if (!inMask(r, c) || walls.has(k)) continue;
+      ae(2 * k, 2 * k + 1, k === src ? INF : 1);
+    }
+    for (r = 0; r < R; r++) for (c = 0; c < C; c++) {
+      k = key(r, c);
+      if (!inMask(r, c) || walls.has(k)) continue;
+      nbs = neighborsInMask(r, c);
+      for (i = 0; i < nbs.length; i++) {
+        nk = key(nbs[i][0], nbs[i][1]);
+        if (!walls.has(nk)) ae(2 * k + 1, 2 * nk, INF);
+      }
+    }
+    EXIT.forEach(function (e) { if (!walls.has(e)) ae(2 * e + 1, NT, INF); });
+    ae(NS, 2 * src, INF);
+
+    // Dinic
+    var lv, it;
+    var dfs = function (u, f) {
+      if (u === NT) return f;
+      for (var ei = it[u]; ei !== -1; ei = nxt[ei]) {
+        var v = to[ei];
+        if (cap[ei] > 0 && lv[v] === lv[u] + 1) {
+          var ret = dfs(v, Math.min(f, cap[ei]));
+          if (ret > 0) { cap[ei] -= ret; cap[ei ^ 1] += ret; return ret; }
+        }
+        it[u] = nxt[ei];
+      }
+      return 0;
+    };
+    var flow = 0;
+    while (true) {
+      lv = new Int32Array(NN).fill(-1); lv[NS] = 0;
+      var q = [NS];
+      for (var h = 0; h < q.length; h++) {
+        var u = q[h];
+        for (var ei = head[u]; ei !== -1; ei = nxt[ei]) {
+          if (cap[ei] > 0 && lv[to[ei]] < 0) { lv[to[ei]] = lv[u] + 1; q.push(to[ei]); }
+        }
+      }
+      if (lv[NT] < 0) break;
+      it = Int32Array.from(head);
+      var x;
+      while ((x = dfs(NS, INF)) > 0) flow += x;
+    }
+    return flow;
+  }
+
+  /* ---------- ④ 猫的决策 ----------
+     1) 能一步踏上出口格 → 立刻逃走；
+     2) 否则只在「距离下降」的最短路方向里选（保证推进，不原地磨蹭）；
+     3) 主语：最小割（越大越难被封死）；次语：最短路条数；平局随机。
+     全程不加入任何「故意走错」的随机失误——难度只由初始障碍数控制。 */
+  function catStep() {
+    var DM = distMap(), d = DM.d;
+    var ck = key(cat[0], cat[1]);
+    if (!(ck in d)) return null;                        // 已无任何逃路 → 被围住
+    var opts = neighborsInMask(cat[0], cat[1]).filter(function (n) {
+      return !walls.has(key(n[0], n[1]));
+    });
+    if (!opts.length) return null;
+
+    var esc = opts.filter(function (n) { return EXIT.has(key(n[0], n[1])); });
+    if (esc.length) return esc[Math.floor(Math.random() * esc.length)];
+
+    var dc = d[ck];
+    var cands = opts.filter(function (n) { return d[key(n[0], n[1])] === dc - 1; });
+    if (!cands.length) cands = opts.filter(function (n) { return key(n[0], n[1]) in d; });
+    if (!cands.length) cands = opts;
+
+    var cnt = pathCountMap(DM), best = [], bs = -1;
+    for (var i = 0; i < cands.length; i++) {
+      var n = cands[i], nk = key(n[0], n[1]);
+      var s = minCut(nk) * 1e6 + (cnt[nk] || 0);
+      if (s > bs) { bs = s; best = [n]; }
+      else if (s === bs) best.push(n);
+    }
+    return best[Math.floor(Math.random() * best.length)];
+  }
+
+  /* ---------- 开局障碍 ----------
+     经 500 局/组批量对局调参：普通 16 个、困难 12 个（均不预封猫的邻格）。
+     障碍越少棋盘越开阔、猫越好逃；两个难度共用同一套完整 AI，不再"故意变蠢"。 */
+  function genWalls() {
+    var total = difficulty === 'normal' ? 16 : 12;
+    for (var attempt = 0; attempt < 300; attempt++) {
+      var w = new Set(), pool = [];
+      for (var r = 0; r < R; r++) for (var c = 0; c < C; c++) {
+        var k = key(r, c);
+        if (!inMask(r, c)) continue;
+        if (r === CAT_START[0] && c === CAT_START[1]) continue;
+        pool.push(k);
+      }
+      var sp = shuffled(pool);
+      for (var j = 0; j < sp.length && w.size < total; j++) w.add(sp[j]);
+      walls = w;
+      if (!catTrapped()) return;    // 保证开局猫有逃路，不白送
+    }
+  }
+
+  function reset() {
+    walls = new Set();
+    cat = CAT_START.slice();
+    catTrail = [cat.slice()];
+    moves = 0;
+    over = null;
+    prevCell = null;
+    genWalls();
+    overlayEl.classList.remove('show');
+    statusEl.className = '';
+    statusEl.textContent = difficulty === 'normal'
+      ? '猫会挑最难封死的方向，先连成一道墙再收口！'
+      : '障碍更少，这只猫极难围住，小心布局 😼';
+    render();
+  }
+
+  function render() {
+    boardEl.innerHTML = '';
+    var caught = over === 'win';
+    for (var r = 0; r < R; r++) {
+      var rowEl = document.createElement('div');
+      rowEl.className = 'row' + ((r & 1) ? ' odd' : '');
+      for (var c = 0; c < C; c++) {
+        // 不在圆形棋盘内的格子仍占位，保证每个格子的视觉 x 严格等于 c×宽
+        if (!inMask(r, c)) {
+          var blank = document.createElement('div');
+          blank.className = 'hex blank';
+          rowEl.appendChild(blank);
+          continue;
+        }
+        (function (r, c) {
+          var k = key(r, c);
+          var hex = document.createElement('div');
+          hex.className = 'hex';
+          hex.dataset.r = r; hex.dataset.c = c;
+          var isCat = cat[0] === r && cat[1] === c;
+          if (walls.has(k)) hex.classList.add('wall');
+          if (isCat) {
+            hex.classList.add('cat');
+            if (caught) hex.classList.add('caught');   // 只停动画，不改颜色
+          }
+          if (prevCell && prevCell[0] === r && prevCell[1] === c && !isCat) {
+            hex.classList.add('prev');
+          }
+          if (over === 'lose' && catTrail.some(function (p) { return p[0] === r && p[1] === c; })) {
+            hex.classList.add('trail');
+          }
+          var inner = document.createElement('div');
+          inner.className = 'in';
+          if (isCat) inner.innerHTML = CAT_SVG;
+          hex.appendChild(inner);
+          rowEl.appendChild(hex);
+        })(r, c);
+      }
+      boardEl.appendChild(rowEl);
+    }
+    movesEl.textContent = '步数：' + moves;
+  }
+
+  function catMove() {
+    var step = catStep();
+    if (!step) return 'win';
+    prevCell = cat.slice();
+    cat = step;
+    catTrail.push(cat.slice());
+    return EXIT.has(key(cat[0], cat[1])) ? 'lose' : 'continue';
+  }
+
+  /* ---------- 交互 ---------- */
+  function onTileClick(r, c) {
+    if (over || !inMask(r, c)) return;
+    var k = key(r, c);
+    if (walls.has(k)) return;
+    if (cat[0] === r && cat[1] === c) return;
+
+    walls.add(k);
+    moves++;
+
+    // 围住判定：猫无法到达任何出口格 → 立即胜利，猫定格不再移动
+    if (catTrapped()) { finish('win'); render(); return; }
+
+    var result = catMove();
+    if (result === 'win')  { finish('win');  render(); return; }
+    if (result === 'lose') { finish('lose'); render(); return; }
+
+    statusEl.className = '';
+    statusEl.textContent = '猫跳了一步，继续围！';
+    render();
+  }
+
+  function finish(result) {
+    over = result;
+    if (result === 'win') {
+      statusEl.className = 'win';
+      statusEl.textContent = '🎉 猫无路可通，被你围住了！';
+      overlayText.className = 'win';
+      overlayText.textContent = '🎉 你赢了！猫被完全围住';
+    } else {
+      statusEl.className = 'lose';
+      statusEl.textContent = '猫从边缘溜走了……';
+      overlayText.className = 'lose';
+      overlayText.textContent = '😾 猫逃走了！再试一次？';
+    }
+    setTimeout(function () { overlayEl.classList.add('show'); }, 450);
+  }
+
+  boardEl.addEventListener('click', function (e) {
+    var t = e.target.closest('.hex');
+    if (!t || t.classList.contains('blank')) return;
+    onTileClick(+t.dataset.r, +t.dataset.c);
+  });
+  document.getElementById('reset').addEventListener('click', reset);
+  document.getElementById('again').addEventListener('click', reset);
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="diff"]'), function (radio) {
+    radio.addEventListener('change', function () {
+      if (!radio.checked) return;
+      difficulty = radio.value;
+      reset();
+    });
+  });
+
+  reset();
+})();
+</script>
+<a class="game-back" href="/games/" target="_top">← 返回游戏列表</a>
+</body>
+</html>
