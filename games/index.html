@@ -269,12 +269,17 @@
       stage.classList.add("open");
       stage.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
+      // 侧栏的汉堡按钮层级高于舞台，会压在舞台顶栏上；游戏期间先收起来
+      var toggle = document.querySelector(".navbar-toggle");
+      if (toggle) toggle.style.display = "none";
     }
     function close() {
       stage.classList.remove("open");
       stage.setAttribute("aria-hidden", "true");
       frame.src = "about:blank";
       document.body.style.overflow = "";
+      var toggle = document.querySelector(".navbar-toggle");
+      if (toggle) toggle.style.display = "";
     }
 
     Array.prototype.forEach.call(document.querySelectorAll(".play-page .card[data-src]"), function (card) {

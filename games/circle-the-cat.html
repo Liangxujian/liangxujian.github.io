@@ -542,5 +542,17 @@
 })();
 </script>
 <a class="game-back" href="/games/" target="_top">← 返回游戏列表</a>
+
+<script>
+/* 嵌在 /games/ 的舞台里时，外层顶栏已有「返回游戏列表」，这里不重复显示 */
+(function () {
+  try {
+    if (window.top !== window.self) {
+      var b = document.querySelector(".game-back");
+      if (b) b.style.display = "none";
+    }
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
