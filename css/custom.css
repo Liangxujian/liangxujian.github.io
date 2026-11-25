@@ -50,6 +50,16 @@
     max-width: 100%;
   }
 }
+
+/* 上面那条 300px 留白是给文章页目录用的，但 .content 同时也是首页封面的父级，
+ 套上去会让整张封面往右缩、右边露出一条空白（1440 宽实测空 315px）。
+ 首页（.content 里带 .cover）取消这两条内边距，封面恢复满宽。 */
+@media (min-width: 769px) and (max-width: 1500px) {
+.content:has(.cover) {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+}
 /* 回到顶部按钮改由 float-btns-fix.js 用 class 控制显隐，覆盖 jQuery 内联的 display:none / opacity */
 .totop {
   display: block !important;
