@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数独 Pro · Sudoku</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --cell: clamp(28px, min(10.2vw, 9vmin, 6.4vh), 54px);
+    --ink: #26303b; --sub: #7c8593;
+    --paper: #f2f5f8; --board: #ffffff;
+    --line: #ccd4dd; --bold: #4a5568;
+    --accent: #4f6ef7; --accent-soft: rgba(79,110,247,.14);
+    --peer: rgba(79,110,247,.06);
+    --same: rgba(255,170,40,.32);
+    --error: #e04848;
+    --given: #2d3a4d; --user: #4f6ef7;
+    --btn: #ffffff; --btn2: #e6ebf2; --btn2-ink: #4a5568;
+    --shadow: 0 10px 30px rgba(40,60,100,.15);
+  }
+  body[data-theme="dark"] {
+    --ink: #dbe3ec; --sub: #8a95a3;
+    --paper: #161b22; --board: #222a35;
+    --line: #39434f; --bold: #7e8b9c;
+    --accent: #6d87ff; --accent-soft: rgba(109,135,255,.20);
+    --peer: rgba(109,135,255,.09);
+    --same: rgba(255,170,40,.30);
+    --error: #ff6b6b;
+    --given: #c9d4e2; --user: #6d87ff;
+    --btn: #2a3341; --btn2: #2e3846; --btn2-ink: #aeb9c7;
+    --shadow: 0 10px 30px rgba(0,0,0,.5);
+  }
+  body {
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--paper); color: var(--ink);
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 16px 12px 30px;
+    user-select: none; -webkit-user-select: none;
+  }
+  .top { display: flex; align-items: baseline; gap: 10px; }
+  h1 { font-size: clamp(22px, 4.6vmin, 32px); letter-spacing: 6px; font-weight: 700; }
+  .badge {
+    font-size: 11px; color: #fff; background: var(--accent);
+    border-radius: 999px; padding: 2px 9px; letter-spacing: 1px; font-weight: 600;
+  }
+  .subtitle { font-size: 12px; color: var(--sub); margin: 4px 0 12px; }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .toolbar .seg { display: flex; background: var(--btn2); border-radius: 8px; padding: 3px; gap: 2px; }
+  .seg button {
+    border: 0; background: transparent; padding: 6px 12px; border-radius: 6px;
+    font-size: 13px; color: var(--btn2-ink); cursor: pointer; font-family: inherit;
+  }
+  .seg button.on { background: var(--btn); color: var(--ink); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,.14); }
+  .iconbtn {
+    border: 0; background: var(--btn2); border-radius: 8px; padding: 7px 11px;
+    font-size: 15px; cursor: pointer; color: var(--btn2-ink); font-family: inherit; line-height: 1;
+  }
+  .stat {
+    display: flex; gap: 14px; font-size: 14px; color: var(--btn2-ink);
+    background: var(--btn); border-radius: 8px; padding: 7px 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.10);
+  }
+  .stat b { font-variant-numeric: tabular-nums; color: var(--ink); }
+
+  #board {
+    display: grid;
+    grid-template-columns: repeat(9, var(--cell));
+    grid-template-rows: repeat(9, var(--cell));
+    background: var(--board);
+    border: 2.5px solid var(--bold); border-radius: 4px;
+    box-shadow: var(--shadow);
+    touch-action: manipulation;
+  }
+  .cell {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    font-size: calc(var(--cell) * .52); font-weight: 600;
+    border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    cursor: pointer; transition: background .1s;
+  }
+  .cell:nth-child(9n) { border-right: none; }
+  .cell:nth-child(n + 73) { border-bottom: none; }
+  .cell.b-r { border-right: 3px solid var(--bold); }
+  .cell.b-b { border-bottom: 3px solid var(--bold); }
+  .cell.peer { background: var(--peer); }
+  .cell.same  { background: var(--same); }
+  .cell.sel   { background: var(--accent-soft) !important; outline: 2px solid var(--accent); outline-offset: -2px; z-index: 1; }
+  .cell .n { color: var(--user); }
+  .cell.given .n { color: var(--given); }
+  .cell.auto .n { color: #2ea36b; }
+  body[data-theme="dark"] .cell.auto .n { color: #4fd392; }
+  .cell.err .n { color: var(--error); animation: shake .18s; }
+  @keyframes shake { 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
+  .cell.pop .n { animation: pop .16s ease-out; }
+  @keyframes pop { 0% { transform: scale(.4); } 100% { transform: scale(1); } }
+  .cell.hinted { background: rgba(46,163,107,.16) !important; }
+  .notes {
+    position: absolute; inset: 9%;
+    display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
+  }
+  .notes span {
+    font-size: calc(var(--cell) * .22); color: #8fa3bd; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+  }
+  body[data-theme="dark"] .notes span { color: #7f93b3; }
+
+  #pad { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 16px; }
+  #nums { display: flex; gap: 8px; flex-wrap: nowrap; justify-content: center; }
+  #pad .num {
+    position: relative;
+    width: calc(var(--cell) * 1.08); height: calc(var(--cell) * 1.08);
+    border: 0; border-radius: 10px;
+    background: var(--btn); box-shadow: 0 2px 6px rgba(0,0,0,.10);
+    font-size: calc(var(--cell) * .42); font-weight: 700; color: var(--ink);
+    cursor: pointer; font-family: inherit; transition: transform .06s;
+  }
+  #pad .num:active { transform: scale(.92); }
+  #pad .num small {
+    position: absolute; right: 3px; bottom: 1px;
+    font-size: 10px; color: var(--sub); font-weight: 500;
+  }
+  #pad .num.done { opacity: .32; pointer-events: none; }
+  #tools { display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; }
+  .tool {
+    border: 0; border-radius: 10px; padding: 8px 13px;
+    background: var(--btn2); color: var(--btn2-ink); font-size: 13px; cursor: pointer; font-family: inherit;
+  }
+  .tool.on { background: var(--accent); color: #fff; font-weight: 600; }
+  .tool:disabled { opacity: .4; cursor: default; }
+  .tool b { font-variant-numeric: tabular-nums; }
+
+  #toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(8px);
+    background: var(--ink); color: var(--paper);
+    padding: 9px 18px; border-radius: 10px; font-size: 14px;
+    opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+    z-index: 50; max-width: 86vw;
+  }
+  #toast.show { opacity: .96; transform: translateX(-50%) translateY(0); }
+
+  .win {
+    position: fixed; inset: 0; background: rgba(30, 40, 60, .38);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .win.show { opacity: 1; pointer-events: auto; }
+  .win .card {
+    background: var(--board); border-radius: 16px; padding: 28px 40px;
+    text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,.28);
+    transform: translateY(12px); transition: transform .25s; color: var(--ink);
+  }
+  .win.show .card { transform: translateY(0); }
+  .win h2 { font-size: 26px; color: #3a8f4f; margin-bottom: 8px; }
+  .win p { font-size: 14px; color: var(--sub); margin-bottom: 16px; line-height: 1.7; }
+
+  .hint { font-size: 12px; color: var(--sub); margin-top: 12px; text-align: center; line-height: 1.8; max-width: 620px; }
+  kbd {
+    background: var(--btn); border: 1px solid var(--line); border-bottom-width: 2px;
+    border-radius: 4px; padding: 0 5px; font-size: 11px; font-family: inherit; color: var(--ink);
+  }
+  @media (max-width: 560px) {
+    .subtitle { display: none; }
+    #pad .num { width: calc(var(--cell) * .82); height: calc(var(--cell) * .82); }
+  }
+
+  /* 返回游戏列表：左上角悬浮按钮；嵌在 /games/ 舞台里时自动隐藏（外层顶栏已有） */
+  .game-back {
+    position: fixed; left: 14px; top: 14px; z-index: 30;
+    display: inline-block; font-size: 13px; text-decoration: none;
+    color: var(--ink); background: var(--board, #fff);
+    border: 1px solid var(--line, #ccd4dd); border-radius: 999px;
+    padding: 7px 13px; box-shadow: 0 4px 12px rgba(40,60,100,.12);
+    transition: .2s;
+  }
+  .game-back:hover { color: var(--accent, #4f6ef7); border-color: var(--accent, #4f6ef7); }
+</style>
+</head>
+<body data-theme="light">
+  <div class="top"><h1>数 独</h1><span class="badge">PRO</span></div>
+  <p class="subtitle">参考 GitHub 开源轮子的专业版：撤销 / 自动笔记 / 智能填充 / 提示 / 存档 / 深色模式</p>
+
+  <div class="toolbar">
+    <div class="seg" id="diffSeg">
+      <button data-d="easy" class="on">简单</button>
+      <button data-d="medium">中等</button>
+      <button data-d="hard">困难</button>
+      <button data-d="expert">专家</button>
+    </div>
+    <div class="seg"><button id="newBtn">新一局</button></div>
+    <button class="iconbtn" id="themeBtn" title="切换深色/浅色">🌙</button>
+    <div class="stat">
+      <span>⏱ <b id="time">00:00</b></span>
+      <span>冲突 <b id="conflicts">0</b></span>
+      <span>提示 <b id="hintCount">0/5</b></span>
+    </div>
+  </div>
+
+  <div id="board"></div>
+
+  <div id="pad">
+    <div id="nums"></div>
+    <div id="tools">
+      <button class="tool" id="noteBtn" title="N">✏️ 备注</button>
+      <button class="tool" id="eraseBtn" title="Del / 0">⌫ 擦除</button>
+      <button class="tool" id="undoBtn" title="Ctrl+Z">↩️ 撤销</button>
+      <button class="tool" id="redoBtn" title="Ctrl+Y">↪️ 重做</button>
+      <button class="tool" id="autoNoteBtn" title="A">📋 自动笔记</button>
+      <button class="tool" id="smartBtn" title="F">⚡ 智能填充</button>
+      <button class="tool" id="hintBtn" title="H">💡 提示</button>
+    </div>
+  </div>
+
+  <p class="hint">
+    <kbd>1</kbd>–<kbd>9</kbd> 填数 · <kbd>Del</kbd>/<kbd>0</kbd> 擦除 · <kbd>N</kbd> 备注 · <kbd>Ctrl</kbd>+<kbd>Z</kbd>/<kbd>Y</kbd> 撤销/重做 ·
+    <kbd>A</kbd> 自动笔记 · <kbd>F</kbd> 智能填充 · <kbd>H</kbd> 提示<br>
+    冲突红标基于行列宫重复判定；进度自动保存，关掉页面再打开可继续；⏱ 在页面切到后台时暂停
+  </p>
+
+  <div class="win" id="winOverlay">
+    <div class="card">
+      <h2>🎉 恭喜通关！</h2>
+      <p id="winText"></p>
+      <button class="tool" id="againBtn">再来一局</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+<script>
+'use strict';
+
+/* ============ 求解与生成（唯一解） ============ */
+var N = 9;
+
+function canPlace(g, r, c, v) {
+  for (var i = 0; i < N; i++) if (g[r][i] === v || g[i][c] === v) return false;
+  var br = Math.floor(r / 3) * 3, bc = Math.floor(c / 3) * 3;
+  for (var rr = br; rr < br + 3; rr++) for (var cc = bc; cc < bc + 3; cc++)
+    if (g[rr][cc] === v) return false;
+  return true;
+}
+function shuffle(a) {
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function fillGrid(g) {
+  function rec() {
+    var best = null;
+    for (var r = 0; r < N; r++) for (var c = 0; c < N; c++) {
+      if (g[r][c] !== 0) continue;
+      var cands = [];
+      for (var v = 1; v <= N; v++) if (canPlace(g, r, c, v)) cands.push(v);
+      if (cands.length === 0) return false;
+      if (!best || cands.length < best.cands.length) best = { r: r, c: c, cands: cands };
+    }
+    if (!best) return true;
+    shuffle(best.cands);
+    for (var i = 0; i < best.cands.length; i++) {
+      g[best.r][best.c] = best.cands[i];
+      if (rec()) return true;
+      g[best.r][best.c] = 0;
+    }
+    return false;
+  }
+  return rec();
+}
+function countSolutions(g, limit) {
+  var count = 0;
+  function rec() {
+    if (count >= limit) return;
+    var best = null;
+    for (var r = 0; r < N; r++) for (var c = 0; c < N; c++) {
+      if (g[r][c] !== 0) continue;
+      var cands = [];
+      for (var v = 1; v <= N; v++) if (canPlace(g, r, c, v)) cands.push(v);
+      if (cands.length === 0) return;
+      if (!best || cands.length < best.cands.length) best = { r: r, c: c, cands: cands };
+      if (best.cands.length === 1) { r = N; break; }
+    }
+    if (!best) { count++; return; }
+    for (var i = 0; i < best.cands.length; i++) {
+      g[best.r][best.c] = best.cands[i];
+      rec();
+      g[best.r][best.c] = 0;
+      if (count >= limit) return;
+    }
+  }
+  rec();
+  return count;
+}
+function generate(targetClues) {
+  for (var attempt = 0; attempt < 30; attempt++) {
+    var sol = [];
+    for (var r = 0; r < N; r++) sol.push([0,0,0,0,0,0,0,0,0]);
+    if (!fillGrid(sol)) continue;
+    var puzzle = sol.map(function (row) { return row.slice(); });
+    var positions = [];
+    for (var i = 0; i < N * N; i++) positions.push(i);
+    shuffle(positions);
+    var clues = N * N;
+    for (var p = 0; p < positions.length && clues > targetClues; p++) {
+      var idx = positions[p], rr = Math.floor(idx / N), cc = idx % N;
+      var keep = puzzle[rr][cc];
+      puzzle[rr][cc] = 0;
+      if (countSolutions(puzzle.map(function (row) { return row.slice(); }), 2) < 2) clues--;
+      else puzzle[rr][cc] = keep;
+    }
+    return { puzzle: puzzle, solution: sol, clues: clues };
+  }
+  throw new Error('generate failed');
+}
+
+/* ============ 界面 ============ */
+var DIFF_CLUES = { easy: 40, medium: 32, hard: 26, expert: 22 };
+var MAX_HINTS = 5;
+var SAVE_KEY = 'sudoku2-save';
+
+var boardEl = document.getElementById('board');
+var numsEl = document.getElementById('nums');
+var timeEl = document.getElementById('time');
+var conflictsEl = document.getElementById('conflicts');
+var hintCountEl = document.getElementById('hintCount');
+var noteBtn = document.getElementById('noteBtn');
+var eraseBtn = document.getElementById('eraseBtn');
+var undoBtn = document.getElementById('undoBtn');
+var redoBtn = document.getElementById('redoBtn');
+var autoNoteBtn = document.getElementById('autoNoteBtn');
+var smartBtn = document.getElementById('smartBtn');
+var hintBtn = document.getElementById('hintBtn');
+var winOverlay = document.getElementById('winOverlay');
+var winText = document.getElementById('winText');
+var toastEl = document.getElementById('toast');
+
+var cells = [];   // {el, r, c, given, auto, val, notes:Set, err}
+var state = {
+  solution: null, clues: 0, diff: 'easy',
+  sel: null, noteMode: false,
+  conflicts: 0, hintsUsed: 0, finished: false,
+  elapsed: 0, running: false, runStart: 0, timerId: null
+};
+var undoStack = [], redoStack = [];
+var saveTimer = null;
+
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function () { toastEl.classList.remove('show'); }, 1800);
+}
+
+function buildDOM() {
+  boardEl.innerHTML = '';
+  cells = [];
+  for (var r = 0; r < N; r++) for (var c = 0; c < N; c++) {
+    var el = document.createElement('div');
+    el.className = 'cell';
+    // 粗线落在第 3、6 列/行之后（index 2、5）→ 均匀 3/3/3 九宫
+    if (c % 3 === 2 && c !== 8) el.classList.add('b-r');
+    if (r % 3 === 2 && r !== 8) el.classList.add('b-b');
+    el.addEventListener('pointerdown', (function (rr, cc) {
+      return function (e) { e.preventDefault(); select(rr, cc); };
+    })(r, c));
+    boardEl.appendChild(el);
+    cells.push({ el: el, r: r, c: c, given: false, auto: false, val: 0, notes: new Set(), err: false });
+  }
+  numsEl.innerHTML = '';
+  for (var v = 1; v <= 9; v++) {
+    var b = document.createElement('button');
+    b.className = 'num'; b.dataset.v = v;
+    b.innerHTML = v + '<small></small>';
+    b.addEventListener('click', (function (vv) { return function () { input(vv); }; })(v));
+    numsEl.appendChild(b);
+  }
+}
+function cellAt(r, c) { return cells[r * N + c]; }
+function sameBox(r, c, rr, cc) {
+  return Math.floor(r / 3) === Math.floor(rr / 3) && Math.floor(c / 3) === Math.floor(cc / 3);
+}
+function select(r, c) { state.sel = [r, c]; render(); }
+
+function render() {
+  var sel = state.sel;
+  var selVal = sel ? cellAt(sel[0], sel[1]).val : 0;
+  for (var i = 0; i < cells.length; i++) {
+    var cl = cells[i], el = cl.el;
+    el.classList.remove('sel', 'peer', 'same', 'err', 'pop', 'given', 'auto', 'hinted');
+    if (cl.given) el.classList.add('given');
+    if (cl.auto) el.classList.add('auto');
+    if (cl.hinted) el.classList.add('hinted');
+    if (sel) {
+      if (cl.r === sel[0] && cl.c === sel[1]) el.classList.add('sel');
+      else if (cl.r === sel[0] || cl.c === sel[1] || sameBox(cl.r, cl.c, sel[0], sel[1])) el.classList.add('peer');
+    }
+    if (selVal && cl.val === selVal) el.classList.add('same');
+    if (cl.err) el.classList.add('err');
+    if (cl.val) { el.innerHTML = '<span class="n">' + cl.val + '</span>'; }
+    else if (cl.notes.size) {
+      var html = '<div class="notes">';
+      for (var v = 1; v <= 9; v++) html += '<span>' + (cl.notes.has(v) ? v : '') + '</span>';
+      html += '</div>';
+      el.innerHTML = html;
+    } else el.innerHTML = '';
+  }
+  renderPad();
+  undoBtn.disabled = undoStack.length === 0;
+  redoBtn.disabled = redoStack.length === 0;
+}
+
+// 数字键角标 = 该数字还剩几个没填满；满 9 个禁用
+function renderPad() {
+  var counts = {};
+  for (var i = 0; i < cells.length; i++) if (cells[i].val) counts[cells[i].val] = (counts[cells[i].val] || 0) + 1;
+  var btns = numsEl.children;
+  for (var v = 1; v <= 9; v++) {
+    var left = 9 - (counts[v] || 0);
+    btns[v - 1].querySelector('small').textContent = left;
+    btns[v - 1].classList.toggle('done', left <= 0);
+  }
+}
+
+function refreshConflicts() {
+  var i, j;
+  for (i = 0; i < cells.length; i++) cells[i].err = false;
+  for (i = 0; i < cells.length; i++) {
+    var a = cells[i];
+    if (!a.val) continue;
+    for (j = i + 1; j < cells.length; j++) {
+      var b = cells[j];
+      if (!b.val || b.val !== a.val) continue;
+      if (a.r === b.r || a.c === b.c || sameBox(a.r, a.c, b.r, b.c)) { a.err = true; b.err = true; }
+    }
+  }
+  var n = 0;
+  for (i = 0; i < cells.length; i++) if (cells[i].err) n++;
+  state.conflicts = n;
+  conflictsEl.textContent = n;
+  return n;
+}
+
+/* ---- 撤销 / 重做 ---- */
+function snap() {
+  return cells.map(function (c) { return { v: c.val, n: Array.from(c.notes) }; });
+}
+function applySnap(s) {
+  cells.forEach(function (c, i) { c.val = s[i].v; c.notes = new Set(s[i].n); });
+  refreshConflicts();
+}
+function pushHistory() {
+  undoStack.push(snap());
+  if (undoStack.length > 200) undoStack.shift();
+  redoStack = [];
+}
+function doUndo() {
+  if (!undoStack.length || state.finished) return;
+  redoStack.push(snap());
+  applySnap(undoStack.pop());
+  render();
+}
+function doRedo() {
+  if (!redoStack.length || state.finished) return;
+  undoStack.push(snap());
+  applySnap(redoStack.pop());
+  render();
+}
+
+/* ---- 输入 ---- */
+function input(v) {
+  if (state.finished || !state.sel) return;
+  var cl = cellAt(state.sel[0], state.sel[1]);
+  if (cl.given) return;
+  if (state.noteMode) {
+    if (cl.val) return;
+    pushHistory();
+    if (cl.notes.has(v)) cl.notes.delete(v); else cl.notes.add(v);
+  } else {
+    if (cl.val === v) { pushHistory(); cl.val = 0; cl.auto = false; }
+    else {
+      pushHistory();
+      cl.val = v; cl.auto = false; cl.hinted = false;
+      // 该数在同行/列/宫的候选备注自动失效
+      for (var i = 0; i < cells.length; i++) {
+        var o = cells[i];
+        if (o !== cl && (o.r === cl.r || o.c === cl.c || sameBox(o.r, o.c, cl.r, cl.c))) o.notes.delete(v);
+      }
+      cl.notes.clear();
+      cl.el.classList.remove('pop'); void cl.el.offsetWidth; cl.el.classList.add('pop');
+    }
+    refreshConflicts();
+    checkWin();
+  }
+  render();
+  scheduleSave();
+}
+function erase() {
+  if (state.finished || !state.sel) return;
+  var cl = cellAt(state.sel[0], state.sel[1]);
+  if (cl.given) return;
+  if (!cl.val && !cl.notes.size) return;
+  pushHistory();
+  cl.val = 0; cl.auto = false; cl.hinted = false; cl.notes.clear();
+  refreshConflicts();
+  render();
+  scheduleSave();
+}
+
+/* ---- 自动笔记：为所有空格计算候选数（bestSudoku 轮子） ---- */
+function boardGrid() {
+  var g = [];
+  for (var r = 0; r < N; r++) { g.push([]); for (var c = 0; c < N; c++) g[r].push(cellAt(r, c).val); }
+  return g;
+}
+function autoNotes() {
+  if (state.finished) return;
+  var g = boardGrid();
+  pushHistory();
+  var total = 0;
+  for (var r = 0; r < N; r++) for (var c = 0; c < N; c++) {
+    var cl = cellAt(r, c);
+    if (cl.val) { cl.notes.clear(); continue; }
+    cl.notes.clear();
+    for (var v = 1; v <= N; v++) if (canPlace(g, r, c, v)) { cl.notes.add(v); total++; }
+  }
+  render();
+  scheduleSave();
+  toast(total ? '已生成候选笔记（' + total + ' 个）' : '没有可填的空格');
+}
+
+/* ---- 智能填充：Naked/Hidden Single 级联推导（bestSudoku 轮子） ---- */
+function smartFill() {
+  if (state.finished) return;
+  var g = boardGrid();
+  var filled = 0, guard = N * N;
+  function candidatesOf(r, c) {
+    var out = [];
+    for (var v = 1; v <= N; v++) if (canPlace(g, r, c, v)) out.push(v);
+    return out;
+  }
+  while (guard--) {
+    var did = false;
+    // Naked Single：唯一候选
+    for (var r = 0; r < N && !did; r++) for (var c = 0; c < N && !did; c++) {
+      if (g[r][c]) continue;
+      var cs = candidatesOf(r, c);
+      if (cs.length === 1) { g[r][c] = cs[0]; filled++; did = true; }
+    }
+    if (did) continue;
+    // Hidden Single：某候选在整行/列/宫中只出现在一个格
+    outer:
+    for (var unit = 0; unit < 27; unit++) {
+      var list = [];
+      for (var k = 0; k < N; k++) {
+        if (unit < 9) list.push([unit, k]);
+        else if (unit < 18) list.push([k, unit - 9]);
+        else {
+          var br = Math.floor((unit - 18) / 3) * 3, bc = ((unit - 18) % 3) * 3;
+          list.push([br + Math.floor(k / 3), bc + k % 3]);
+        }
+      }
+      for (var v = 1; v <= N; v++) {
+        var spots = 0, spot = null;
+        for (var k2 = 0; k2 < N; k2++) {
+          var p = list[k2];
+          if (g[p[0]][p[1]]) continue;
+          if (canPlace(g, p[0], p[1], v)) { spots++; spot = p; if (spots > 1) break; }
+        }
+        if (spots === 1) { g[spot[0]][spot[1]] = v; filled++; did = true; break outer; }
+      }
+    }
+    if (!did) break;
+  }
+  if (!filled) { toast('没有可以逻辑推导的格子了'); return; }
+  pushHistory();
+  for (var rr = 0; rr < N; rr++) for (var cc = 0; cc < N; cc++) {
+    var cl = cellAt(rr, cc);
+    if (!cl.given && g[rr][cc] && !cl.val) {
+      cl.val = g[rr][cc]; cl.auto = true;
+      cl.el.classList.remove('pop'); void cl.el.offsetWidth; cl.el.classList.add('pop');
+    }
+  }
+  // 级联清理备注
+  for (var i = 0; i < cells.length; i++) {
+    var o = cells[i];
+    if (o.val) { o.notes.clear(); continue; }
+    for (var j = 0; j < cells.length; j++) {
+      var p2 = cells[j];
+      if (p2.val && (o.r === p2.r || o.c === p2.c || sameBox(o.r, o.c, p2.r, p2.c))) o.notes.delete(p2.val);
+    }
+  }
+  refreshConflicts();
+  checkWin();
+  render();
+  scheduleSave();
+  toast('⚡ 逻辑推导填入 ' + filled + ' 格（绿色，可撤销）');
+}
+
+/* ---- 提示：填入选中格的正确答案（sdGame 轮子） ---- */
+function hint() {
+  if (state.finished) return;
+  if (state.hintsUsed >= MAX_HINTS) { toast('本局提示已用完（' + MAX_HINTS + ' 次）'); return; }
+  if (!state.sel) { toast('先选中一个空格再按提示'); return; }
+  var cl = cellAt(state.sel[0], state.sel[1]);
+  if (cl.given) { toast('选中的是给定数字格'); return; }
+  if (cl.val === state.solution[cl.r][cl.c] && cl.hinted) { toast('这格已经是正确答案了'); return; }
+  pushHistory();
+  cl.val = state.solution[cl.r][cl.c];
+  cl.auto = false; cl.hinted = true;
+  state.hintsUsed++;
+  hintCountEl.textContent = state.hintsUsed + '/' + MAX_HINTS;
+  for (var i = 0; i < cells.length; i++) {
+    var o = cells[i];
+    if (o !== cl && (o.r === cl.r || o.c === cl.c || sameBox(o.r, o.c, cl.r, cl.c))) o.notes.delete(cl.val);
+  }
+  cl.notes.clear();
+  cl.el.classList.remove('pop'); void cl.el.offsetWidth; cl.el.classList.add('pop');
+  refreshConflicts();
+  checkWin();
+  render();
+  scheduleSave();
+}
+
+/* ---- 计时（后台自动暂停） ---- */
+function fmt(s) {
+  var m = Math.floor(s / 60), ss = s % 60;
+  return (m < 10 ? '0' : '') + m + ':' + (ss < 10 ? '0' : '') + ss;
+}
+function tick() {
+  if (state.running) timeEl.textContent = fmt(state.elapsed + Math.floor((Date.now() - state.runStart) / 1000));
+}
+function resumeTimer() {
+  if (state.finished || state.running) return;
+  state.running = true; state.runStart = Date.now();
+}
+function pauseTimer() {
+  if (!state.running) return;
+  state.elapsed += Math.floor((Date.now() - state.runStart) / 1000);
+  state.running = false;
+}
+document.addEventListener('visibilitychange', function () {
+  if (document.hidden) pauseTimer(); else resumeTimer();
+});
+
+/* ---- 存档（localStorage 自动保存 / 恢复） ---- */
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveGame, 250);
+}
+function saveGame() {
+  if (state.finished || !state.solution) { return; }
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+      diff: state.diff, clues: state.clues,
+      puzzle: state.puzzle, solution: state.solution,
+      vals: cells.map(function (c) { return c.val; }),
+      autos: cells.map(function (c) { return c.auto; }),
+      notes: cells.map(function (c) { return Array.from(c.notes); }),
+      hintsUsed: state.hintsUsed,
+      elapsed: state.elapsed + (state.running ? Math.floor((Date.now() - state.runStart) / 1000) : 0),
+      sel: state.sel, noteMode: state.noteMode
+    }));
+  } catch (e) { /* 存储不可用时静默降级 */ }
+}
+function clearSave() { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
+window.addEventListener('beforeunload', function () { pauseTimer(); saveGame(); });
+
+/* ---- 胜负 ---- */
+function checkWin() {
+  for (var i = 0; i < cells.length; i++) if (!cells[i].val || cells[i].err) return;
+  for (var r = 0; r < N; r++) for (var c = 0; c < N; c++)
+    if (cellAt(r, c).val !== state.solution[r][c]) return;
+  state.finished = true;
+  pauseTimer();
+  clearSave();
+  winText.innerHTML = '用时 <b>' + fmt(state.elapsed) + '</b> · 提示数 ' + state.clues +
+    ' · 使用提示 ' + state.hintsUsed + ' 次';
+  setTimeout(function () { winOverlay.classList.add('show'); }, 250);
+}
+
+function newGame(diff) {
+  var g = generate(DIFF_CLUES[diff]);
+  state.puzzle = g.puzzle;
+  state.solution = g.solution;
+  state.clues = g.clues;
+  state.diff = diff;
+  state.conflicts = 0; state.hintsUsed = 0;
+  hintCountEl.textContent = '0/' + MAX_HINTS;
+  state.finished = false;
+  state.elapsed = 0; state.running = false;
+  undoStack = []; redoStack = [];
+  winOverlay.classList.remove('show');
+  buildDOM();
+  for (var r = 0; r < N; r++) for (var c = 0; c < N; c++) {
+    var cl = cellAt(r, c);
+    if (g.puzzle[r][c]) { cl.val = g.puzzle[r][c]; cl.given = true; }
+  }
+  state.sel = null;
+  refreshConflicts();
+  render();
+  timeEl.textContent = '00:00';
+  resumeTimer();
+  saveGame();
+}
+
+function resumeGame(s) {
+  state.puzzle = s.puzzle;
+  state.solution = s.solution;
+  state.clues = s.clues;
+  state.diff = s.diff;
+  state.hintsUsed = s.hintsUsed || 0;
+  hintCountEl.textContent = state.hintsUsed + '/' + MAX_HINTS;
+  state.finished = false;
+  state.elapsed = s.elapsed || 0; state.running = false;
+  undoStack = []; redoStack = [];
+  winOverlay.classList.remove('show');
+  buildDOM();
+  for (var r = 0; r < N; r++) for (var c = 0; c < N; c++) {
+    var cl = cellAt(r, c);
+    if (s.puzzle[r][c]) { cl.val = s.puzzle[r][c]; cl.given = true; }
+    else if (s.vals && s.vals[r * N + c]) { cl.val = s.vals[r * N + c]; cl.auto = !!s.autos[r * N + c]; }
+    if (s.notes && s.notes[r * N + c]) s.notes[r * N + c].forEach(function (x) { cl.notes.add(x); });
+  }
+  state.sel = s.sel || null;
+  state.noteMode = !!s.noteMode;
+  noteBtn.classList.toggle('on', state.noteMode);
+  refreshConflicts();
+  render();
+  tick();
+  resumeTimer();
+  toast('已恢复上次进度（用时 ' + fmt(state.elapsed) + '）');
+}
+
+/* ---- 事件 ---- */
+document.getElementById('diffSeg').addEventListener('click', function (e) {
+  var b = e.target.closest('button'); if (!b) return;
+  document.querySelectorAll('#diffSeg button').forEach(function (x) { x.classList.remove('on'); });
+  b.classList.add('on');
+  newGame(b.dataset.d);
+});
+document.getElementById('newBtn').addEventListener('click', function () {
+  newGame(document.querySelector('#diffSeg button.on').dataset.d);
+});
+document.getElementById('againBtn').addEventListener('click', function () {
+  newGame(document.querySelector('#diffSeg button.on').dataset.d);
+});
+noteBtn.addEventListener('click', function () {
+  state.noteMode = !state.noteMode;
+  noteBtn.classList.toggle('on', state.noteMode);
+});
+eraseBtn.addEventListener('click', erase);
+undoBtn.addEventListener('click', doUndo);
+redoBtn.addEventListener('click', doRedo);
+autoNoteBtn.addEventListener('click', autoNotes);
+smartBtn.addEventListener('click', smartFill);
+hintBtn.addEventListener('click', hint);
+
+var themeBtn = document.getElementById('themeBtn');
+function applyTheme(t) {
+  document.body.dataset.theme = t;
+  themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('sudoku2-theme', t); } catch (e) {}
+}
+themeBtn.addEventListener('click', function () {
+  applyTheme(document.body.dataset.theme === 'dark' ? 'light' : 'dark');
+});
+
+document.addEventListener('keydown', function (e) {
+  if (state.finished) return;
+  var k = e.key;
+  if ((e.ctrlKey || e.metaKey) && (k === 'z' || k === 'Z')) { e.preventDefault(); e.shiftKey ? doRedo() : doUndo(); return; }
+  if ((e.ctrlKey || e.metaKey) && (k === 'y' || k === 'Y')) { e.preventDefault(); doRedo(); return; }
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (k >= '1' && k <= '9') { input(+k); e.preventDefault(); return; }
+  if (k === 'Backspace' || k === 'Delete' || k === '0') { erase(); e.preventDefault(); return; }
+  if (k === 'n' || k === 'N') { noteBtn.click(); return; }
+  if (k === 'h' || k === 'H') { hint(); return; }
+  if (k === 'a' || k === 'A') { autoNotes(); return; }
+  if (k === 'f' || k === 'F') { smartFill(); return; }
+  if (k.indexOf('Arrow') === 0) {
+    e.preventDefault();
+    if (!state.sel) { select(4, 4); return; }
+    var d = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] }[k];
+    select(Math.min(8, Math.max(0, state.sel[0] + d[0])), Math.min(8, Math.max(0, state.sel[1] + d[1])));
+  }
+});
+
+/* ---- 启动：优先恢复存档 ---- */
+(function init() {
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem('sudoku2-theme'); } catch (e) {}
+  if (savedTheme) applyTheme(savedTheme);
+  else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) applyTheme('dark');
+
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); } catch (e) {}
+  if (saved && saved.puzzle && saved.solution) resumeGame(saved);
+  else newGame('easy');
+})();
+
+// 供自动化验证
+window.__test = {
+  generate: generate, countSolutions: countSolutions, cellAt: cellAt, select: select,
+  input: input, state: function () { return state; }, cells: function () { return cells; },
+  undo: doUndo, redo: doRedo, autoNotes: autoNotes, smartFill: smartFill, hint: hint,
+  erase: erase, newGame: newGame, snap: snap, applySnap: applySnap,
+  saveGame: saveGame, resumeGame: resumeGame, clearSave: clearSave, SAVE_KEY: SAVE_KEY
+};
+</script>
+<a class="game-back" href="/games/" target="_top">← 返回游戏列表</a>
+<script>
+/* 嵌在 /games/ 舞台里时，外层顶栏已有「返回游戏列表」，这里不重复显示 */
+(function () {
+  try {
+    if (window.top !== window.self) {
+      var b = document.querySelector(".game-back");
+      if (b) b.style.display = "none";
+    }
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
