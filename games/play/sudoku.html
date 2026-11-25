@@ -635,6 +635,7 @@ function tick() {
 function resumeTimer() {
   if (state.finished || state.running) return;
   state.running = true; state.runStart = Date.now();
+  tick();
 }
 function pauseTimer() {
   if (!state.running) return;
@@ -644,6 +645,8 @@ function pauseTimer() {
 document.addEventListener('visibilitychange', function () {
   if (document.hidden) pauseTimer(); else resumeTimer();
 });
+// 计时器驱动：每 250ms 刷新一次显示
+setInterval(tick, 250);
 
 /* ---- 存档（localStorage 自动保存 / 恢复） ---- */
 function scheduleSave() {
